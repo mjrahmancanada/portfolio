@@ -1,3 +1,7 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>MJ Rahman Portfolio</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="author" content="Mohammad Jillur Rahman">
@@ -28,7 +32,7 @@ button{font:inherit;color:inherit}
 .wrap{width:100%;max-width:1240px;margin:0 auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
 .eyebrow{font:600 12px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--graphite)}
 .mono{font-family:var(--f-mono)}
-.chapter-title{font:400 clamp(46px,11vw,168px)/.88 var(--f-display);color:var(--rule);letter-spacing:.02em;overflow:hidden;padding-bottom:.04em}
+.chapter-title{font:400 clamp(44px,min(11vw,15vh),168px)/.88 var(--f-display);color:var(--rule);letter-spacing:.02em;overflow:hidden;padding-bottom:.04em}
 .chapter-title .wd{display:inline-block;white-space:nowrap}
 .chapter-title .ch{display:inline-block;will-change:transform}
 .cap{font-size:13px;color:var(--graphite);letter-spacing:.02em}
@@ -352,7 +356,7 @@ html.present .toast{display:none}
 .role-card ul{margin:0;padding-left:18px;max-width:64ch}
 .role-card li{margin:5px 0}
 .role-card li::marker{color:var(--rule)}
-.flower{position:absolute;right:-6vw;bottom:-8vw;width:clamp(240px,38vw,560px);pointer-events:none;z-index:0}
+.flower{position:absolute;right:0;bottom:0;width:clamp(220px,36vw,620px);height:auto;pointer-events:none;z-index:0;transform-origin:100% 100%}
 .exp .wrap{position:relative;z-index:1}
 
 /* ---------- work chapters ---------- */
@@ -366,10 +370,21 @@ html.present .toast{display:none}
 .ch-head .cap{max-width:36ch;text-align:right;padding-bottom:10px}
 .media{position:relative;margin:0 auto}
 
-.logo-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(14px,2.6vw,36px) clamp(12px,2.4vw,32px);align-items:center;justify-items:center;perspective:1000px}
-.logo-grid img{max-height:clamp(54px,9vw,120px);width:auto;max-width:100%;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.logo-grid img:hover{transform:scale(1.08)}
-.logo-grid img.tall{max-height:clamp(86px,13vw,180px)}
+.logo-grid{--rows:3;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:min(calc((100svh - 300px) / var(--rows)),190px);gap:clamp(8px,1.2vw,16px);perspective:1200px;list-style:none;margin:0 auto;padding:0;max-width:1180px}
+.logo-grid li{display:flex;min-width:0}
+.logo-tile{margin:0;width:100%;position:relative;display:grid;place-items:center;background:#fff;border:1px solid var(--mist);border-radius:10px;overflow:hidden;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s,border-color .3s,opacity .3s;min-height:84px}
+.logo-tile img{width:auto;height:auto;max-width:72%;max-height:58%;object-fit:contain;mix-blend-mode:multiply;transform:scale(var(--k,1));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.logo-tile figcaption{position:absolute;left:0;right:0;bottom:0;padding:8px 10px;font:600 10px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--graphite);text-align:center;transform:translateY(100%);transition:transform .35s cubic-bezier(.2,.8,.2,1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo-tile::after{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--dahlia);transform:scaleY(0);transform-origin:top;transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.logo-tile:focus-visible{outline:2px solid var(--dahlia);outline-offset:2px}
+.logo-tile:focus-visible figcaption{transform:none}
+@media (hover:hover){
+  .logo-grid:hover .logo-tile:not(:hover){opacity:.55}
+  .logo-tile:hover{transform:translateY(-6px);box-shadow:0 26px 40px -26px rgba(23,24,26,.45);border-color:var(--rule)}
+  .logo-tile:hover img{transform:scale(calc(var(--k,1) * 1.07)) translateY(-6%)}
+  .logo-tile:hover figcaption{transform:none}
+  .logo-tile:hover::after{transform:scaleY(1)}
+}
 
 .product{display:grid;grid-template-columns:1fr 1.25fr .85fr;grid-template-rows:auto auto;gap:clamp(10px,2vw,30px);align-items:end;max-width:1000px}
 .product .tee{grid-column:2;grid-row:1/3}
@@ -377,42 +392,101 @@ html.present .toast{display:none}
 .product .shorts{grid-column:1;grid-row:2}
 .product .mug{grid-column:3;grid-row:2;max-width:80%}
 
-.flyer{display:flex;justify-content:center;perspective:1600px;max-width:800px}
-.flyer .fp{width:calc(var(--w) * 1%);transform-style:preserve-3d}
-.flyer .f1{transform-origin:100% 50%}.flyer .f3{transform-origin:0 50%}
-.flyer img{width:100%;height:auto}
+.fly-stage{position:relative;width:min(100%,calc((100svh - 300px) * 1.38),1000px);margin:0 auto;perspective:2000px;perspective-origin:50% 30%}
+.fly-sheet{display:flex;transform-style:preserve-3d;will-change:transform}
+.fly-sheet .fp{position:relative;flex:none;width:calc(var(--w) * 1%);transform-style:preserve-3d;backface-visibility:hidden;will-change:transform}
+.fly-sheet .f1{transform-origin:100% 50%}.fly-sheet .f3{transform-origin:0 50%}
+.fly-sheet img{width:100%;height:auto;display:block;box-shadow:0 0 0 1px rgba(23,24,26,.05)}
+.fp .shade{position:absolute;inset:0;pointer-events:none;opacity:var(--s,.3)}
+.f1 .shade{background:linear-gradient(90deg,rgba(23,24,26,0) 40%,rgba(23,24,26,.22))}
+.f2 .shade{background:linear-gradient(90deg,rgba(255,255,255,.35),rgba(255,255,255,0) 18%,rgba(255,255,255,0) 82%,rgba(23,24,26,.08))}
+.f3 .shade{background:linear-gradient(270deg,rgba(23,24,26,0) 50%,rgba(23,24,26,.16))}
 
-.bb{position:relative;max-width:1100px;aspect-ratio:1182/550}
+.bb{position:relative;width:min(100%,1100px,calc((100svh - 240px) * 2.149));aspect-ratio:1182/550}
 .bb .board{position:absolute;right:0;top:0;width:70%;overflow:hidden}
 .bb .board img{width:100%}
 .bb .sub{position:absolute;left:0;top:20.9%;width:40.5%;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
 
-.lift{position:relative;width:min(100%,calc(62vh * 312 / 502));aspect-ratio:312/502;margin:0 auto}
-.lift img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lift-wrap{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:clamp(16px,3vw,48px);align-items:center}
+.lift-col{width:min(calc((100svh - 310px) * var(--lr)),86vw,600px);--lr:.6125}
+.lift-scene{position:relative;width:100%;aspect-ratio:var(--lr);overflow:hidden;border-radius:8px;background:#2a2620;box-shadow:0 50px 90px -50px rgba(23,24,26,.6);--gx:.2307;--gy:.1172;--gw:.4684;--gh:.7429}
+.lift-cam{position:absolute;inset:0;will-change:transform;transform-origin:47% 52%}
+.lift-base{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.lift-gap{position:absolute;left:calc(var(--gx) * 100%);top:calc(var(--gy) * 100%);width:calc(var(--gw) * 100%);height:calc(var(--gh) * 100%);overflow:hidden;background:#15161a}
+.lift-in{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;will-change:transform}
+.lift-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 20%,rgba(255,250,235,.9),rgba(255,250,235,0) 70%);opacity:0;mix-blend-mode:screen;pointer-events:none}
+.door{position:absolute;top:0;width:50%;height:100%;overflow:hidden;will-change:transform}
+.door.l{left:0}.door.r{right:0}
+.door img{position:absolute;max-width:none;width:calc(200% / var(--gw));height:calc(100% / var(--gh));top:calc(-100% * var(--gy) / var(--gh))}
+.door.l img{left:calc(-200% * var(--gx) / var(--gw))}
+.door.r img{left:calc(-200% * var(--gx) / var(--gw) - 100%)}
+.door.l::after,.door.r::after{content:"";position:absolute;top:0;bottom:0;width:14%;pointer-events:none}
+.door.l::after{right:0;background:linear-gradient(90deg,rgba(0,0,0,0),rgba(0,0,0,.28))}
+.door.r::after{left:0;background:linear-gradient(270deg,rgba(0,0,0,0),rgba(0,0,0,.28))}
+.lift-floor{position:absolute;right:7%;top:13.4%;width:5.4%;text-align:center;font:600 clamp(9px,1.1vw,14px)/1 var(--f-mono);color:#ff5a3c;text-shadow:0 0 6px rgba(255,90,60,.9)}
 .lift-caps{position:relative;height:1.4em;margin-top:18px;text-align:center;font:400 clamp(22px,2.6vw,32px)/1.4 var(--f-display);letter-spacing:.04em}
 .lift-caps span{position:absolute;left:0;right:0;transition:opacity .4s,transform .4s}
-.lift-wrap{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(16px,3vw,40px);align-items:center}
-.lift-side{font-size:15px;color:var(--graphite);max-width:28ch}
+.lift-side{font-size:clamp(15px,1.3vw,18px);color:var(--graphite);max-width:26ch}
 .lift-side.r{justify-self:end;text-align:right}
 .lift-dots{display:flex;gap:8px;justify-content:center;margin-top:10px}
 .lift-dots i{width:24px;height:3px;background:var(--mist);border-radius:2px;transition:background .3s}
 .lift-dots i.on{background:var(--dahlia)}
 
 .tilt{transform-style:preserve-3d;will-change:transform;transition:transform .2s ease-out}
-.social{max-width:900px;perspective:1200px}
-.social img{border-radius:6px}
-.calendar{max-width:1000px;perspective:1400px}
+.post-stage{perspective:1600px;width:min(100%,1000px,calc((100svh - 330px) * 1.69 + 2px))}
+.post{position:relative;background:#fff;border:1px solid var(--mist);border-radius:14px;box-shadow:0 60px 100px -60px rgba(23,24,26,.55),0 2px 6px rgba(23,24,26,.05);transform-origin:50% 100%}
+.post-head{display:flex;align-items:center;gap:12px;padding:12px 16px}
+.post-head .av{width:40px;height:40px;border-radius:50%;border:1px solid var(--mist);display:grid;place-items:center;overflow:hidden;flex:none;background:#fff}
+.post-head .av img{width:84%;mix-blend-mode:multiply}
+.post-head .who{display:flex;flex-direction:column;line-height:1.25;min-width:0}
+.post-head b{font-weight:600;font-size:15px}
+.post-head small{color:var(--graphite);font-size:12px}
+.post-head .more{margin-left:auto;color:var(--graphite);letter-spacing:2px;font-size:12px}
+.post-img{position:relative;overflow:hidden;background:var(--mist)}
+.post-img img{width:100%;height:auto;display:block}
+.post-img .seam{position:absolute;top:0;bottom:0;left:50%;width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 18px 4px rgba(255,255,255,.85);opacity:0;pointer-events:none}
+.post-foot{display:flex;justify-content:space-around;padding:10px 8px;border-top:1px solid var(--mist);font:500 14px/1 var(--f-body);color:#55595f}
+.post-foot span{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px}
+.post:hover .post-foot span:first-child{color:var(--dahlia)}
+.reacts{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.react{position:absolute;bottom:40px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;box-shadow:0 8px 18px -6px rgba(0,0,0,.35)}
+.react svg{width:58%;height:58%}
+.cal-stage{position:relative;width:min(100%,1060px,calc((100svh - 290px) * 1.2375));aspect-ratio:1089/880;perspective:1400px}
+.cal-tilt{position:absolute;inset:0}
+.cal-space{position:absolute;left:0;top:0;width:1089px;height:880px;transform-origin:0 0;perspective:1600px;perspective-origin:50% 40%}
+.cal-photo{position:absolute;inset:0;width:100%;height:100%;max-width:none;border-radius:4px;box-shadow:0 50px 90px -60px rgba(23,24,26,.6)}
+.cal-pg,.cal-rings{display:none}
+.cal-anim .cal-pg,.cal-anim .cal-rings{display:block}
+.cal-pg{position:absolute;left:0;top:0;width:167px;height:234px;max-width:none;transform-origin:0 0;backface-visibility:hidden;box-shadow:0 1px 2px rgba(0,0,0,.08),0 18px 30px -18px rgba(23,24,26,.45);will-change:transform}
+.cal-rings{position:absolute;left:0;top:0;width:490px;height:40px;transform-origin:0 0;overflow:visible}
+.cal-month{position:absolute;left:0;right:0;bottom:-34px;text-align:center;font:600 11px/1 var(--f-mono);letter-spacing:.3em;text-transform:uppercase;color:var(--graphite)}
 .office{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1.4vw,16px);max-width:1040px}
 .office img{box-shadow:0 30px 60px -36px rgba(0,0,0,.45)}
 
-.outdoor{display:grid;grid-template-columns:291fr 278fr 247fr 236fr;grid-template-rows:196fr 243fr 186fr;gap:6px;aspect-ratio:1070/640;max-width:1080px}
-.outdoor > div,.event > div{overflow:hidden}
-.outdoor img,.event img{width:100%;height:100%;object-fit:cover}
+.outdoor{display:grid;grid-template-columns:291fr 278fr 247fr 236fr;grid-template-rows:196fr 243fr 186fr;gap:clamp(6px,1vw,12px);aspect-ratio:1070/640;width:min(100%,1120px,calc((100svh - 240px) * 1.672))}
+.outdoor > figure{position:relative;margin:0;overflow:hidden;border-radius:8px;cursor:zoom-in;background:var(--mist);isolation:isolate}
+.outdoor img{width:100%;height:100%;object-fit:cover;transform:scale(1.14);will-change:transform}
+.outdoor .in{position:absolute;inset:0;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.outdoor figcaption{position:absolute;left:0;right:0;bottom:0;padding:28px 14px 12px;font:500 13px/1.3 var(--f-body);color:#fff;background:linear-gradient(transparent,rgba(10,10,12,.72));transform:translateY(101%);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.outdoor figcaption b{display:block;font:600 10px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:#ffb3cf;margin-bottom:6px}
+.outdoor > figure::after{content:"";position:absolute;inset:0;border:2px solid var(--dahlia);border-radius:8px;opacity:0;transition:opacity .3s;pointer-events:none}
+@media (hover:hover){.outdoor > figure:hover .in{transform:scale(1.06)}.outdoor > figure:hover figcaption{transform:none}.outdoor > figure:hover::after{opacity:1}.outdoor:hover > figure:not(:hover){filter:saturate(.6) brightness(.92)}}
+.outdoor > figure{transition:filter .4s}
+.outdoor > figure:focus-visible figcaption{transform:none}
+.lb{position:fixed;inset:0;z-index:80;background:rgba(10,10,12,.88);display:grid;place-items:center;padding:clamp(16px,4vw,60px);opacity:0;visibility:hidden;transition:opacity .35s,visibility 0s .35s;cursor:zoom-out}
+.lb.on{opacity:1;visibility:visible;transition:opacity .35s}
+.lb img{max-width:100%;max-height:calc(100svh - 120px);width:auto;border-radius:6px;box-shadow:0 40px 80px -30px #000;transform:scale(.94);transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.lb.on img{transform:none}
+.lb p{color:#d9dce1;font-size:14px;margin-top:14px;text-align:center}
+.lb button{all:unset;cursor:pointer;position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:18px;background:rgba(255,255,255,.08)}
+.lb button:focus-visible{outline:2px solid var(--dahlia)}
+.event > div{overflow:hidden}
+.event img{width:100%;height:100%;object-fit:cover}
 .o1{grid-area:1/1/2/2}.o2{grid-area:2/1/4/2}.o3{grid-area:1/2/3/5}.o4{grid-area:3/2/4/3}.o5{grid-area:3/3/4/4}.o6{grid-area:3/4/4/5}
-.event{display:grid;grid-template-columns:336fr 312fr 317fr;grid-template-rows:215fr 231fr 233fr;gap:6px;aspect-ratio:971/690;max-width:1000px}
+.event{display:grid;grid-template-columns:336fr 312fr 317fr;grid-template-rows:215fr 231fr 233fr;gap:6px;aspect-ratio:971/690;width:min(100%,1000px,calc((100svh - 220px) * 1.407))}
 .e1{grid-area:1/1/2/2}.e2{grid-area:1/2/2/3}.e3{grid-area:1/3/2/4}.e4{grid-area:2/1/3/2}.e5{grid-area:2/2/4/4}.e6{grid-area:3/1/4/2}
 
-.booth{position:relative;max-width:1000px;aspect-ratio:999/657}
+.booth{position:relative;width:min(100%,1000px,calc((100svh - 220px) * 1.52));aspect-ratio:999/657}
 .booth .b1{position:absolute;left:0;top:0;width:76.2%;overflow:hidden}
 .booth .b1::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(var(--g,-120%));mix-blend-mode:soft-light}
 .booth .b2{position:absolute;left:62.6%;top:57%;width:37.4%;box-shadow:0 30px 60px -30px rgba(0,0,0,.55)}
@@ -431,13 +505,12 @@ html.present .toast{display:none}
 .render3d img{width:100%;height:100%;object-fit:cover}
 
 /* product kit scene */
-.kit{position:relative;width:100%;max-width:1100px;aspect-ratio:16/9}
+.kit{position:relative;width:min(100%,1100px,calc((100svh - 230px) * 16 / 9));aspect-ratio:16/9}
 .kit-tee,.kit-shorts{position:absolute}
 .kit-tee{left:38.44%;top:4%;width:23.1%;height:60%;z-index:3}
 .kit-shorts{left:44.6%;top:58.5%;width:10.8%;height:29.5%;z-index:2}
-.kit .sl{position:absolute;left:0;width:100%;height:20%;background-repeat:no-repeat;background-size:100% 500%;will-change:transform}
-.kit-tee .sl{background-image:url(img/tee-cut.webp)}
-.kit-shorts .sl{background-image:url(img/shorts-cut.webp)}
+.kit-tee img,.kit-shorts img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 24px 26px rgba(23,24,26,.18))}
+.kit-tee,.kit-shorts{will-change:transform}
 .kit-side{position:absolute;left:83%;top:46%;height:31%;width:auto;opacity:0;z-index:2}
 .kit-polo{position:absolute;left:68%;top:2%;width:17%;opacity:0;z-index:2}
 .kit-floor{position:absolute;left:30%;right:30%;bottom:3%;height:7%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(23,24,26,.22),rgba(23,24,26,0) 70%)}
@@ -447,25 +520,33 @@ html.present .toast{display:none}
 .kit-call circle{fill:var(--dahlia)}
 .kit-call text{font:600 20px var(--f-mono);fill:var(--ink);letter-spacing:2px}
 .kit-mug{position:absolute;left:35%;top:30%;width:30%;opacity:0;z-index:5}
-.mug-spin{position:relative;aspect-ratio:240/167;will-change:transform}
+.mug-spin{position:relative;aspect-ratio:760/568;will-change:transform}
 .mug-spin img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 #mugB{opacity:0}
 .mug-cap{text-align:center;margin-top:14px;font:600 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--graphite)}
 .mug-box{position:relative}
-.steam{position:absolute;left:6%;bottom:86%;width:52%;overflow:visible}
+.steam{position:absolute;left:10%;bottom:78%;width:48%;overflow:visible}
 .steam path{fill:none;stroke:#9EA2A8;stroke-width:11;stroke-linecap:round;opacity:0;filter:blur(4px);stroke-dasharray:110 400;animation:steam 3.3s ease-in-out infinite}
 @keyframes steam{0%{stroke-dashoffset:110;opacity:0}30%{opacity:.7}100%{stroke-dashoffset:-320;opacity:0}}
 
-/* falling flyer */
-.fly-drop{position:relative;max-width:800px;margin:0 auto;will-change:transform}
-.fly-cam{will-change:transform}
-.fly-shadow{width:70%;height:26px;margin:-6px auto 0;border-radius:50%;background:radial-gradient(ellipse at center,rgba(23,24,26,.28),rgba(23,24,26,0) 70%);transform-origin:center}
+.fly-shadow{width:86%;height:34px;margin:-10px auto 0;border-radius:50%;background:radial-gradient(ellipse at center,rgba(23,24,26,.26),rgba(23,24,26,0) 70%);transform-origin:center}
 
 /* ---------- contact ---------- */
 .contact{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-block:90px 40px;text-align:center}
 .inf{width:min(320px,60vw);margin:0 auto 40px}
 .inf path{fill:none;stroke:var(--ink);stroke-width:7;stroke-linecap:round}
-.contact h2{font:400 clamp(44px,7vw,110px)/.9 var(--f-display)}
+.contact{position:relative;overflow:hidden}
+.contact h2{font:400 clamp(44px,min(8vw,15vh),132px)/.9 var(--f-display);letter-spacing:.01em}
+.sig{position:relative;cursor:default;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.sig .wd{display:inline-block;white-space:nowrap}
+.sig .lt{display:inline-block;position:relative;color:var(--ink);--cx:0;--cy:0;--mx:0;--my:0;--yx:0;--yy:0;--o:0;
+  text-shadow:calc(var(--cx) * 1px) calc(var(--cy) * 1px) 0 rgba(0,174,239,var(--o)),calc(var(--mx) * 1px) calc(var(--my) * 1px) 0 rgba(236,0,140,var(--o)),calc(var(--yx) * 1px) calc(var(--yy) * 1px) 0 rgba(255,214,0,var(--o));will-change:transform}
+.sig .lt::after{content:"";position:absolute;left:-1px;right:-1px;bottom:-.08em;height:.035em;background:var(--dahlia);transform:scaleX(var(--u,0));transform-origin:left;border-radius:2px}
+.sig-hint{font:600 10px/1 var(--f-mono);letter-spacing:.3em;text-transform:uppercase;color:var(--rule);margin-top:14px;transition:opacity .6s}
+.reg{position:absolute;width:26px;height:26px;pointer-events:none;opacity:.5}
+.reg::before,.reg::after{content:"";position:absolute;background:var(--ink)}
+.reg::before{left:50%;top:0;bottom:0;width:1px}.reg::after{top:50%;left:0;right:0;height:1px}
+.reg i{position:absolute;inset:6px;border:1px solid var(--ink);border-radius:50%}
 .contact .where{color:var(--graphite);margin-top:12px}
 .lines{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:36px}
 .line-item{display:flex;align-items:center;gap:10px;border:1px solid var(--rule);border-radius:999px;padding:8px 8px 8px 18px;font:500 clamp(14px,1.4vw,17px)/1.2 var(--f-body);max-width:100%}
@@ -483,9 +564,11 @@ html.present .toast{display:none}
   .tool small{display:none}
   .process ol{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:30px}
   .steps::before,.process .line{display:none}
-  .logo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .logo-grid{grid-template-columns:repeat(3,minmax(0,1fr));--rows:5;grid-auto-rows:clamp(84px,min(20vw,calc((100svh - 260px) / 5)),150px)}
   .lift-wrap{grid-template-columns:minmax(0,1fr)}
   .lift-side,.lift-side.r{justify-self:center;text-align:center}
+  .lift-side.r{display:none}
+  .lift-col{width:min(calc((100svh - 330px) * var(--lr)),86vw)}
   .stat{grid-template-columns:minmax(0,1fr)}
   .ch-head .cap{text-align:left}
   .areas{columns:1}
@@ -948,11 +1031,23 @@ html.present .toast{display:none}
 <section class="chapter pin" id="logos" data-label="Logo design">
   <div class="wrap">
     <div class="ch-head"><h2 class="chapter-title">Logo design</h2><p class="cap">One simple symbol can say what industry you're in, what you offer and how your business feels.</p></div>
-    <div class="logo-grid media" id="logoGrid">
-      <img src="img/logo-lustrous.webp" alt="Lustrous Pearl"><img src="img/logo-jumairah.webp" alt="Jumairah Holdings Ltd."><img src="img/logo-rezia.webp" alt="Park Rezia"><img src="img/logo-haven.webp" alt="Haven 107"><img src="img/logo-plc.webp" class="tall" alt="People's Learning Center">
-      <img src="img/logo-babyfood.webp" alt="Chittagong Baby Food"><img src="img/logo-shape.webp" alt="Shape Interior &amp; Architecture"><img src="img/logo-giant.webp" alt="Giant Concept Limited"><img src="img/logo-silver.webp" alt="Silver Spoon"><img src="img/logo-sailor.webp" alt="Sailor by Epyllion">
-      <img src="img/logo-chevron.webp" alt="Chevron Clinical Laboratory"><img src="img/logo-cpdl.webp" alt="cpdl"><img src="img/logo-hammer.webp" alt="Hammer Strength Fitness &amp; Training Center"><img src="img/logo-bengal.webp" class="tall" alt="Bengal Tigers Cricket Club"><img src="img/logo-mithila.webp" class="tall" alt="Mithila's Fashion">
-    </div>
+    <ul class="logo-grid media" id="logoGrid" aria-label="Logo design work">
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-lustrous.webp" alt="Lustrous Pearl" loading="lazy"><figcaption>Lustrous Pearl</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-jumairah.webp" alt="Jumairah Holdings Ltd." loading="lazy"><figcaption>Jumairah Holdings Ltd.</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-plc.webp" alt="People's Learning Center" loading="lazy"><figcaption>People's Learning Center</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-rezia.webp" alt="Park Rezia" loading="lazy"><figcaption>Park Rezia</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-haven.webp" alt="Haven 107" loading="lazy"><figcaption>Haven 107</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-babyfood.webp" alt="Chittagong Baby Food" loading="lazy"><figcaption>Chittagong Baby Food</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-bengal.webp" alt="Bengal Tigers Cricket Club" loading="lazy"><figcaption>Bengal Tigers Cricket Club</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-giant.webp" alt="Giant Concept Limited" loading="lazy"><figcaption>Giant Concept Limited</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-mithila.webp" alt="Mithila's Fashion" loading="lazy"><figcaption>Mithila's Fashion</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-silver.webp" alt="Silver Spoon" loading="lazy"><figcaption>Silver Spoon</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-chevron.webp" alt="Chevron Clinical Laboratory" loading="lazy"><figcaption>Chevron Clinical Laboratory</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-sailor.webp" alt="Sailor by Epyllion" loading="lazy"><figcaption>Sailor by Epyllion</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-hammer.webp" alt="Hammer Strength Fitness &amp; Training" loading="lazy"><figcaption>Hammer Strength Fitness &amp; Training</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-shape.webp" alt="Shape Interior &amp; Architecture" loading="lazy"><figcaption>Shape Interior &amp; Architecture</figcaption></figure></li>
+      <li><figure class="logo-tile" tabindex="0"><img src="img/logo-cpdl.webp" alt="cpdl" loading="lazy"><figcaption>cpdl</figcaption></figure></li>
+    </ul>
   </div>
 </section>
 
@@ -961,8 +1056,8 @@ html.present .toast{display:none}
     <div class="ch-head"><h2 class="chapter-title">Product design</h2><p class="cap"><b>Hammer Strength</b> · Fitness &amp; Training Center kit</p></div>
     <div class="kit media" id="kit" role="img" aria-label="Hammer Strength training kit: T-shirt, shorts, polo and mug">
       <div class="kit-floor" id="kitFloor"></div>
-      <div class="kit-shorts" id="kitShorts"><i class="sl" style="top:0.0000%;height:33.34%;background-size:100% 300%;background-position:0 0%"></i><i class="sl" style="top:33.3333%;height:33.34%;background-size:100% 300%;background-position:0 50%"></i><i class="sl" style="top:66.6667%;height:33.34%;background-size:100% 300%;background-position:0 100%"></i></div>
-      <div class="kit-tee" id="kitTee"><i class="sl" style="top:0%;background-position:0 0%"></i><i class="sl" style="top:20%;background-position:0 25%"></i><i class="sl" style="top:40%;background-position:0 50%"></i><i class="sl" style="top:60%;background-position:0 75%"></i><i class="sl" style="top:80%;background-position:0 100%"></i></div>
+      <div class="kit-shorts" id="kitShorts"><img src="img/shorts-cut.webp" alt=""></div>
+      <div class="kit-tee" id="kitTee"><img src="img/tee-cut.webp" alt=""></div>
       <img class="kit-side" id="kitSide" src="img/shorts-side-cut.webp" alt="">
       <img class="kit-polo" id="kitPolo" src="img/polo-cut.webp" alt="">
       <svg class="kit-call" id="kitCall" viewBox="0 0 1600 900" aria-hidden="true">
@@ -986,14 +1081,14 @@ html.present .toast{display:none}
 <section class="chapter pin" id="flyer" data-label="Flyer design">
   <div class="wrap">
     <div class="ch-head"><h2 class="chapter-title">Flyer design</h2><p class="cap"><b>cpdl</b> · Property portfolio tri-fold</p></div>
-    <div class="fly-drop" id="flyDrop"><div class="fly-cam" id="flyCam">
-    <div class="flyer media" id="flyerBox">
-      <div class="fp f1" style="--w:33.24"><img src="img/flyer1.webp" alt="cpdl tri-fold, back panel"></div>
-      <div class="fp f2" style="--w:32.43"><img src="img/flyer2.webp" alt="cpdl tri-fold, inside panel"></div>
-      <div class="fp f3" style="--w:34.33"><img src="img/flyer3.webp" alt="cpdl tri-fold, cover"></div>
+    <div class="fly-stage media" id="flyStage">
+      <div class="fly-sheet" id="flySheet">
+        <div class="fp f1" style="--w:33.94"><img src="img/flyer1.webp" alt="cpdl tri-fold, back panel with contact details"><i class="shade"></i></div>
+        <div class="fp f2" style="--w:33.03"><img src="img/flyer2.webp" alt="cpdl tri-fold, inside panel: company story"><i class="shade"></i></div>
+        <div class="fp f3" style="--w:33.03"><img src="img/flyer3.webp" alt="cpdl tri-fold, cover with butterfly ring"><i class="shade"></i></div>
+      </div>
+      <div class="fly-shadow" id="flyShadow"></div>
     </div>
-    </div></div>
-    <div class="fly-shadow" id="flyShadow"></div>
   </div>
 </section>
 
@@ -1011,9 +1106,20 @@ html.present .toast{display:none}
   <div class="wrap">
     <div class="ch-head"><h2 class="chapter-title">Creative branding</h2><p class="cap"><b>Silver Spoon</b> · Elevator ambient ad</p></div>
     <div class="lift-wrap">
-      <p class="lift-side">The lift doors carry a whole lobster. When they open, a chef's knife waits inside.</p>
-      <div>
-        <div class="lift media"><img src="img/lift1.webp" alt="Elevator doors closed, showing a red lobster"><img id="lift2" src="img/lift2.webp" alt="Doors half open, revealing a hand with a knife"><img id="lift3" src="img/lift3.webp" alt="Doors fully open, Silver Spoon logo and knife"></div>
+      <p class="lift-side">The lift doors carry a whole lobster. When they part, a chef's knife is waiting inside.</p>
+      <div class="lift-col">
+        <div class="lift-scene media" id="liftScene">
+          <div class="lift-cam" id="liftCam">
+            <img class="lift-base" src="img/lift1.webp" alt="Elevator with a red lobster printed across its closed doors">
+            <div class="lift-gap">
+              <img class="lift-in" id="liftIn" src="img/lift-inside.webp" alt="Inside the lift: a hand holds a chef's knife under the Silver Spoon logo">
+              <i class="lift-glow" id="liftGlow"></i>
+              <div class="door l" id="doorL"><img src="img/lift1.webp" alt=""></div>
+              <div class="door r" id="doorR"><img src="img/lift1.webp" alt=""></div>
+            </div>
+          </div>
+          <span class="lift-floor" id="liftFloor" aria-hidden="true">G</span>
+        </div>
         <div class="lift-caps" aria-hidden="true"><span id="cap1">Doors closed</span><span id="cap2" style="opacity:0">Doors opening</span><span id="cap3" style="opacity:0">Dinner is served</span></div>
         <div class="lift-dots"><i class="on"></i><i></i><i></i></div>
       </div>
@@ -1025,14 +1131,33 @@ html.present .toast{display:none}
 <section class="chapter" id="social" data-label="Social media">
   <div class="wrap">
     <div class="ch-head"><h2 class="chapter-title">Social media post</h2><p class="cap"><b>Chevron Clinical Laboratory</b> · Dental Unite</p></div>
-    <div class="social media"><div class="tilt" data-tilt><img id="socialImg" src="img/social.webp" alt="Before and after smile post for Chevron Dental Unite with reaction emoji"></div></div>
+    <div class="post-stage media" id="postStage"><article class="post tilt" data-tilt id="post">
+      <header class="post-head"><span class="av"><img src="img/logo-chevron.webp" alt=""></span><span class="who"><b>Chevron Clinical Laboratory</b><small>Sponsored post · Dental Unite campaign</small></span><span class="more" aria-hidden="true">&#8226;&#8226;&#8226;</span></header>
+      <div class="post-img"><img id="socialImg" src="img/social.webp" alt="Before and after smile post for Chevron Dental Unite with reaction emoji"><span class="seam" id="seam"></span></div>
+      <footer class="post-foot" aria-hidden="true">
+        <span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M7 11v9H4v-9zM7 11l4-8c1.7 0 2.6 1.2 2.2 2.8L12.6 9H19a2 2 0 0 1 2 2.3l-1.2 6.9A2 2 0 0 1 17.8 20H7"/></svg>Like</span>
+        <span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg>Comment</span>
+        <span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M14 4l7 7-7 7v-4c-5 0-8 1.5-10 5 0-6 3-10 10-11z"/></svg>Share</span>
+      </footer>
+      <div class="reacts" id="reacts" aria-hidden="true"></div>
+    </article></div>
   </div>
 </section>
 
-<section class="chapter" id="calendar" data-label="Calendar design">
+<section class="chapter pin" id="calendar" data-label="Calendar design">
   <div class="wrap">
     <div class="ch-head"><h2 class="chapter-title">Calendar design</h2><p class="cap"><b>Dream Knitting</b> · 2018 desk calendar</p></div>
-    <div class="calendar media"><div class="tilt" data-tilt id="calTilt"><img src="img/calendar.webp" alt="Dream Knitting 2018 desk calendar with triangle-cut textile imagery"></div></div>
+    <div class="cal-stage media" id="calStage"><div class="cal-tilt tilt" data-tilt>
+      <div class="cal-space" id="calSpace">
+        <img class="cal-photo" id="calPhoto" src="img/calendar.webp" alt="Dream Knitting 2018 desk calendar with its monthly pages arranged around it">
+        <svg class="cal-rings" id="calRings" viewBox="0 0 490 40" aria-hidden="true"></svg>
+        <img class="cal-pg" data-k="p3" src="img/cal-p3.webp" alt="">
+        <img class="cal-pg" data-k="p4" src="img/cal-p4.webp" alt="">
+        <img class="cal-pg" data-k="p2" src="img/cal-p2.webp" alt="">
+        <img class="cal-pg" data-k="p5" src="img/cal-p5.webp" alt="">
+        <img class="cal-pg" data-k="p1" src="img/cal-p1.webp" alt="">
+      </div>
+    </div><p class="cal-month" id="calMonth" aria-hidden="true">December</p></div>
   </div>
 </section>
 
@@ -1047,12 +1172,12 @@ html.present .toast{display:none}
   <div class="wrap">
     <div class="ch-head"><h2 class="chapter-title">Outdoor campaign</h2><p class="cap"><b>Milonmela 2020</b> · Stage, gates, bags and signage</p></div>
     <div class="outdoor media" id="outdoorGrid">
-      <div class="o1"><img src="img/out1.webp" alt="Milonmela 2020 banner with a school bus illustration"></div>
-      <div class="o2"><img src="img/out2.webp" alt="Branded gift bags"></div>
-      <div class="o3"><img src="img/out3.webp" alt="Main stage with lighting truss and audience"></div>
-      <div class="o4"><img src="img/out4.webp" alt="Group photo at the entrance arch"></div>
-      <div class="o5"><img src="img/out5.webp" alt="Venue signage on the plaza"></div>
-      <div class="o6"><img src="img/out6.webp" alt="Entrance arch"></div>
+      <figure class="o1" tabindex="0" role="button" aria-label="Enlarge: Milonmela 2020 banner with a school bus illustration"><div class="in"><img src="img/out1.webp" alt="Milonmela 2020 banner with a school bus illustration" loading="lazy"></div><figcaption><b>Backdrop</b>Milonmela 2020 banner with a school bus illustration</figcaption></figure>
+      <figure class="o2" tabindex="0" role="button" aria-label="Enlarge: Branded gift bags"><div class="in"><img src="img/out2.webp" alt="Branded gift bags" loading="lazy"></div><figcaption><b>Giveaway</b>Branded gift bags</figcaption></figure>
+      <figure class="o3" tabindex="0" role="button" aria-label="Enlarge: Main stage with lighting truss and audience"><div class="in"><img src="img/out3.webp" alt="Main stage with lighting truss and audience" loading="lazy"></div><figcaption><b>Main stage</b>Main stage with lighting truss and audience</figcaption></figure>
+      <figure class="o4" tabindex="0" role="button" aria-label="Enlarge: Group photo at the entrance arch"><div class="in"><img src="img/out4.webp" alt="Group photo at the entrance arch" loading="lazy"></div><figcaption><b>Entrance</b>Group photo at the entrance arch</figcaption></figure>
+      <figure class="o5" tabindex="0" role="button" aria-label="Enlarge: Venue signage on the plaza"><div class="in"><img src="img/out5.webp" alt="Venue signage on the plaza" loading="lazy"></div><figcaption><b>Wayfinding</b>Venue signage on the plaza</figcaption></figure>
+      <figure class="o6" tabindex="0" role="button" aria-label="Enlarge: Entrance arch"><div class="in"><img src="img/out6.webp" alt="Entrance arch" loading="lazy"></div><figcaption><b>Entrance</b>Entrance arch</figcaption></figure>
     </div>
   </div>
 </section>
@@ -1115,9 +1240,11 @@ html.present .toast{display:none}
 
 <!-- CONTACT -->
 <section class="contact" id="contact" data-label="Contact">
+  <span class="reg" style="left:4%;top:12%"><i></i></span><span class="reg" style="right:4%;top:12%"><i></i></span><span class="reg" style="left:4%;bottom:6%"><i></i></span><span class="reg" style="right:4%;bottom:6%"><i></i></span>
   <div class="wrap">
     <svg class="inf" viewBox="0 0 320 180" aria-hidden="true"><path id="infPath" d="M160 90 C 200 40, 290 10, 290 80 C 290 150, 200 140, 160 90 C 120 40, 30 30, 30 95 C 30 160, 120 140, 160 90 Z" transform="rotate(-14 160 90)"/></svg>
-    <h2>Mohammad Jillur Rahman</h2>
+    <h2 class="sig" id="sig" aria-label="Mohammad Jillur Rahman">Mohammad Jillur Rahman</h2>
+    <p class="sig-hint" id="sigHint" aria-hidden="true">move across the name</p>
     <p class="where">Graphic designer · Vancouver, BC</p>
     <div class="lines">
       <div class="line-item"><span id="phone">+1 (778) 683-9312</span><button class="copy" data-copy="phone">Copy</button></div>
@@ -1127,6 +1254,8 @@ html.present .toast{display:none}
   </div>
 </section>
 </main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Image viewer"><button id="lbClose" aria-label="Close">&#10005;</button><div><img id="lbImg" alt=""><p id="lbCap"></p></div></div>
 
 <div class="toast" id="toast" role="status" aria-live="polite">
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="6"/><path d="M12 6v4"/></svg>
@@ -1354,6 +1483,84 @@ html.present .toast{display:none}
     try { navigator.clipboard.writeText(txt).then(done, fallback); } catch (e) { fallback(); }
   }));
 
+
+  /* ---------------- outdoor lightbox ---------------- */
+  const lb = $('#lb'), lbImg = $('#lbImg'), lbCap = $('#lbCap'); let lbFrom = null;
+  const openLb = f => { const im = f.querySelector('img'); lbFrom = f; lbImg.src = im.currentSrc || im.src; lbImg.alt = im.alt; lbCap.textContent = im.alt; lb.classList.add('on'); $('#lbClose').focus(); };
+  const closeLb = () => { lb.classList.remove('on'); if (lbFrom) lbFrom.focus(); lbFrom = null; };
+  $$('#outdoorGrid > figure').forEach(f => { f.addEventListener('click', () => openLb(f)); f.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(f); } }); });
+  lb.addEventListener('click', closeLb);
+  addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('on')) { e.stopImmediatePropagation(); closeLb(); } }, true);
+
+  /* ---------------- social: reaction burst ---------------- */
+  const reacts = $('#reacts');
+  const RX = [
+    ['#2f6fe4', '<svg viewBox="0 0 24 24" fill="#fff"><path d="M7 11v9H4v-9zM8 11l3.6-7.2c1.6 0 2.5 1.2 2.1 2.8L13 9.5h5.6a2 2 0 0 1 2 2.3l-1.1 6.4A2.2 2.2 0 0 1 17.3 20H8z"/></svg>'],
+    ['#e8365d', '<svg viewBox="0 0 24 24" fill="#fff"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>'],
+    ['#f7b928', '<svg viewBox="0 0 24 24" fill="none" stroke="#5a3a00" stroke-width="1.8" stroke-linecap="round"><circle cx="9" cy="10" r="1.2" fill="#5a3a00"/><circle cx="15" cy="10" r="1.2" fill="#5a3a00"/><path d="M7.5 14.5c2.5 3 6.5 3 9 0"/></svg>']
+  ];
+  function burst(n = 5) {
+    if (reduce || !G) return;
+    for (let i = 0; i < n; i++) {
+      const [bg, svg] = RX[i % RX.length], el = document.createElement('span');
+      el.className = 'react'; el.style.background = bg; el.innerHTML = svg; el.style.left = (8 + Math.random() * 20) + '%';
+      reacts.appendChild(el);
+      G.fromTo(el, { y: 0, x: 0, scale: 0.2, opacity: 0 }, { y: -(160 + Math.random() * 220), x: (Math.random() - 0.5) * 120, scale: 0.8 + Math.random() * 0.5, opacity: 1, duration: 1.8 + Math.random() * 0.8, delay: i * 0.12, ease: 'power1.out', onComplete: () => el.remove() });
+      G.to(el, { opacity: 0, duration: 0.5, delay: i * 0.12 + 1.4 });
+    }
+  }
+  let lastBurst = 0;
+  $('#post').addEventListener('pointerenter', () => { const t = performance.now(); if (t - lastBurst > 2200) { lastBurst = t; burst(5); } });
+  $('#post').addEventListener('click', () => burst(4));
+
+  /* ---------------- signature: the artist's name ---------------- */
+  const sig = $('#sig');
+  sig.innerHTML = sig.textContent.trim().split(' ').map(w => `<span class="wd" aria-hidden="true">${w.split('').map(c => `<span class="lt">${c}</span>`).join('')}</span>`).join(' ');
+  const lts = $$('.lt', sig).map((el, i) => { const a = i * 2.39996; return { el, f: 0, dx: 0, dy: 0, cx: 0, cy: 0, intro: motion ? 1 : 0, ix: Math.cos(a), iy: Math.sin(a) }; });
+  let sigFs = 100;
+  let sigVisible = false, sigRects = false, sigLastMove = 0, sigWave = -1;
+  const measureSig = () => { sigFs = parseFloat(getComputedStyle(sig).fontSize) || 100; lts.forEach(o => { const r = o.el.getBoundingClientRect(); o.cx = r.left + r.width / 2; o.cy = r.top + r.height / 2; }); sigRects = true; };
+  new IntersectionObserver(es => es.forEach(e => { sigVisible = e.isIntersecting; sigRects = false; })).observe(sig);
+  addEventListener('scroll', () => sigRects = false, { passive: true });
+  addEventListener('resize', () => sigRects = false);
+  const sigPointer = e => { sigLastMove = performance.now(); $('#sigHint').style.opacity = 0; };
+  sig.addEventListener('pointermove', sigPointer);
+  sig.addEventListener('pointerdown', e => { sigWave = 0; sigWaveX = e.clientX; sigPointer(e); });
+  let sigWaveX = 0;
+  if (!reduce) (function sigLoop(now) {
+    if (sigVisible) {
+      if (!sigRects) measureSig();
+      const R = Math.max(120, sig.offsetHeight * 1.5);
+      const live = now - sigLastMove < 1600;
+      const idle = !live && sigWave < 0 && (now % 7000) < 30; // a quiet "print pass" every 7 s
+      if (idle) { sigWave = 0; sigWaveX = lts[0].cx - 200; }
+      if (sigWave >= 0) { sigWave += 16; if (sigWave > 2600) sigWave = -1; }
+      lts.forEach(o => {
+        let tf = 0, dx = 0, dy = 0;
+        if (live && mouse.px > -900) {
+          dx = o.cx - mouse.px; dy = o.cy - mouse.py; const d = Math.hypot(dx, dy) || 1;
+          tf = Math.max(0, 1 - d / R); tf = tf * tf * (3 - 2 * tf); dx /= d; dy /= d;
+        }
+        if (sigWave >= 0) { const front = sigWaveX + sigWave * 1.1, dd = Math.abs(o.cx - front); const w = Math.max(0, 1 - dd / 140); if (w > tf) { tf = w * 0.8; dx = 1; dy = -0.4; } }
+        o.f += (tf - o.f) * 0.14; o.dx += (dx - o.dx) * 0.14; o.dy += (dy - o.dy) * 0.14;
+        const f = o.f, I = o.intro, k = sigFs * 0.06 * f, q = sigFs * 0.45 * I, st = o.el.style;
+        st.transform = (f > 0.002 || I > 0.002) ? `translate(${(o.dx * f * 6 + o.ix * I * sigFs * 0.15).toFixed(2)}px, ${(-f * sigFs * 0.13 + I * sigFs * 0.5).toFixed(2)}px) rotate(${(o.ix * I * 14).toFixed(2)}deg) scale(${(1 + f * 0.1).toFixed(3)})` : '';
+        st.opacity = I > 0.002 ? (1 - I * 0.92).toFixed(3) : '';
+        st.setProperty('--o', Math.min(0.9, Math.max(f * 1.6, I * 1.4)).toFixed(3));
+        st.setProperty('--cx', (-o.dx * k - o.ix * q).toFixed(2)); st.setProperty('--cy', (-o.dy * k - o.iy * q).toFixed(2));
+        st.setProperty('--mx', (o.dx * k + o.ix * q).toFixed(2)); st.setProperty('--my', (o.dy * k + o.iy * q).toFixed(2));
+        st.setProperty('--yx', (o.dy * k * 0.7 + o.iy * q).toFixed(2)); st.setProperty('--yy', (-o.dx * k * 0.7 - o.ix * q).toFixed(2));
+        st.setProperty('--u', Math.min(1, f * 1.4).toFixed(3));
+        st.color = f > 0.55 ? 'var(--dahlia)' : '';
+      });
+    }
+    requestAnimationFrame(sigLoop);
+  })(performance.now());
+
+  /* calendar mockup space scales to its stage */
+  const calFit = () => { $('#calSpace').style.transform = `scale(${$('#calStage').clientWidth / 1089})`; };
+  calFit(); addEventListener('resize', calFit); if (window.ResizeObserver) new ResizeObserver(calFit).observe($('#calStage'));
+
   /* ---------------- presentation mode ---------------- */
   const root = document.documentElement, pBtn = $('#presentBtn');
   let presenting = false, stops = [], idx = 0, busy = false, acc = 0, usedFs = false, coolUntil = 0;
@@ -1414,6 +1621,7 @@ html.present .toast{display:none}
   const paged = fine && !reduce;
   let lastWheel = 0, gestureUsed = false;
   addEventListener('wheel', e => {
+    if (lb.classList.contains('on')) { e.preventDefault(); return; }
     if (!(presenting || paged) || e.ctrlKey) return;
     e.preventDefault();
     const now = performance.now(), gap = now - lastWheel; lastWheel = now;
@@ -1451,7 +1659,6 @@ html.present .toast{display:none}
 
   // progress + chapter label
   G.to('#progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
-  $$('[data-label]').forEach(s => ST.create({ trigger: s, start: 'top 55%', end: 'bottom 55%', onToggle: self => { if (self.isActive) label.textContent = s.dataset.label; } }));
   ST.create({ trigger: '#hero', start: 'top top', end: 'bottom 40%', onToggle: s => { if (s.isActive) label.textContent = 'Portfolio'; } });
 
   // hero intro
@@ -1501,7 +1708,7 @@ html.present .toast{display:none}
   // experience: line draws, flower blooms
   G.fromTo('.tl-line', { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: '.tl', start: 'top 70%', end: 'bottom 60%', scrub: true } });
   $$('.role-card').forEach(c => G.from(c, { x: 50, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: c, start: 'top 80%', toggleActions: 'play none none reverse' } }));
-  G.fromTo('#flower', { rotate: -120, scale: 0.35, opacity: 0 }, { rotate: 0, scale: 1, opacity: 1, ease: 'none', scrollTrigger: { trigger: '#experience', start: 'top 70%', end: 'bottom bottom', scrub: true } });
+  G.fromTo('#flower', { scale: 0.45, opacity: 0, filter: 'saturate(0.3)' }, { scale: 1, opacity: 1, filter: 'saturate(1)', transformOrigin: '100% 100%', ease: 'power2.out', scrollTrigger: { trigger: '#experience', start: 'top 70%', end: 'bottom bottom', scrub: true } });
 
   // selected-work marquee
   G.fromTo('#marquee', { xPercent: 0 }, { xPercent: -45, ease: 'none', scrollTrigger: { trigger: '.divider', start: 'top bottom', end: 'bottom top', scrub: true } });
@@ -1516,27 +1723,27 @@ html.present .toast{display:none}
   const scrubFrom = (target, vars, trigger, start = 'top 85%', end = 'top 30%') => G.from(target, Object.assign({ ease: 'none', scrollTrigger: { trigger, start, end, scrub: 0.6 } }, vars));
 
   // logos: scattered across space, then snap into a grid
-  const lr = rng(7);
-  pinTL('#logos', '+=110%').from('#logoGrid img', {
-    x: () => (lr() - 0.5) * innerWidth * 1.1, y: () => (lr() - 0.5) * innerHeight * 1.2,
-    rotate: () => (lr() - 0.5) * 90, scale: () => 0.3 + lr() * 1.6, opacity: 0, stagger: { each: 0.02, from: 'random' }, ease: 'power2.out', duration: 1
+  // logos: tiles settle into an ordered grid in a diagonal wave, one beat per row
+  G.from('#logoGrid .logo-tile', {
+    y: 70, rotateX: -55, opacity: 0, transformOrigin: '50% 100%', ease: 'power3.out', duration: 1,
+    stagger: { each: 0.06, grid: 'auto', from: 'start' },
+    scrollTrigger: { trigger: '#logoGrid', start: 'top 85%', end: 'top 30%', scrub: 0.5, invalidateOnRefresh: true }
   });
+  G.from('#logoGrid img', { scale: 0.6, opacity: 0, ease: 'back.out(1.7)', duration: 1, stagger: { each: 0.06, grid: 'auto', from: 'start' },
+    scrollTrigger: { trigger: '#logoGrid', start: 'top 75%', end: 'top 20%', scrub: 0.5, invalidateOnRefresh: true } });
 
   // product: kit assembles, comes apart in slices, then the mug steams and turns
-  const teeSl = $$('#kitTee .sl'), shSl = $$('#kitShorts .sl');
   const mug = { a: 0 }, mugSpin = $('#mugSpin'), mugF = $('#mugF'), mugB = $('#mugB');
   const turnMug = () => { const c = Math.cos(mug.a * Math.PI / 180); mugSpin.style.transform = `scaleX(${Math.max(Math.abs(c), 0.03).toFixed(3)})`; mugF.style.opacity = c >= 0 ? 1 : 0; mugB.style.opacity = c < 0 ? 1 : 0; };
   G.timeline({ scrollTrigger: { trigger: '#product', start: 'top top', end: '+=340%', pin: true, scrub: 0.7 } })
-    // 1 · assemble: slices fly together into a complete kit
-    .from(teeSl, { xPercent: i => (i % 2 ? 1 : -1) * 120, yPercent: i => (i - 2) * 90, rotation: i => (i % 2 ? 14 : -14), opacity: 0, stagger: 0.03, duration: 0.6, ease: 'power3.out' }, 0)
-    .from(shSl, { xPercent: i => (i % 2 ? -1 : 1) * 160, yPercent: i => (i + 1) * 60, rotation: i => (i % 2 ? -12 : 12), opacity: 0, stagger: 0.04, duration: 0.6, ease: 'power3.out' }, 0.1)
+    // 1 · assemble: the whole jersey drops onto its hanger point, the shorts rise to meet it
+    .from('#kitTee', { yPercent: -45, rotation: -6, opacity: 0, transformPerspective: 1200, rotationY: -35, duration: 0.6, ease: 'power3.out' }, 0)
+    .from('#kitShorts', { yPercent: 50, rotation: 5, opacity: 0, duration: 0.6, ease: 'power3.out' }, 0.1)
     .from('#kitFloor', { scaleX: 0.3, opacity: 0, duration: 0.6 }, 0)
     .to({}, { duration: 0.25 })
     // 2 · disassemble: exploded view with callouts
     .to('#kitTee', { xPercent: -70, yPercent: -4, rotation: -8, duration: 0.7, ease: 'power2.inOut' }, 'ex')
-    .to(teeSl, { yPercent: i => (i - 2) * 16, xPercent: i => (i % 2 ? 4 : -4), rotation: i => (i % 2 ? 1.5 : -1.5), duration: 0.7, ease: 'power2.inOut' }, 'ex')
     .to('#kitShorts', { xPercent: 195, yPercent: -18, rotation: 7, duration: 0.7, ease: 'power2.inOut' }, 'ex')
-    .to(shSl, { yPercent: i => (i - 1) * 18, xPercent: i => (i % 2 ? -5 : 5), duration: 0.7, ease: 'power2.inOut' }, 'ex')
     .to('#kitSide', { opacity: 1, x: 0, duration: 0.4 }, 'ex+=0.4')
     .fromTo('#kitPolo', { opacity: 0, xPercent: 60, rotation: 14 }, { opacity: 1, xPercent: 0, rotation: 4, duration: 0.5, ease: 'power3.out' }, 'ex+=0.35')
     .to('#kitCall g', { opacity: 1, stagger: 0.08, duration: 0.25 }, 'ex+=0.5')
@@ -1551,27 +1758,17 @@ html.present .toast{display:none}
     .to('#kitMug', { y: -10, duration: 0.55, ease: 'sine.inOut', yoyo: true, repeat: 1 }, '<');
   G.set('#kitSide', { x: 60 });
 
-  // flyer: the tri-fold opens
-  // flyer: drifts down like a sheet of paper, lands, then the camera reads it panel by panel
-  G.set('#flyDrop', { transformPerspective: 1100 });
-  G.timeline({ scrollTrigger: { trigger: '#flyer', start: 'top top', end: '+=300%', pin: true, scrub: 0.8, invalidateOnRefresh: true } })
-    .fromTo('#flyDrop', { y: () => -innerHeight * 1.15, x: () => -innerWidth * 0.12, rotation: -18, rotationX: 55 },
-      { y: () => -innerHeight * 0.72, x: () => innerWidth * 0.1, rotation: 14, rotationX: -32, duration: 0.3, ease: 'sine.inOut' })
-    .to('#flyDrop', { y: () => -innerHeight * 0.33, x: () => -innerWidth * 0.07, rotation: -9, rotationX: 30, duration: 0.3, ease: 'sine.inOut' })
-    .to('#flyDrop', { y: 0, x: 0, rotation: 0, rotationX: 0, duration: 0.3, ease: 'power2.out' })
-    .fromTo('#flyShadow', { scaleX: 0.2, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.9, ease: 'power1.in' }, 0)
-    .from('#flyerBox .f1', { rotateY: -24, duration: 0.9 }, 0).from('#flyerBox .f3', { rotateY: 24, duration: 0.9 }, 0)
-    .to({}, { duration: 0.15 })
-    // zoom into the cover, pan across the inside, back to the contact panel, then pull out
-    .to('#flyCam', { scale: 2.3, xPercent: -76, yPercent: 8, duration: 0.45, ease: 'power2.inOut' })
-    .to('#flyShadow', { opacity: 0, duration: 0.2 }, '<')
-    .to({}, { duration: 0.2 })
-    .to('#flyCam', { xPercent: 0, yPercent: 14, duration: 0.45, ease: 'power2.inOut' })
-    .to({}, { duration: 0.2 })
-    .to('#flyCam', { xPercent: 76, yPercent: -10, duration: 0.45, ease: 'power2.inOut' })
-    .to({}, { duration: 0.2 })
-    .to('#flyCam', { scale: 1, xPercent: 0, yPercent: 0, duration: 0.45, ease: 'power2.inOut' })
-    .to('#flyShadow', { opacity: 1, duration: 0.3 }, '<0.15');
+  // flyer: the tri-fold rises off the table, unfolds once, and settles into a standing mockup
+  G.timeline({ scrollTrigger: { trigger: '#flyer', start: 'top top', end: '+=130%', pin: true, scrub: 0.8 } })
+    .fromTo('#flySheet', { rotationX: 58, rotationZ: -5, yPercent: 14, scale: 0.74 }, { rotationX: 6, rotationZ: 0, yPercent: 0, scale: 0.95, duration: 0.55, ease: 'power3.out' }, 0)
+    .fromTo('#flySheet .f1', { rotationY: 86 }, { rotationY: 16, duration: 0.55, ease: 'power3.out' }, 0.08)
+    .fromTo('#flySheet .f3', { rotationY: -86 }, { rotationY: -16, duration: 0.55, ease: 'power3.out' }, 0.08)
+    .fromTo('#flySheet .shade', { '--s': 1 }, { '--s': 0.35, duration: 0.55, ease: 'power2.out' }, 0.08)
+    .fromTo('#flyShadow', { scaleX: 0.35, opacity: 0.2 }, { scaleX: 1, opacity: 1, duration: 0.55, ease: 'power2.out' }, 0)
+    .to('#flySheet', { rotationX: 0, scale: 1, duration: 0.25, ease: 'back.out(1.6)' }, 0.63)
+    .to('#flySheet .f1', { rotationY: 13, duration: 0.25, ease: 'back.out(1.6)' }, 0.63)
+    .to('#flySheet .f3', { rotationY: -13, duration: 0.25, ease: 'back.out(1.6)' }, 0.63)
+    .to({}, { duration: 0.25 });
 
   // billboard: start inside the faces, pull back to the city
   pinTL('#billboard', '+=120%')
@@ -1581,25 +1778,79 @@ html.present .toast{display:none}
   // elevator: ride the doors open
   const caps = [$('#cap1'), $('#cap2'), $('#cap3')], dots = $$('.lift-dots i');
   const setCap = i => { caps.forEach((c, j) => { c.style.opacity = j === i ? 1 : 0; c.style.transform = j === i ? 'none' : 'translateY(8px)'; }); dots.forEach((d, j) => d.classList.toggle('on', j === i)); };
-  G.set(['#lift2', '#lift3'], { opacity: 0 });
-  G.timeline({ scrollTrigger: { trigger: '#lift', start: 'top top', end: '+=200%', pin: true, scrub: 0.4, onUpdate: s => setCap(s.progress < 0.38 ? 0 : s.progress < 0.72 ? 1 : 2) } })
-    .to('.lift', { scale: 1.06, ease: 'none', duration: 1 }, 0)
-    .to('#lift2', { opacity: 1, ease: 'none', duration: 0.12 }, 0.3)
-    .to('#lift3', { opacity: 1, ease: 'none', duration: 0.12 }, 0.64);
+  const floor = $('#liftFloor');
+  G.timeline({ scrollTrigger: { trigger: '#lift', start: 'top top', end: '+=180%', pin: true, scrub: 0.5, onUpdate: s => { setCap(s.progress < 0.22 ? 0 : s.progress < 0.6 ? 1 : 2); floor.textContent = s.progress < 0.12 ? '3' : s.progress < 0.2 ? '2' : 'G'; } } })
+    .fromTo('#liftCam', { scale: 1.08 }, { scale: 1, duration: 0.2, ease: 'power2.out' }, 0)
+    .to('#doorL', { xPercent: -100, duration: 0.42, ease: 'power2.inOut' }, 0.2)
+    .to('#doorR', { xPercent: 100, duration: 0.42, ease: 'power2.inOut' }, 0.2)
+    .fromTo('#liftGlow', { opacity: 0 }, { opacity: 0.9, duration: 0.18, ease: 'power2.out' }, 0.22)
+    .to('#liftGlow', { opacity: 0, duration: 0.25 }, 0.45)
+    .fromTo('#liftIn', { scale: 1.18, filter: 'brightness(1.4)' }, { scale: 1, filter: 'brightness(1)', duration: 0.45, ease: 'power2.out' }, 0.22)
+    .to('#liftCam', { scale: 1.55, duration: 0.33, ease: 'power2.inOut' }, 0.67)
+    .to('.lift-side', { opacity: 0.25, duration: 0.2 }, 0.67);
 
   // social: split open from the centre seam (before | after)
-  G.fromTo('#socialImg', { clipPath: 'inset(0% 50% 0% 50%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: { trigger: '#social', start: 'top 75%', end: 'top 20%', scrub: 0.6 } });
+  G.timeline({ scrollTrigger: { trigger: '#postStage', start: 'top 92%', end: 'top 22%', scrub: 0.6, onLeave: () => burst(7) } })
+    .fromTo('#post', { rotationX: 38, y: 120, scale: 0.86, opacity: 0.2 }, { rotationX: 0, y: 0, scale: 1, opacity: 1, ease: 'power3.out', duration: 0.6 }, 0)
+    .fromTo('#socialImg', { clipPath: 'inset(0% 50% 0% 50%)', scale: 1.08 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, ease: 'power2.inOut', duration: 0.6 }, 0.25)
+    .fromTo('#seam', { opacity: 0 }, { opacity: 1, duration: 0.1 }, 0.25)
+    .to('#seam', { opacity: 0, duration: 0.2 }, 0.75);
 
-  // calendar: flips down like a page
-  scrubFrom('#calTilt', { rotateX: -75, transformOrigin: '50% 0%', y: -40, opacity: 0 }, '#calendar');
+  // calendar: a pad of monthly pages flips on its spiral; each page is tossed to its place
+  // in the scene, then the 3D desk mockup settles in underneath them
+  (function calendarScene() {
+    const space = $('#calSpace'), stageEl = $('#calStage'), photo = $('#calPhoto'), rings = $('#calRings'), monthEl = $('#calMonth');
+    const PW = 167, PH = 234, padS = 2.9, padX = 544.5 - PW * padS / 2, padY = 96;
+    // page corners (TL, TR, BL) measured on the 1089 x 880 mockup
+    const Q = { p1: [[84, 10.7], [242.7, 64], [8.3, 230]], p2: [[140.7, 345.7], [301.7, 301.7], [202.7, 570]], p3: [[10, 649], [172.7, 593], [77.7, 884]], p4: [[870, -16], [1026.7, 43.3], [786, 204]], p5: [[876.7, 593.3], [1030, 661.7], [781.7, 807]] };
+    const months = { p3: 'December', p4: 'November', p2: 'October', p5: 'September', p1: 'August' };
+    const pages = $$('.cal-pg', space).map(el => { const [tl, tr, bl] = Q[el.dataset.k]; return { el, k: el.dataset.k, M: [(tr[0] - tl[0]) / PW, (tr[1] - tl[1]) / PW, (bl[0] - tl[0]) / PH, (bl[1] - tl[1]) / PH, tl[0], tl[1]] }; });
+    const P = [padS, 0, 0, padS, padX, padY];
+    let ringsHtml = ''; for (let i = 0; i < 18; i++) { const x = 16 + i * 26.4; ringsHtml += `<path d="M${x} 34 C ${x - 7} 14, ${x + 9} 0, ${x + 12} 22" fill="none" stroke="#17181A" stroke-width="3.2" stroke-linecap="round"/>`; }
+    rings.innerHTML = ringsHtml;
+    G.set(rings, { x: padX, y: padY - 30, scale: (PW * padS) / 490 });
+    stageEl.classList.add('cal-anim');
+    const lerp = (a, b, t) => a + (b - a) * t, ease = t => 1 - Math.pow(1 - t, 3), clamp = t => Math.max(0, Math.min(1, t));
+    const order = ['p3', 'p4', 'p2', 'p5', 'p1'];
+    // per-page schedule on a 0..1 timeline: lift (flip up over the rings), then toss to the scene
+    const plan = order.map((k, i) => i < 4 ? { k, lift: [0.1 + i * 0.13, 0.1 + i * 0.13 + 0.09], toss: [0.1 + i * 0.13 + 0.07, 0.1 + i * 0.13 + 0.2] } : { k, lift: null, toss: [0.66, 0.8] });
+    function render(t) {
+      pages.forEach(pg => {
+        const pl = plan.find(p => p.k === pg.k), idx = order.indexOf(pg.k);
+        let ang = 0, m = 0;
+        if (pl.lift) { const a = clamp((t - pl.lift[0]) / (pl.lift[1] - pl.lift[0])); ang = -112 * ease(a); }
+        const b = clamp((t - pl.toss[0]) / (pl.toss[1] - pl.toss[0]));
+        if (b > 0) { m = ease(b); ang = lerp(ang, 0, ease(b)); }
+        const X = P.map((v, j) => lerp(v, pg.M[j], m));
+        pg.el.style.transform = `matrix(${X.map(v => v.toFixed(4)).join(',')}) rotateX(${ang.toFixed(2)}deg)`;
+        pg.el.style.zIndex = b > 0 ? 10 + idx : 50 - idx;
+        pg.el.style.opacity = t > 0.9 ? Math.max(0, 1 - (t - 0.9) / 0.05).toFixed(3) : 1;
+      });
+      const intro = clamp(t / 0.08);
+      space.style.opacity = '';
+      photo.style.opacity = clamp((t - 0.7) / 0.14).toFixed(3);
+      photo.style.transform = `scale(${lerp(1.05, 1, ease(clamp((t - 0.7) / 0.2))).toFixed(4)})`;
+      rings.style.opacity = (intro * (1 - clamp((t - 0.62) / 0.08))).toFixed(3);
+      const cur = plan.find(p => !p.lift || t < p.lift[0] + 0.045) || plan[4];
+      monthEl.textContent = t > 0.86 ? 'Desk calendar · 2018' : months[cur.k] + ' 2018';
+    }
+    const st = { t: 0 }; render(0);
+    G.timeline({ scrollTrigger: { trigger: '#calendar', start: 'top top', end: '+=200%', pin: true, scrub: 0.5 } })
+      .fromTo(stageEl, { scale: 0.92, opacity: 0.4 }, { scale: 1, opacity: 1, duration: 0.08, ease: 'power2.out' }, 0)
+      .to(st, { t: 1, duration: 1, ease: 'none', onUpdate: () => render(st.t) }, 0);
+  })();
 
   // office: two pieces slide together
   scrubFrom('#lh', { xPercent: -60, rotate: -7, opacity: 0 }, '#office');
   scrubFrom('#bc', { xPercent: 60, rotate: 7, opacity: 0 }, '#office');
 
   // outdoor: the mosaic assembles
-  const or = rng(3);
-  G.from('#outdoorGrid > div', { x: () => (or() - 0.5) * 400, y: () => (or() - 0.2) * 300, rotate: () => (or() - 0.5) * 30, scale: 0.7, opacity: 0, ease: 'none', stagger: 0.05, scrollTrigger: { trigger: '#outdoor', start: 'top 80%', end: 'top 15%', scrub: 0.6 } });
+  // outdoor: tiles open like shutters in reading order; photos drift inside their frames (parallax)
+  const oTiles = ['.o1', '.o3', '.o2', '.o4', '.o5', '.o6'].map(c => $('#outdoorGrid ' + c));
+  G.timeline({ scrollTrigger: { trigger: '#outdoorGrid', start: 'top 88%', end: 'top 30%', scrub: 0.6 } })
+    .fromTo(oTiles, { clipPath: 'inset(0% 0% 100% 0% round 8px)' }, { clipPath: 'inset(0% 0% 0% 0% round 8px)', ease: 'power3.out', duration: 0.5, stagger: 0.1 }, 0)
+    .from(oTiles.map(t => t.querySelector('img')), { scale: 1.45, ease: 'power3.out', duration: 0.7, stagger: 0.1 }, 0);
+  $$('#outdoorGrid img').forEach((im, i) => G.fromTo(im, { yPercent: -5 }, { yPercent: 5, ease: 'none', scrollTrigger: { trigger: '#outdoorGrid', start: 'top bottom', end: 'bottom top', scrub: true } }));
 
   // event: tiles wipe open, the ballroom settles
   G.from('#eventGrid > div', { clipPath: 'inset(100% 0% 0% 0%)', ease: 'none', stagger: 0.12, scrollTrigger: { trigger: '#event', start: 'top 80%', end: 'top 15%', scrub: 0.6 } });
@@ -1627,7 +1878,11 @@ html.present .toast{display:none}
   // contact: infinity draws itself
   const inf = $('#infPath'), L = inf.getTotalLength();
   G.fromTo(inf, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: '#contact', start: 'top 80%', end: 'top 10%', scrub: 0.6 } });
-  G.from('.contact h2, .contact .where, .line-item', { y: 30, opacity: 0, stagger: 0.1, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: '#contact', start: 'top 55%', toggleActions: 'play none none reverse' } });
+  G.to(lts, { intro: 0, ease: 'power3.out', stagger: 0.035, scrollTrigger: { trigger: '#contact', start: 'top 80%', end: 'top 12%', scrub: 0.6 } });
+  G.from('.contact .where, .line-item', { y: 30, opacity: 0, stagger: 0.1, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: '#contact', start: 'top 55%', toggleActions: 'play none none reverse' } });
+
+  // chapter label: created last so each trigger can use its section's pin spacer (covers the whole pinned run)
+  $$('[data-label]').forEach(s => { const t = s.parentElement.classList.contains('pin-spacer') ? s.parentElement : s; ST.create({ trigger: t, start: 'top 55%', end: 'bottom 55%', onToggle: self => { if (self.isActive) label.textContent = s.dataset.label; } }); });
 
   addEventListener('load', () => ST.refresh());
 })();
