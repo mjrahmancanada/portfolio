@@ -16,8 +16,9 @@
   color-scheme:light;
 }
 *{box-sizing:border-box}
-html{background:var(--paper)}
-body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--f-body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html{background:var(--paper);overflow-x:clip}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+@supports not (overflow:clip){html{overflow-x:hidden}}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
 img{max-width:100%;display:block}
 h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
@@ -61,11 +62,17 @@ button{font:inherit;color:inherit}
 
 /* ---------- 2 profile ---------- */
 .profile{padding-block:clamp(80px,14vh,160px) 60px;overflow:hidden}
-.roles{display:flex;flex-direction:column;gap:0;margin:36px 0 clamp(60px,10vh,120px)}
-.role{font:400 clamp(60px,13vw,200px)/.88 var(--f-display);white-space:nowrap;will-change:transform;letter-spacing:.005em}
-.role.outline{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
-.role.grey{color:var(--rule)}
-.role .dot{color:var(--dahlia)}
+.role-art{width:100%;max-width:1680px;margin:24px auto clamp(50px,9vh,110px);padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.role-art svg{display:block;width:100%;height:auto;overflow:visible}
+.role-art .pl{will-change:transform}
+.art-curve{fill:none;stroke:var(--dahlia);stroke-width:6;stroke-linecap:round}
+.art-handles line{stroke:var(--ink);stroke-width:1.4}
+.art-handles circle{fill:var(--ink)}
+.art-handles rect{fill:var(--paper);stroke:var(--ink);stroke-width:2.5}
+.art-t{font:400 66px var(--f-display);fill:var(--ink);letter-spacing:1px}
+.art-t.big{font-size:104px}
+.art-s{font:600 15px var(--f-mono);fill:var(--graphite);letter-spacing:3px}
+.spark-rays{animation:spin 24s linear infinite}
 .stat{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,64px);align-items:end;border-top:1px solid var(--rule);padding-top:36px}
 .stat .num{font:400 clamp(110px,19vw,280px)/.78 var(--f-display);font-variant-numeric:tabular-nums;color:var(--ink)}
 .stat .num sup{font-size:.42em;color:var(--dahlia);vertical-align:top;margin-left:4px;line-height:1}
@@ -246,6 +253,29 @@ button{font:inherit;color:inherit}
 .toast button:hover{color:var(--paper)}
 .toast button:focus-visible{outline:2px solid var(--dahlia)}
 
+/* presentation mode */
+.present-btn{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:66;width:48px;height:48px;border-radius:50%;border:0;background:var(--ink);color:var(--paper);display:grid;place-items:center;cursor:pointer;box-shadow:0 14px 34px -14px rgba(0,0,0,.55);transition:transform .25s cubic-bezier(.2,.9,.3,1.3),background .2s}
+.present-btn:hover{transform:scale(1.08)}
+.present-btn:focus-visible{outline:2px solid var(--dahlia);outline-offset:3px}
+.present-btn .ic-exit{display:none}
+html.present .present-btn .ic-play{display:none}
+html.present .present-btn .ic-exit{display:block}
+.present-btn .tip{position:absolute;right:58px;top:50%;transform:translate(6px,-50%);white-space:nowrap;background:var(--ink);color:var(--paper);font:500 12px/1 var(--f-body);padding:8px 10px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s}
+.present-btn:hover .tip,.present-btn:focus-visible .tip{opacity:1;transform:translate(0,-50%)}
+.present-btn .tip kbd{font:600 10px/1 var(--f-mono);border:1px solid var(--graphite);border-radius:3px;padding:2px 4px;margin-left:6px}
+.hud{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:65;display:flex;align-items:center;gap:6px;background:var(--ink);color:var(--paper);border-radius:999px;padding:5px;font:500 12px/1 var(--f-body);transform:translate(-50%,160%);visibility:hidden;transition:transform .5s cubic-bezier(.2,.9,.2,1.1),visibility 0s .5s;max-width:calc(100vw - 100px)}
+html.present .hud{transform:translate(-50%,0);visibility:visible;transition:transform .5s cubic-bezier(.2,.9,.2,1.1)}
+.hud button{all:unset;cursor:pointer;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;font-size:16px}
+.hud button:hover{background:#2c2e33}
+.hud button:focus-visible{outline:2px solid var(--dahlia)}
+.hud .count{font:600 11px/1 var(--f-mono);font-variant-numeric:tabular-nums;padding:0 6px;color:var(--bird)}
+.hud .lbl{padding-right:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.hud .exit{width:auto;padding:0 10px;font:600 10px/1 var(--f-mono);letter-spacing:.06em;border:1px solid #3a3d44;border-radius:999px;height:24px}
+html.present{scrollbar-width:none}
+html.present::-webkit-scrollbar{display:none}
+html.present .toast{display:none}
+@media (max-width:640px){.toast{bottom:calc(80px + env(safe-area-inset-bottom,0px))}.hud .lbl{display:none}}
+
 /* ---------- 4 range ---------- */
 .range{position:relative;min-height:100vh;display:flex;align-items:center;padding-block:80px;overflow:hidden}
 .range-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(20px,4vw,60px);align-items:center}
@@ -253,6 +283,60 @@ button{font:inherit;color:inherit}
 .areas{list-style:none;margin:0;padding:0;columns:2;column-gap:28px}
 .areas li{break-inside:avoid;padding:7px 0;border-bottom:1px solid var(--mist);font-size:clamp(15px,1.3vw,17px)}
 .pencil{--r:170%;-webkit-mask-image:radial-gradient(circle at 4% 97%,#000 var(--r),transparent calc(var(--r) + 14%));mask-image:radial-gradient(circle at 4% 97%,#000 var(--r),transparent calc(var(--r) + 14%))}
+
+
+/* range schematics */
+.area{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:10px;width:100%;transition:color .2s,transform .3s}
+.area::before{content:"";width:6px;height:6px;border-radius:1px;background:var(--rule);flex:none;transition:background .2s,transform .3s}
+.area:hover,.area:focus-visible,.area.on{color:var(--dahlia);transform:translateX(4px)}
+.area:hover::before,.area.on::before,.area:focus-visible::before{background:var(--dahlia);transform:rotate(45deg) scale(1.3)}
+.area:focus-visible{outline:none}
+.rstage{position:relative;max-width:100%}
+.rstage .pencil{transition:opacity .45s,filter .45s}
+.rstage:not([data-k=""]) .pencil{opacity:.13;filter:grayscale(1) blur(.5px)}
+.rfx{position:absolute;inset:0}
+.rfx svg{width:100%;height:100%;overflow:visible;display:block}
+.rfx .k{fill:none;stroke:var(--ink);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.rfx .k.a{stroke:var(--dahlia)}
+.rfx .k.thin{stroke-width:.9;opacity:.55}
+.rfx .k.dash{stroke-dasharray:5 6}
+.rfx .k.paper{fill:var(--paper)}
+.rfx .blk{fill:var(--ink)}
+.rfx .d{stroke-dasharray:1;stroke-dashoffset:1;animation:rdraw 1s cubic-bezier(.6,0,.2,1) forwards;animation-delay:calc(var(--i,0) * 90ms)}
+@keyframes rdraw{to{stroke-dashoffset:0}}
+.rfx .fade{opacity:0;animation:rfade .5s ease forwards;animation-delay:calc(var(--i,0) * 90ms + 200ms)}
+@keyframes rfade{to{opacity:1}}
+.rfx .lbl,.rfx text{font:600 11px var(--f-mono);fill:var(--graphite);letter-spacing:.06em}
+.rfx .pop{transform-box:fill-box;transform-origin:center;transform:scale(0);animation:rpop .45s cubic-bezier(.2,.9,.3,1.5) forwards;animation-delay:calc(var(--i,0) * 14ms + 300ms)}
+@keyframes rpop{to{transform:scale(1)}}
+.rfx .mark{fill:var(--dahlia);opacity:0;animation:rmark .7s ease forwards 1.3s}
+@keyframes rmark{to{opacity:.88}}
+.rfx .foldL,.rfx .foldR{transform-box:fill-box;animation:fold 2.4s ease-in-out 1.2s infinite alternate}
+.rfx .foldL{transform-origin:right center}.rfx .foldR{transform-origin:left center}
+@keyframes fold{to{transform:scaleX(.55)}}
+.rfx .cone{fill:var(--dahlia);opacity:.1;animation:cone 1.8s ease-in-out infinite alternate}
+.rfx .cone.c2{animation-delay:-.9s}
+@keyframes cone{to{opacity:.24}}
+.rfx .heart{fill:var(--dahlia);opacity:0;animation:heart 2.4s ease-out infinite}
+@keyframes heart{0%{opacity:0;transform:translateY(8px) scale(.6)}20%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-34px) scale(1.1)}}
+.rfx .strip{animation:strip 1.6s linear infinite}
+@keyframes strip{to{transform:translateX(-136px)}}
+.rfx .rec{fill:var(--dahlia);animation:blink 1s steps(2,start) infinite}
+@keyframes blink{to{opacity:.15}}
+.rfx .colg{fill:var(--dahlia);fill-opacity:.06;stroke:var(--dahlia);stroke-opacity:.35;stroke-width:.8}
+.rfx .cursor{animation:cur 3s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes cur{0%{transform:translate(500px,560px)}55%,100%{transform:translate(165px,340px)}}
+.rfx .ripple{fill:none;stroke:var(--dahlia);stroke-width:2;transform-box:fill-box;transform-origin:center;opacity:0;animation:rip 3s ease-out infinite}
+@keyframes rip{0%,55%{opacity:0;transform:scale(.2)}60%{opacity:1}85%,100%{opacity:0;transform:scale(1.6)}}
+.rfx .focus{transform-box:fill-box;transform-origin:center;animation:focus 3s cubic-bezier(.3,0,.2,1) infinite}
+.rfx .fbox{fill:none;stroke:var(--ink);stroke-width:1.6;animation:fcol 3s steps(1) infinite}
+@keyframes focus{0%{transform:scale(2.2)}45%,100%{transform:scale(1)}}
+@keyframes fcol{0%{stroke:var(--ink)}45%,100%{stroke:var(--dahlia)}}
+.rfx .iris{animation:spin 6s linear infinite}
+.rfx .flash{fill:#fff;opacity:0;animation:flash 3s linear infinite}
+@keyframes flash{0%,88%{opacity:0}91%{opacity:.85}100%{opacity:0}}
+.rcap{position:absolute;left:0;bottom:-6px;font:600 11px/1.3 var(--f-mono);letter-spacing:.06em;color:var(--graphite)}
+.rcap b{color:var(--dahlia);font-weight:600}
 
 /* ---------- 5 experience ---------- */
 .exp{position:relative;padding-block:clamp(80px,14vh,150px) clamp(120px,20vh,220px);overflow:hidden}
@@ -346,6 +430,37 @@ button{font:inherit;color:inherit}
 .render3d{display:grid;grid-template-columns:364fr 591fr;gap:0;max-width:960px;align-items:stretch}
 .render3d img{width:100%;height:100%;object-fit:cover}
 
+/* product kit scene */
+.kit{position:relative;width:100%;max-width:1100px;aspect-ratio:16/9}
+.kit-tee,.kit-shorts{position:absolute}
+.kit-tee{left:38.44%;top:4%;width:23.1%;height:60%;z-index:3}
+.kit-shorts{left:44.6%;top:58.5%;width:10.8%;height:29.5%;z-index:2}
+.kit .sl{position:absolute;left:0;width:100%;height:20%;background-repeat:no-repeat;background-size:100% 500%;will-change:transform}
+.kit-tee .sl{background-image:url(img/tee-cut.webp)}
+.kit-shorts .sl{background-image:url(img/shorts-cut.webp)}
+.kit-side{position:absolute;left:83%;top:46%;height:31%;width:auto;opacity:0;z-index:2}
+.kit-polo{position:absolute;left:68%;top:2%;width:17%;opacity:0;z-index:2}
+.kit-floor{position:absolute;left:30%;right:30%;bottom:3%;height:7%;border-radius:50%;background:radial-gradient(ellipse at center,rgba(23,24,26,.22),rgba(23,24,26,0) 70%)}
+.kit-call{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:4;overflow:visible}
+.kit-call g{opacity:0}
+.kit-call line{stroke:var(--dahlia);stroke-width:1.6}
+.kit-call circle{fill:var(--dahlia)}
+.kit-call text{font:600 20px var(--f-mono);fill:var(--ink);letter-spacing:2px}
+.kit-mug{position:absolute;left:35%;top:30%;width:30%;opacity:0;z-index:5}
+.mug-spin{position:relative;aspect-ratio:240/167;will-change:transform}
+.mug-spin img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#mugB{opacity:0}
+.mug-cap{text-align:center;margin-top:14px;font:600 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--graphite)}
+.mug-box{position:relative}
+.steam{position:absolute;left:6%;bottom:86%;width:52%;overflow:visible}
+.steam path{fill:none;stroke:#9EA2A8;stroke-width:11;stroke-linecap:round;opacity:0;filter:blur(4px);stroke-dasharray:110 400;animation:steam 3.3s ease-in-out infinite}
+@keyframes steam{0%{stroke-dashoffset:110;opacity:0}30%{opacity:.7}100%{stroke-dashoffset:-320;opacity:0}}
+
+/* falling flyer */
+.fly-drop{position:relative;max-width:800px;margin:0 auto;will-change:transform}
+.fly-cam{will-change:transform}
+.fly-shadow{width:70%;height:26px;margin:-6px auto 0;border-radius:50%;background:radial-gradient(ellipse at center,rgba(23,24,26,.28),rgba(23,24,26,0) 70%);transform-origin:center}
+
 /* ---------- contact ---------- */
 .contact{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-block:90px 40px;text-align:center}
 .inf{width:min(320px,60vw);margin:0 auto 40px}
@@ -378,8 +493,7 @@ button{font:inherit;color:inherit}
   .layers,.graph{transform:scale(.8);transform-origin:top right}
 }
 @media (max-width:520px){
-  .product{grid-template-columns:1fr 1fr}
-  .product .tee{grid-column:1/3;grid-row:1}.product .polo{grid-column:1;grid-row:2}.product .shorts{grid-column:2;grid-row:2}.product .mug{display:none}
+  .kit-call text{font-size:28px}
   .office,.pack,.brochure,.render3d{grid-template-columns:minmax(0,1fr)}
   .timeline{height:34%}
 }
@@ -419,11 +533,87 @@ button{font:inherit;color:inherit}
 <!-- 2 · PROFILE -->
 <section class="profile" id="profile" data-label="Profile">
   <div class="wrap"><div class="eyebrow">Performance profile</div></div>
-  <div class="roles" aria-label="Graphic Designer, Brand Development, Marketing Strategy, Creative Execution">
-    <div class="role" data-dir="1">Graphic Designer<span class="dot">.</span></div>
-    <div class="role outline" data-dir="-1">Brand Development</div>
-    <div class="role grey" data-dir="1">Marketing Strategy</div>
-    <div class="role" data-dir="-1">Creative Execution<span class="dot">.</span></div>
+  <div class="role-art" id="roleArt">
+    <svg viewBox="0 0 1600 920" role="img" aria-labelledby="artTitle">
+      <title id="artTitle">Graphic Designer, Brand Development, Marketing Strategy, Creative Execution</title>
+      <defs>
+        <linearGradient id="nibG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3B3E45"/><stop offset=".42" stop-color="#17181A"/><stop offset=".62" stop-color="#5D616A"/><stop offset=".78" stop-color="#202226"/><stop offset="1" stop-color="#3B3E45"/></linearGradient>
+        <linearGradient id="barG" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#17181A"/><stop offset="1" stop-color="#5D616A"/></linearGradient>
+        <radialGradient id="sparkG"><stop offset="0" stop-color="#C2185B" stop-opacity=".35"/><stop offset="1" stop-color="#C2185B" stop-opacity="0"/></radialGradient>
+      </defs>
+
+      <g class="pl" data-depth="0.15">
+        <g class="guides" fill="none" stroke="#8B8E93" stroke-width="1" opacity=".45">
+          <circle cx="700" cy="650" r="250" stroke-dasharray="4 8"/>
+          <line x1="430" y1="1035" x2="1180" y2="-35" stroke-dasharray="2 10"/>
+          <line x1="0" y1="650" x2="1600" y2="650" stroke-dasharray="2 10"/>
+          <circle cx="1320" cy="250" r="160" stroke-dasharray="2 8"/>
+        </g>
+      </g>
+
+      <g class="pl" data-depth="0.35">
+        <path id="artCurve" class="art-curve" pathLength="1" d="M700 650C560 780 300 720 250 560S330 290 170 240"/>
+        <g class="art-handles mod">
+          <line x1="700" y1="650" x2="560" y2="780"/><line x1="300" y1="720" x2="200" y2="400"/><line x1="170" y1="240" x2="330" y2="290"/>
+          <circle cx="560" cy="780" r="6"/><circle cx="300" cy="720" r="6"/><circle cx="200" cy="400" r="6"/><circle cx="330" cy="290" r="6"/>
+          <rect x="243" y="553" width="14" height="14"/><rect x="163" y="233" width="14" height="14"/>
+        </g>
+      </g>
+
+      <g class="pl" data-depth="0.6">
+        <g transform="translate(700 650) rotate(35)">
+          <g id="artNib">
+            <rect x="-165" y="-545" width="330" height="76" rx="10" fill="#17181A"/>
+            <rect x="-165" y="-545" width="330" height="14" rx="7" fill="#fff" opacity=".14"/>
+            <path d="M0 0C-46-110-150-250-150-400V-470H150V-400C150-250 46-110 0 0Z" fill="url(#nibG)"/>
+            <path d="M0 0C-46-110-150-250-150-400V-470H-62L-34-300Z" fill="#fff" opacity=".07"/>
+            <path d="M-108-422Q0-382 108-422M-78-360Q0-332 78-360" fill="none" stroke="#8B8E93" stroke-width="2.4"/>
+            <line x1="0" y1="-8" x2="0" y2="-286" stroke="#C2185B" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="0" cy="-306" r="20" fill="#FAFAF8" stroke="#C2185B" stroke-width="3"/>
+            <circle cx="0" cy="12" r="11" fill="#C2185B"/>
+          </g>
+        </g>
+      </g>
+
+      <g class="pl" data-depth="0.9">
+        <g class="mod" id="modBrand">
+          <line x1="1170" y1="250" x2="1470" y2="250" stroke="#8B8E93" stroke-width="1"/><line x1="1320" y1="100" x2="1320" y2="400" stroke="#8B8E93" stroke-width="1"/>
+          <circle cx="1320" cy="250" r="120" fill="none" stroke="#17181A" stroke-width="2.5"/>
+          <circle cx="1320" cy="250" r="88" fill="none" stroke="#8B8E93" stroke-width="1.4" stroke-dasharray="6 6"/>
+          <circle cx="1320" cy="250" r="56" fill="none" stroke="#17181A" stroke-width="2.5"/>
+          <circle cx="1320" cy="250" r="26" fill="#C2185B"/>
+          <g><circle cx="1440" cy="250" r="8" fill="#C2185B"/><animateTransform attributeName="transform" type="rotate" from="0 1320 250" to="360 1320 250" dur="9s" repeatCount="indefinite"/></g>
+        </g>
+      </g>
+
+      <g class="pl" data-depth="0.55">
+        <g class="mod" id="modMkt">
+          <line x1="1100" y1="792" x2="1490" y2="792" stroke="#17181A" stroke-width="2"/>
+          <rect x="1130" y="722" width="46" height="70" fill="url(#barG)"/><rect x="1200" y="672" width="46" height="120" fill="url(#barG)"/>
+          <rect x="1270" y="692" width="46" height="100" fill="url(#barG)"/><rect x="1340" y="622" width="46" height="170" fill="url(#barG)"/>
+          <rect x="1410" y="552" width="46" height="240" fill="#C2185B"/>
+          <path d="M1100 690C1220 640 1320 560 1450 512" fill="none" stroke="#17181A" stroke-width="3" stroke-linecap="round"/>
+          <path d="M1428 500L1470 504 1446 538Z" fill="#17181A"/>
+        </g>
+      </g>
+
+      <g class="pl" data-depth="0.75">
+        <g class="mod" id="modSpark">
+          <circle cx="430" cy="800" r="120" fill="url(#sparkG)"/>
+          <g transform="translate(430 800)"><g class="spark-rays" stroke="#17181A" stroke-width="5" stroke-linecap="round"><line x1="0" y1="-26" x2="0" y2="-90" transform="rotate(0)"/><line x1="0" y1="-26" x2="0" y2="-54" transform="rotate(30)"/><line x1="0" y1="-26" x2="0" y2="-90" transform="rotate(60)"/><line x1="0" y1="-26" x2="0" y2="-54" transform="rotate(90)"/><line x1="0" y1="-26" x2="0" y2="-90" transform="rotate(120)"/><line x1="0" y1="-26" x2="0" y2="-54" transform="rotate(150)"/><line x1="0" y1="-26" x2="0" y2="-90" transform="rotate(180)"/><line x1="0" y1="-26" x2="0" y2="-54" transform="rotate(210)"/><line x1="0" y1="-26" x2="0" y2="-90" transform="rotate(240)"/><line x1="0" y1="-26" x2="0" y2="-54" transform="rotate(270)"/><line x1="0" y1="-26" x2="0" y2="-90" transform="rotate(300)"/><line x1="0" y1="-26" x2="0" y2="-54" transform="rotate(330)"/></g></g>
+          <circle cx="430" cy="800" r="16" fill="#C2185B"/>
+          <circle cx="560" cy="740" r="5" fill="#C2185B"/><circle cx="330" cy="700" r="4" fill="#17181A"/><circle cx="545" cy="880" r="6" fill="#17181A"/><circle cx="300" cy="880" r="5" fill="#C2185B"/>
+        </g>
+      </g>
+
+      <g class="art-l">
+        <g transform="translate(96 92)"><rect width="22" height="22" fill="#00AEEF"/><rect x="28" width="22" height="22" fill="#EC008C"/><rect x="56" width="22" height="22" fill="#FFF200"/><rect x="84" width="22" height="22" fill="#17181A"/></g>
+        <text class="art-t big" x="92" y="205">Graphic Designer</text><text class="art-s" x="96" y="236">LAYOUT · TYPE · IMAGE</text>
+      </g>
+      <g class="art-l"><text class="art-t" x="1320" y="460" text-anchor="middle">Brand Development</text><text class="art-s" x="1320" y="490" text-anchor="middle">IDENTITY · VOICE · SYSTEMS</text></g>
+      <g class="art-l"><text class="art-t" x="1318" y="868" text-anchor="middle">Marketing Strategy</text><text class="art-s" x="1318" y="898" text-anchor="middle">MARKET · PLAN · CAMPAIGNS</text></g>
+      <g class="art-l"><text class="art-t" x="566" y="836">Creative Execution</text><text class="art-s" x="570" y="866">PRINT · EVENTS · PRODUCTION</text></g>
+    </svg>
   </div>
   <div class="wrap">
     <div class="stat">
@@ -585,13 +775,130 @@ button{font:inherit;color:inherit}
     <div>
       <div class="eyebrow">Areas of work</div>
       <h2>A wide range of hands-on experience</h2>
-      <ul class="areas" id="areas">
-        <li>Real-estate marketing strategy</li><li>Project logo design</li><li>Brochure design</li><li>Event management</li>
-        <li>Flyer design</li><li>Social media content design</li><li>Proposal design</li><li>Video production</li>
-        <li>Web banner &amp; interface design</li><li>Small &amp; large format design</li><li>Magazine &amp; print ad design</li><li>Photography &amp; cinematography</li>
+      <ul class="areas" id="areas" aria-label="Areas of work. Hover or select one to see its schematic.">
+        <li><button class="area" data-k="re" data-n="01">Real-estate marketing strategy</button></li>
+        <li><button class="area" data-k="logo" data-n="02">Project logo design</button></li>
+        <li><button class="area" data-k="bro" data-n="03">Brochure design</button></li>
+        <li><button class="area" data-k="ev" data-n="04">Event management</button></li>
+        <li><button class="area" data-k="fly" data-n="05">Flyer design</button></li>
+        <li><button class="area" data-k="soc" data-n="06">Social media content design</button></li>
+        <li><button class="area" data-k="pro" data-n="07">Proposal design</button></li>
+        <li><button class="area" data-k="vid" data-n="08">Video production</button></li>
+        <li><button class="area" data-k="web" data-n="09">Web banner &amp; interface design</button></li>
+        <li><button class="area" data-k="fmt" data-n="10">Small &amp; large format design</button></li>
+        <li><button class="area" data-k="mag" data-n="11">Magazine &amp; print ad design</button></li>
+        <li><button class="area" data-k="pho" data-n="12">Photography &amp; cinematography</button></li>
       </ul>
     </div>
-    <img class="pencil" id="pencil" src="img/pencil.webp" alt="Pencil sketch of ideas streaming from a pencil tip: a bird, a brain, a butterfly, a light bulb" width="637" height="630">
+    <div class="rstage" id="rstage" data-k="">
+      <img class="pencil" id="pencil" src="img/pencil.webp" alt="Pencil sketch of ideas streaming from a pencil tip: a bird, a brain, a butterfly, a light bulb" width="637" height="630">
+      <div class="rfx" data-k="re" hidden><svg viewBox="0 0 637 630">
+ <line class="k d" pathLength="1" x1="60" y1="560" x2="580" y2="560"/>
+ <rect class="k d" pathLength="1" x="90" y="400" width="70" height="160" style="--i:1"/><rect class="k d" pathLength="1" x="170" y="340" width="90" height="220" style="--i:2"/>
+ <rect class="k d" pathLength="1" x="270" y="430" width="60" height="130" style="--i:3"/><rect class="k a d" pathLength="1" x="340" y="300" width="100" height="260" style="--i:4"/>
+ <rect class="k d" pathLength="1" x="450" y="370" width="80" height="190" style="--i:5"/>
+ <path class="k thin" d="M185 370h60M185 400h60M185 430h60M185 460h60M355 330h70M355 360h70M355 390h70M355 420h70M355 450h70M105 430h40M105 460h40M465 400h50M465 430h50"/>
+ <path class="k a d" pathLength="1" d="M140 60H500L360 190V245H280V190Z" style="--i:6"/>
+ <path class="k thin" d="M188 104H452M237 148H403"/>
+ <g class="lbl fade" style="--i:9"><text x="512" y="66">AWARENESS</text><text x="465" y="110">INTEREST</text><text x="415" y="154">VISIT</text><text x="372" y="224">SOLD</text></g>
+ <g fill="#C2185B">
+  <circle r="5"><animateMotion dur="2.4s" repeatCount="indefinite" path="M180 40Q320 130 320 240T390 300"/></circle>
+  <circle r="5"><animateMotion dur="2.4s" begin="-.6s" repeatCount="indefinite" path="M300 40Q320 130 320 240T390 300"/></circle>
+  <circle r="5"><animateMotion dur="2.4s" begin="-1.2s" repeatCount="indefinite" path="M420 40Q320 130 320 240T390 300"/></circle>
+  <circle r="5"><animateMotion dur="2.4s" begin="-1.8s" repeatCount="indefinite" path="M470 40Q320 130 320 240T390 300"/></circle>
+ </g></svg></div>
+      <div class="rfx" data-k="logo" hidden><svg viewBox="0 0 637 630">
+ <rect class="k thin d" pathLength="1" x="150" y="170" width="300" height="300"/>
+ <line class="k thin d" pathLength="1" x1="110" y1="320" x2="530" y2="320" style="--i:1"/><line class="k thin d" pathLength="1" x1="300" y1="130" x2="300" y2="510" style="--i:1"/>
+ <line class="k thin d" pathLength="1" x1="150" y1="170" x2="450" y2="470" style="--i:2"/><line class="k thin d" pathLength="1" x1="450" y1="170" x2="150" y2="470" style="--i:2"/>
+ <circle class="k d" pathLength="1" cx="300" cy="320" r="150" style="--i:3"/><circle class="k d" pathLength="1" cx="357" cy="320" r="93" style="--i:5"/>
+ <circle class="k d" pathLength="1" cx="393" cy="320" r="57" style="--i:7"/><circle class="k d" pathLength="1" cx="415" cy="320" r="35" style="--i:9"/>
+ <path class="mark" fill-rule="evenodd" d="M150 320a150 150 0 1 0 300 0a150 150 0 1 0 -300 0ZM264 320a93 93 0 1 0 186 0a93 93 0 1 0 -186 0Z"/>
+ <text class="lbl fade" x="318" y="548" text-anchor="middle" style="--i:12">Ø 150 · 93 · 57 · 35   ≈ 1 : 1.618</text></svg></div>
+      <div class="rfx" data-k="bro" hidden><svg viewBox="0 0 637 630">
+ <g class="foldL"><polygon class="k d" pathLength="1" points="110,170 250,210 250,480 110,440"/><path class="k thin" d="M130 230l90 26M130 250l70 20M130 290l100 29M130 310l90 26"/></g>
+ <g><polygon class="k d" pathLength="1" points="250,210 390,170 390,440 250,480" style="--i:2"/><path class="k thin" d="M270 250l90-26M270 280l100-29M270 300l70-20"/><rect class="k a d" pathLength="1" x="275" y="330" width="90" height="70" transform="skewY(-16)" transform-origin="275 330" style="--i:5"/></g>
+ <g class="foldR"><polygon class="k d" pathLength="1" points="390,170 530,210 530,480 390,440" style="--i:4"/><path class="k thin" d="M410 230l90 26M410 250l60 17M410 290l100 29"/></g>
+ <line class="k a dash fade" x1="250" y1="200" x2="250" y2="495" style="--i:7"/><line class="k a dash fade" x1="390" y1="160" x2="390" y2="455" style="--i:7"/>
+ <g class="lbl fade" style="--i:8"><text x="172" y="160">A</text><text x="316" y="155">B</text><text x="456" y="160">C</text><text x="318" y="545" text-anchor="middle">DL tri-fold · 3 × 99 × 210 mm</text></g></svg></div>
+      <div class="rfx" data-k="ev" hidden><svg viewBox="0 0 637 630">
+ <path class="cone" d="M205 140L130 330H280Z"/><path class="cone c2" d="M435 140L360 330H510Z"/>
+ <rect class="k a d" pathLength="1" x="170" y="80" width="300" height="60"/>
+ <text class="lbl fade" x="320" y="116" text-anchor="middle" style="--i:3">STAGE</text>
+ <g id="seats"></g>
+ <rect class="k d" pathLength="1" x="270" y="500" width="100" height="40" style="--i:8"/><text class="lbl fade" x="320" y="525" text-anchor="middle" style="--i:9">FOH</text>
+ <path class="k d" pathLength="1" d="M120 595H240M400 595H520" style="--i:9"/><path class="k a d" pathLength="1" d="M320 615V560M308 572L320 560L332 572" style="--i:10"/>
+ <text class="lbl fade" x="345" y="610" style="--i:11">ENTRY</text></svg></div>
+      <div class="rfx" data-k="fly" hidden><svg viewBox="0 0 637 630">
+ <rect class="k thin dash fade" x="196" y="76" width="246" height="342"/>
+ <rect class="k d" pathLength="1" x="206" y="86" width="226" height="322" style="--i:1"/>
+ <rect class="blk fade" x="226" y="108" width="150" height="22" style="--i:4"/>
+ <rect class="k d" pathLength="1" x="226" y="146" width="186" height="120" style="--i:5"/><path class="k thin" d="M226 146L412 266M412 146L226 266"/>
+ <path class="k thin" d="M226 290H412M226 306H380M226 322H400"/>
+ <rect class="k a d" pathLength="1" x="226" y="356" width="96" height="28" rx="14" style="--i:8"/>
+ <text class="lbl fade" x="206" y="440" style="--i:9">A5 · 148 × 210 mm · 3 mm bleed</text>
+ <path class="k thin dash" d="M40 560C160 640 130 470 260 520S520 600 600 470"/>
+ <path fill="#17181A" d="M0 0L-24-9-17 0-24 9Z"><animateMotion dur="3s" repeatCount="indefinite" rotate="auto" path="M40 560C160 640 130 470 260 520S520 600 600 470"/></path></svg></div>
+      <div class="rfx" data-k="soc" hidden><svg viewBox="0 0 637 630"><line class="k thin d" pathLength="1" x1="318" y1="315" x2="518" y2="315" style="--i:0"/><line class="k thin d" pathLength="1" x1="318" y1="315" x2="459" y2="456" style="--i:1"/><line class="k thin d" pathLength="1" x1="318" y1="315" x2="318" y2="515" style="--i:2"/><line class="k thin d" pathLength="1" x1="318" y1="315" x2="177" y2="456" style="--i:3"/><line class="k thin d" pathLength="1" x1="318" y1="315" x2="118" y2="315" style="--i:4"/><line class="k thin d" pathLength="1" x1="318" y1="315" x2="177" y2="174" style="--i:5"/><line class="k thin d" pathLength="1" x1="318" y1="315" x2="318" y2="115" style="--i:6"/><line class="k thin d" pathLength="1" x1="318" y1="315" x2="459" y2="174" style="--i:7"/><line class="k thin dash fade" x1="518" y1="315" x2="459" y2="456" style="--i:8"/><line class="k thin dash fade" x1="459" y1="456" x2="318" y2="515" style="--i:9"/><line class="k thin dash fade" x1="318" y1="515" x2="177" y2="456" style="--i:10"/><line class="k thin dash fade" x1="177" y1="456" x2="118" y2="315" style="--i:11"/><line class="k thin dash fade" x1="118" y1="315" x2="177" y2="174" style="--i:12"/><line class="k thin dash fade" x1="177" y1="174" x2="318" y2="115" style="--i:13"/><line class="k thin dash fade" x1="318" y1="115" x2="459" y2="174" style="--i:14"/><line class="k thin dash fade" x1="459" y1="174" x2="518" y2="315" style="--i:15"/><circle class="k d" pathLength="1" cx="518" cy="315" r="18" style="--i:3"/><circle class="k d" pathLength="1" cx="459" cy="456" r="18" style="--i:4"/><circle class="k d" pathLength="1" cx="318" cy="515" r="18" style="--i:5"/><circle class="k d" pathLength="1" cx="177" cy="456" r="18" style="--i:6"/><circle class="k d" pathLength="1" cx="118" cy="315" r="18" style="--i:7"/><circle class="k d" pathLength="1" cx="177" cy="174" r="18" style="--i:8"/><circle class="k d" pathLength="1" cx="318" cy="115" r="18" style="--i:9"/><circle class="k d" pathLength="1" cx="459" cy="174" r="18" style="--i:10"/><g fill="#C2185B"><circle r="4.5"><animateMotion dur="1.4s" begin="-0.00s" repeatCount="indefinite" path="M318 315L518 315"/></circle><circle r="4.5"><animateMotion dur="1.4s" begin="-0.35s" repeatCount="indefinite" path="M318 315L459 456"/></circle><circle r="4.5"><animateMotion dur="1.4s" begin="-0.70s" repeatCount="indefinite" path="M318 315L318 515"/></circle><circle r="4.5"><animateMotion dur="1.4s" begin="-1.05s" repeatCount="indefinite" path="M318 315L177 456"/></circle><circle r="4.5"><animateMotion dur="1.4s" begin="-1.40s" repeatCount="indefinite" path="M318 315L118 315"/></circle><circle r="4.5"><animateMotion dur="1.4s" begin="-1.75s" repeatCount="indefinite" path="M318 315L177 174"/></circle><circle r="4.5"><animateMotion dur="1.4s" begin="-2.10s" repeatCount="indefinite" path="M318 315L318 115"/></circle><circle r="4.5"><animateMotion dur="1.4s" begin="-2.45s" repeatCount="indefinite" path="M318 315L459 174"/></circle></g><g transform="translate(538 293)"><path class="heart" style="animation-delay:0s" d="M0 6C-12-6-9-18 0-9 9-18 12-6 0 6Z"/></g><g transform="translate(197 434)"><path class="heart" style="animation-delay:0.6s" d="M0 6C-12-6-9-18 0-9 9-18 12-6 0 6Z"/></g><g transform="translate(338 93)"><path class="heart" style="animation-delay:1.2s" d="M0 6C-12-6-9-18 0-9 9-18 12-6 0 6Z"/></g><g transform="translate(479 434)"><path class="heart" style="animation-delay:1.8s" d="M0 6C-12-6-9-18 0-9 9-18 12-6 0 6Z"/></g>
+ <circle cx="318" cy="315" r="38" fill="#C2185B"/><text x="318" y="319" text-anchor="middle" class="lbl" style="fill:#fff">BRAND</text></svg></div>
+      <div class="rfx" data-k="pro" hidden><svg viewBox="0 0 637 630">
+ <rect class="k thin d" pathLength="1" x="230" y="70" width="250" height="360"/><rect class="k thin d" pathLength="1" x="220" y="80" width="250" height="360" style="--i:1"/>
+ <rect class="k d paper" pathLength="1" x="210" y="90" width="250" height="360" style="--i:2"/>
+ <rect class="blk fade" x="235" y="118" width="150" height="16" style="--i:3"/><g class="fade" style="--i:4"><rect x="460" y="130" width="92" height="26" rx="4" class="k"/><text class="lbl" x="470" y="147">PROBLEM</text></g><g class="fade" style="--i:5"><rect x="460" y="170" width="92" height="26" rx="4" class="k"/><text class="lbl" x="470" y="187">APPROACH</text></g><g class="fade" style="--i:6"><rect x="460" y="210" width="92" height="26" rx="4" class="k"/><text class="lbl" x="470" y="227">BUDGET</text></g><g class="fade" style="--i:7"><rect x="460" y="250" width="92" height="26" rx="4" class="k"/><text class="lbl" x="470" y="267">SIGN-OFF</text></g>
+ <path class="k thin" d="M240 160H430M240 175H400M240 190H420"/>
+ <path class="k d" pathLength="1" d="M240 230V330H430" style="--i:5"/>
+ <polyline class="k a d" pathLength="1" points="240,320 280,300 320,306 360,272 400,252 430,232" style="--i:7"/>
+ <line class="k thin" x1="240" y1="420" x2="430" y2="420"/><text class="lbl" x="228" y="418">×</text>
+ <path class="k a d sig" pathLength="1" d="M250 410c10-25 20-25 15 0s15-30 25-5 10 10 20-10 20-5 30 5 20-10 40-5" style="--i:10"/></svg></div>
+      <div class="rfx" data-k="vid" hidden><svg viewBox="0 0 637 630">
+ <defs><clipPath id="stripClip"><rect x="40" y="230" width="557" height="170"/></clipPath></defs>
+ <rect class="k d" pathLength="1" x="40" y="230" width="557" height="170"/>
+ <g clip-path="url(#stripClip)"><g class="strip" id="strip"></g></g>
+ <polygon points="298,288 298,342 344,315" fill="#C2185B"/>
+ <circle class="rec" cx="66" cy="186" r="7"/><text class="lbl" x="82" y="190">REC 00:00:12:08</text>
+ <text class="lbl fade" x="597" y="430" text-anchor="end" style="--i:4">24 fps · 16:9</text></svg></div>
+      <div class="rfx" data-k="web" hidden><svg viewBox="0 0 637 630">
+ <rect class="k d" pathLength="1" x="90" y="90" width="457" height="400" rx="8"/>
+ <line class="k thin" x1="90" y1="120" x2="547" y2="120"/>
+ <circle cx="108" cy="105" r="4" class="k"/><circle cx="122" cy="105" r="4" class="k"/><circle cx="136" cy="105" r="4" class="k"/>
+ <rect class="k thin" x="170" y="98" width="290" height="14" rx="7"/>
+ <g id="cols"></g>
+ <rect class="blk fade" x="110" y="136" width="417" height="20" style="--i:2;opacity:.12"/>
+ <g class="fade" style="--i:4"><rect class="k" x="110" y="170" width="417" height="140"/><path class="k thin" d="M110 170L527 310M527 170L110 310"/></g>
+ <rect class="fade" x="110" y="325" width="110" height="30" rx="15" fill="#C2185B" style="--i:6"/><rect class="k fade" x="230" y="325" width="110" height="30" rx="15" style="--i:7"/>
+ <rect class="k fade" x="110" y="375" width="131" height="95" style="--i:8"/><rect class="k fade" x="253" y="375" width="131" height="95" style="--i:9"/><rect class="k fade" x="396" y="375" width="131" height="95" style="--i:10"/>
+ <circle class="ripple" cx="165" cy="340" r="22"/>
+ <g class="cursor"><path d="M0 0V22L6 16 10 26 14 24 10 15H17Z" fill="#17181A" stroke="#fff" stroke-width="1.5"/></g>
+ <text class="lbl fade" x="90" y="520" style="--i:11">12-col grid · 1440 px</text></svg></div>
+      <div class="rfx" data-k="fmt" hidden><svg viewBox="0 0 637 630">
+ <line class="k thin" x1="40" y1="520" x2="600" y2="520"/>
+ <rect class="k d" pathLength="1" x="60" y="454" width="102" height="66"/>
+ <rect class="k d" pathLength="1" x="200" y="260" width="184" height="260" style="--i:3"/>
+ <rect class="k a d" pathLength="1" x="420" y="300" width="180" height="52" style="--i:6"/><line class="k d" pathLength="1" x1="510" y1="352" x2="510" y2="520" style="--i:7"/>
+ <path class="k thin dash fade" style="--i:5" d="M162 454L420 300M162 520L420 352"/>
+ <g class="k thin fade" style="--i:2"><path d="M60 440H162M60 435V445M162 435V445"/></g>
+ <g class="k thin fade" style="--i:5"><path d="M200 246H384M200 241V251M384 241V251"/></g>
+ <g class="k thin fade" style="--i:8"><path d="M420 286H600M420 281V291M600 281V291"/></g>
+ <g class="lbl fade" style="--i:9"><text x="111" y="428" text-anchor="middle">85 × 55 mm</text><text x="292" y="234" text-anchor="middle">297 × 420 mm</text><text x="510" y="274" text-anchor="middle">48 × 14 ft</text></g></svg></div>
+      <div class="rfx" data-k="mag" hidden><svg viewBox="0 0 637 630">
+ <rect class="k d" pathLength="1" x="150" y="80" width="337" height="470"/>
+ <g class="fade" style="--i:2"><rect class="colg" x="175" y="100" width="86" height="430"/><rect class="colg" x="275.5" y="100" width="86" height="430"/><rect class="colg" x="376" y="100" width="86" height="430"/></g>
+ <rect class="blk fade" x="175" y="108" width="240" height="26" style="--i:3"/><rect class="fade" x="175" y="142" width="170" height="10" fill="#8B8E93" style="--i:4"/>
+ <g id="halftone"></g>
+ <path class="k thin" d="M175 360H261M175 374H261M175 388H250M175 402H261M175 416H240M275.5 360H361.5M275.5 374H350M275.5 388H361.5M275.5 402H355M376 360H462M376 374H462M376 388H440M376 402H462M376 416H450"/>
+ <g class="k fade" style="--i:6"><circle cx="128" cy="58" r="9"/><path d="M112 58H144M128 42V74"/><circle cx="509" cy="572" r="9"/><path d="M493 572H525M509 556V588"/></g>
+ <g class="fade" style="--i:7"><rect x="200" y="574" width="16" height="16" fill="#00AEEF"/><rect x="220" y="574" width="16" height="16" fill="#EC008C"/><rect x="240" y="574" width="16" height="16" fill="#FFF200"/><rect x="260" y="574" width="16" height="16" fill="#17181A"/>
+ <text class="lbl" x="288" y="587">3-col grid · 300 dpi</text></g></svg></div>
+      <div class="rfx" data-k="pho" hidden><svg viewBox="0 0 637 630">
+ <path class="k d" pathLength="1" d="M80 130V90H120M517 90H557V130M557 480V520H517M120 520H80V480"/>
+ <path class="k thin dash fade" style="--i:2" d="M239 90V520M398 90V520M80 233H557M80 377H557"/>
+ <g class="focus"><rect x="278" y="260" width="80" height="80" class="fbox"/></g>
+ <circle cx="318" cy="300" r="2.5" fill="#C2185B"/>
+ <g transform="translate(500 450)"><g class="iris"><polygon class="k" points="30,0 15,26 -15,26 -30,0 -15,-26 15,-26"/><g class="k thin"><line x1="0" y1="0" x2="30" y2="0" transform="rotate(0)" /><line x1="0" y1="0" x2="30" y2="0" transform="rotate(60)" /><line x1="0" y1="0" x2="30" y2="0" transform="rotate(120)" /><line x1="0" y1="0" x2="30" y2="0" transform="rotate(180)" /><line x1="0" y1="0" x2="30" y2="0" transform="rotate(240)" /><line x1="0" y1="0" x2="30" y2="0" transform="rotate(300)" /></g></g><circle class="k thin" r="36"/></g>
+ <text class="lbl fade" x="318" y="560" text-anchor="middle" style="--i:6">1/125   f/5.6   ISO 200</text>
+ <rect class="flash" x="80" y="90" width="477" height="430"/></svg></div>
+      <span class="rcap" id="rcap">Hover an area to see its schematic</span>
+    </div>
   </div>
 </section>
 
@@ -649,14 +956,29 @@ button{font:inherit;color:inherit}
   </div>
 </section>
 
-<section class="chapter" id="product" data-label="Product design">
+<section class="chapter pin" id="product" data-label="Product design">
   <div class="wrap">
-    <div class="ch-head"><h2 class="chapter-title">Product design</h2><p class="cap"><b>Hammer Strength</b> · Fitness &amp; Training Center merchandise</p></div>
-    <div class="product media">
-      <img class="tee" src="img/tee.webp" alt="Hammer Strength T-shirt">
-      <img class="polo" src="img/polo.webp" alt="Hammer Strength polo shirt">
-      <img class="shorts" src="img/shorts.webp" alt="Hammer Strength training shorts">
-      <img class="mug" src="img/mug.webp" alt="Hammer Strength mug">
+    <div class="ch-head"><h2 class="chapter-title">Product design</h2><p class="cap"><b>Hammer Strength</b> · Fitness &amp; Training Center kit</p></div>
+    <div class="kit media" id="kit" role="img" aria-label="Hammer Strength training kit: T-shirt, shorts, polo and mug">
+      <div class="kit-floor" id="kitFloor"></div>
+      <div class="kit-shorts" id="kitShorts"><i class="sl" style="top:0.0000%;height:33.34%;background-size:100% 300%;background-position:0 0%"></i><i class="sl" style="top:33.3333%;height:33.34%;background-size:100% 300%;background-position:0 50%"></i><i class="sl" style="top:66.6667%;height:33.34%;background-size:100% 300%;background-position:0 100%"></i></div>
+      <div class="kit-tee" id="kitTee"><i class="sl" style="top:0%;background-position:0 0%"></i><i class="sl" style="top:20%;background-position:0 25%"></i><i class="sl" style="top:40%;background-position:0 50%"></i><i class="sl" style="top:60%;background-position:0 75%"></i><i class="sl" style="top:80%;background-position:0 100%"></i></div>
+      <img class="kit-side" id="kitSide" src="img/shorts-side-cut.webp" alt="">
+      <img class="kit-polo" id="kitPolo" src="img/polo-cut.webp" alt="">
+      <svg class="kit-call" id="kitCall" viewBox="0 0 1600 900" aria-hidden="true">
+        <g class="c1"><line x1="190" y1="128" x2="470" y2="215"/><circle cx="470" cy="215" r="6"/><text x="40" y="120">DIAGONAL SPLIT PRINT</text></g>
+        <g class="c2"><line x1="190" y1="300" x2="318" y2="196"/><circle cx="318" cy="196" r="6"/><text x="40" y="324">CONTRAST SLEEVE</text></g>
+        <g class="c3"><line x1="1420" y1="388" x2="1385" y2="560"/><circle cx="1385" cy="560" r="6"/><text x="1250" y="376">LADDER SIDE PANEL</text></g>
+        <g class="c4"><line x1="1120" y1="782" x2="1150" y2="712"/><circle cx="1150" cy="712" r="6"/><text x="1040" y="806">HEM LOGO</text></g>
+        <g class="c5"><text x="1180" y="330">CLUB POLO</text></g>
+      </svg>
+      <div class="kit-mug" id="kitMug"><div class="mug-box">
+        <svg class="steam" viewBox="0 0 120 200" aria-hidden="true">
+          <path d="M40 200C20 160 62 140 42 100S60 40 44 0"/><path d="M62 200C44 165 84 142 64 104S82 46 66 6" style="animation-delay:-1.1s"/><path d="M84 200C70 168 104 146 86 110S100 56 88 18" style="animation-delay:-2.2s"/>
+        </svg>
+        <div class="mug-spin" id="mugSpin"><img id="mugF" src="img/mug-cut.webp" alt=""><img id="mugB" src="img/mug-back.webp" alt=""></div></div>
+        <p class="mug-cap">Gold wordmark on gloss black</p>
+      </div>
     </div>
   </div>
 </section>
@@ -664,11 +986,14 @@ button{font:inherit;color:inherit}
 <section class="chapter pin" id="flyer" data-label="Flyer design">
   <div class="wrap">
     <div class="ch-head"><h2 class="chapter-title">Flyer design</h2><p class="cap"><b>cpdl</b> · Property portfolio tri-fold</p></div>
+    <div class="fly-drop" id="flyDrop"><div class="fly-cam" id="flyCam">
     <div class="flyer media" id="flyerBox">
       <div class="fp f1" style="--w:33.24"><img src="img/flyer1.webp" alt="cpdl tri-fold, back panel"></div>
       <div class="fp f2" style="--w:32.43"><img src="img/flyer2.webp" alt="cpdl tri-fold, inside panel"></div>
       <div class="fp f3" style="--w:34.33"><img src="img/flyer3.webp" alt="cpdl tri-fold, cover"></div>
     </div>
+    </div></div>
+    <div class="fly-shadow" id="flyShadow"></div>
   </div>
 </section>
 
@@ -809,9 +1134,21 @@ button{font:inherit;color:inherit}
   <button id="toastClose" aria-label="Dismiss tip">✕</button>
 </div>
 
+<button class="present-btn" id="presentBtn" aria-label="Start presentation mode" aria-pressed="false">
+  <svg class="ic-play" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="3.5" width="19" height="13" rx="1.5"/><path d="M12 16.5v4M8 20.5h8"/><path d="M10 7.5v5l4-2.5z" fill="currentColor"/></svg>
+  <svg class="ic-exit" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  <span class="tip" id="presentTip">Presentation mode<kbd>P</kbd></span>
+</button>
+<div class="hud" id="hud" role="toolbar" aria-label="Presentation controls">
+  <button id="hudPrev" aria-label="Previous">&#8249;</button>
+  <span class="count" id="hudCount">1 / 1</span>
+  <span class="lbl" id="hudLabel">Portfolio</span>
+  <button id="hudNext" aria-label="Next">&#8250;</button>
+  <button class="exit" id="hudExit" aria-label="Exit presentation mode">ESC</button>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s);
@@ -927,6 +1264,12 @@ button{font:inherit;color:inherit}
     requestAnimationFrame(heroLoop);
   }
   new IntersectionObserver(es => es.forEach(e => heroState.visible = e.isIntersecting)).observe(hero);
+  const artLayers = $$('#roleArt .pl'); let artVisible = false;
+  new IntersectionObserver(es => es.forEach(e => artVisible = e.isIntersecting)).observe($('#roleArt'));
+  if (fine && !reduce) (function artLoop() {
+    if (artVisible) artLayers.forEach(l => { const d = +l.dataset.depth; l.style.transform = `translate(${(mouse.x * d * 34).toFixed(2)}px, ${(mouse.y * d * 20).toFixed(2)}px)`; });
+    requestAnimationFrame(artLoop);
+  })();
   requestAnimationFrame(heroLoop);
 
   /* ---------------- software stage ---------------- */
@@ -953,13 +1296,49 @@ button{font:inherit;color:inherit}
   $('#tools').addEventListener('mouseleave', () => { if (fine) setFx('', null); });
 
   /* toast */
-  const toast = $('#toast');
-  let toastShown = false, toastTimer = 0;
-  if (!fine) $('#toastText').textContent = 'Tap a tool name to see it at work on the illustration';
-  function showToast() { if (toastShown) return; toastShown = true; toast.classList.add('show'); toastTimer = setTimeout(hideToast, 6000); }
+  const toast = $('#toast'), rootEl = document.documentElement;
+  const toastSeen = new Set(); let toastTimer = 0;
+  const verb = fine ? 'Hover' : 'Tap';
+  function showToast(key = 'sw', text = `${verb} a tool name to see it at work on the illustration`) {
+    if (toastSeen.has(key) || rootEl.classList.contains('present')) return; toastSeen.add(key);
+    $('#toastText').textContent = text; clearTimeout(toastTimer);
+    toast.classList.add('show'); toastTimer = setTimeout(hideToast, 6000);
+  }
   function hideToast() { toast.classList.remove('show'); clearTimeout(toastTimer); }
   $('#toastClose').addEventListener('click', hideToast);
   new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) showToast(); }), { threshold: 0.45 }).observe(stage);
+
+  /* range schematics */
+  const rstage = $('#rstage'), rcap = $('#rcap'), areaBtns = $$('.area'), rfx = $$('.rfx');
+  (function buildGenerated() {
+    const NSs = 'http://www.w3.org/2000/svg', mk = (tag, attrs) => { const el = document.createElementNS(NSs, tag); for (const k in attrs) el.setAttribute(k, attrs[k]); return el; };
+    const seats = $('#seats'); let n = 0;
+    for (let r = 0; r < 7; r++) for (let c = 0; c < 14; c++) { if (c === 7) continue; const el = mk('circle', { cx: 122 + c * 30 + (c > 7 ? 0 : 0), cy: 200 + r * 38, r: 6, class: 'pop', fill: '#17181A' }); el.style.setProperty('--i', n++); seats.appendChild(el); }
+    const strip = $('#strip');
+    for (let x = 40; x < 760; x += 136) {
+      strip.appendChild(mk('rect', { x, y: 262, width: 116, height: 106, rx: 3, class: 'k' }));
+      for (let h = 0; h < 4; h++) { strip.appendChild(mk('rect', { x: x + h * 34, y: 240, width: 16, height: 12, rx: 2, fill: '#17181A' })); strip.appendChild(mk('rect', { x: x + h * 34, y: 378, width: 16, height: 12, rx: 2, fill: '#17181A' })); }
+    }
+    const cols = $('#cols'), cw = (417 - 11 * 8) / 12;
+    for (let i = 0; i < 12; i++) cols.appendChild(mk('rect', { x: 110 + i * (cw + 8), y: 128, width: cw, height: 352, class: 'colg' }));
+    const ht = $('#halftone'); n = 0;
+    for (let y = 172; y < 336; y += 11) for (let x = 180; x < 462; x += 11) {
+      const t = ((x - 180) / 282 + (336 - y) / 164) / 2, r = 0.6 + 4.4 * (0.5 + 0.5 * Math.sin(t * 5.2 - 1.2)) * t;
+      const el = mk('circle', { cx: x, cy: y, r: r.toFixed(2), class: 'pop', fill: '#17181A' }); el.style.setProperty('--i', (n++ % 120)); ht.appendChild(el);
+    }
+  })();
+  function setArea(btn) {
+    const k = btn ? btn.dataset.k : '';
+    rstage.dataset.k = k;
+    rfx.forEach(el => el.hidden = el.dataset.k !== k);
+    areaBtns.forEach(b => b.classList.toggle('on', b === btn));
+    rcap.innerHTML = btn ? `<b>FIG. ${btn.dataset.n}</b> · ${btn.innerHTML}` : `${verb} an area to see its schematic`;
+    hideToast();
+  }
+  rcap.textContent = `${verb} an area to see its schematic`;
+  areaBtns.forEach(b => { b.addEventListener('mouseenter', () => setArea(b)); b.addEventListener('focus', () => setArea(b)); b.addEventListener('click', () => setArea(b)); });
+  $('#areas').addEventListener('mouseleave', () => { if (fine) setArea(null); });
+  new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) showToast('range', `${verb} an area of work to see its schematic`); }), { threshold: 0.5 }).observe(rstage);
 
   /* tilt on hover */
   if (fine && !reduce) $$('[data-tilt]').forEach(el => {
@@ -975,17 +1354,100 @@ button{font:inherit;color:inherit}
     try { navigator.clipboard.writeText(txt).then(done, fallback); } catch (e) { fallback(); }
   }));
 
+  /* ---------------- presentation mode ---------------- */
+  const root = document.documentElement, pBtn = $('#presentBtn');
+  let presenting = false, stops = [], idx = 0, busy = false, acc = 0, usedFs = false, coolUntil = 0;
+  function computeStops() {
+    const vh = innerHeight, max = root.scrollHeight - vh, out = [];
+    Array.from($('main').children).forEach(el => {
+      const top = el.getBoundingClientRect().top + scrollY, h = el.offsetHeight;
+      out.push(top);
+      for (let y = top + vh * 0.9; y < top + h - vh * 0.55; y += vh * 0.9) out.push(y);
+    });
+    out.push(max);
+    stops = out.map(v => Math.round(Math.min(Math.max(v, 0), max))).sort((a, b) => a - b)
+      .filter((v, i, a) => i === 0 || v - a[i - 1] > 48);
+  }
+  const nearest = () => stops.reduce((b, v, i) => Math.abs(v - scrollY) < Math.abs(stops[b] - scrollY) ? i : b, 0);
+  function updateHud() {
+    $('#hudCount').textContent = `${idx + 1} / ${stops.length}`;
+    $('#hudLabel').textContent = $('#chapterLabel').textContent;
+  }
+  function go(i) {
+    idx = Math.max(0, Math.min(stops.length - 1, i)); busy = true; updateHud();
+    const done = () => { busy = false; coolUntil = performance.now() + 380; updateHud(); };
+    if (G && !reduce) {
+      const o = { y: scrollY };
+      G.to(o, { y: stops[idx], duration: 1.1, ease: 'power2.inOut', overwrite: true, onUpdate: () => window.scrollTo(0, o.y), onComplete: done });
+    } else { window.scrollTo(0, stops[idx]); setTimeout(done, 120); }
+  }
+  function enterPresent() {
+    if (presenting) return;
+    presenting = true; root.classList.add('present'); hideToast();
+    pBtn.setAttribute('aria-pressed', 'true'); pBtn.setAttribute('aria-label', 'Exit presentation mode');
+    $('#presentTip').innerHTML = 'Exit presentation<kbd>Esc</kbd>';
+    usedFs = false;
+    try { const r = root.requestFullscreen && root.requestFullscreen(); if (r && r.then) r.then(() => { usedFs = true; setTimeout(() => { computeStops(); go(nearest()); }, 250); }, () => {}); } catch (e) {}
+    computeStops(); go(nearest());
+  }
+  function exitPresent() {
+    if (!presenting) return;
+    presenting = false; root.classList.remove('present');
+    pBtn.setAttribute('aria-pressed', 'false'); pBtn.setAttribute('aria-label', 'Start presentation mode');
+    $('#presentTip').innerHTML = 'Presentation mode<kbd>P</kbd>';
+    try { if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); } catch (e) {}
+  }
+  function step(d) {
+    if (busy) return;
+    if (!stops.length) computeStops();
+    const y = scrollY; let i = -1;
+    if (d > 0) i = stops.findIndex(v => v > y + 8);
+    else for (let k = stops.length - 1; k >= 0; k--) if (stops[k] < y - 8) { i = k; break; }
+    if (i >= 0) go(i);
+  }
+  pBtn.addEventListener('click', () => presenting ? exitPresent() : enterPresent());
+  $('#hudPrev').addEventListener('click', () => step(-1));
+  $('#hudNext').addEventListener('click', () => step(1));
+  $('#hudExit').addEventListener('click', exitPresent);
+  document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && usedFs && presenting) exitPresent(); });
+  // Paged wheel: one notch moves one page. Inertial trackpad streams count as one gesture.
+  const paged = fine && !reduce;
+  let lastWheel = 0, gestureUsed = false;
+  addEventListener('wheel', e => {
+    if (!(presenting || paged) || e.ctrlKey) return;
+    e.preventDefault();
+    const now = performance.now(), gap = now - lastWheel; lastWheel = now;
+    if (busy) return;
+    if (gestureUsed && gap < 220) return;
+    if (gap > 220) acc = 0;
+    gestureUsed = false;
+    acc += e.deltaMode === 1 ? e.deltaY * 30 : e.deltaY;
+    if (Math.abs(acc) > 12) { step(acc > 0 ? 1 : -1); acc = 0; gestureUsed = true; }
+  }, { passive: false });
+  let ty0 = null;
+  addEventListener('touchstart', e => { if (presenting) ty0 = e.touches[0].clientY; }, { passive: true });
+  addEventListener('touchmove', e => { if (presenting) e.preventDefault(); }, { passive: false });
+  addEventListener('touchend', e => { if (!presenting || ty0 === null) return; const dy = ty0 - e.changedTouches[0].clientY; if (Math.abs(dy) > 40) step(dy > 0 ? 1 : -1); ty0 = null; });
+  addEventListener('keydown', e => {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if ((e.key === 'p' || e.key === 'P') && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); presenting ? exitPresent() : enterPresent(); return; }
+    if (!presenting) return;
+    const next = ['ArrowDown', 'ArrowRight', 'PageDown', ' ', 'Enter'], prev = ['ArrowUp', 'ArrowLeft', 'PageUp'];
+    if (next.includes(e.key) && !(e.key === 'Enter' && document.activeElement !== document.body)) { e.preventDefault(); step(e.shiftKey && e.key === ' ' ? -1 : 1); }
+    else if (prev.includes(e.key)) { e.preventDefault(); step(-1); }
+    else if (e.key === 'Home') { e.preventDefault(); go(0); }
+    else if (e.key === 'End') { e.preventDefault(); go(stops.length - 1); }
+    else if (e.key === 'Escape') exitPresent();
+  });
+  addEventListener('resize', () => { stops = []; if (presenting) { computeStops(); idx = nearest(); updateHud(); } });
+  addEventListener('load', () => setTimeout(() => { stops = []; }, 300));
+
   /* ---------------- scroll choreography ---------------- */
   const label = $('#chapterLabel');
   if (!motion) { $('#years').textContent = '15'; return; }
   G.registerPlugin(ST);
+  ST.addEventListener('refresh', () => { stops = []; });
 
-  if (window.Lenis) {
-    const lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
-    lenis.on('scroll', ST.update);
-    G.ticker.add(t => lenis.raf(t * 1000));
-    G.ticker.lagSmoothing(0);
-  }
 
   // progress + chapter label
   G.to('#progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
@@ -1004,11 +1466,13 @@ button{font:inherit;color:inherit}
     .to('#portraitWrap', { opacity: 0, filter: 'blur(8px)', ease: 'none', duration: 0.35 }, 0.55)
     .to('#heroVeil', { opacity: 1, ease: 'none', duration: 0.3 }, 0.7);
 
-  // profile: sliding kinetic lines
-  $$('.role').forEach(el => {
-    const d = +el.dataset.dir;
-    G.fromTo(el, { xPercent: d > 0 ? -2 : -30 }, { xPercent: d > 0 ? -30 : 2, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
-  });
+  // profile: the artwork assembles as it scrolls in
+  G.set('#artCurve', { strokeDasharray: 1, strokeDashoffset: 1 });
+  G.timeline({ scrollTrigger: { trigger: '#roleArt', start: 'top 88%', end: 'center 45%', scrub: 0.8 } })
+    .from('#artNib', { scale: 0.35, rotation: -40, opacity: 0, svgOrigin: '0 0', ease: 'power2.out', duration: 0.5 }, 0)
+    .to('#artCurve', { strokeDashoffset: 0, ease: 'none', duration: 0.5 }, 0.2)
+    .from('#roleArt .mod', { scale: 0, opacity: 0, transformOrigin: '50% 50%', stagger: 0.08, ease: 'back.out(1.6)', duration: 0.3 }, 0.3)
+    .from('#roleArt .art-l', { y: 40, opacity: 0, stagger: 0.07, ease: 'power3.out', duration: 0.3 }, 0.45);
   const yrs = { v: 0 };
   ST.create({ trigger: '.stat', start: 'top 80%', once: true, onEnter: () => G.to(yrs, { v: 15, duration: 1.6, ease: 'power3.out', onUpdate: () => $('#years').textContent = Math.round(yrs.v) }) });
   $$('.reveal-words').forEach(p => {
@@ -1058,17 +1522,56 @@ button{font:inherit;color:inherit}
     rotate: () => (lr() - 0.5) * 90, scale: () => 0.3 + lr() * 1.6, opacity: 0, stagger: { each: 0.02, from: 'random' }, ease: 'power2.out', duration: 1
   });
 
-  // product: pieces arrive from the corners
-  scrubFrom('#product .tee', { y: 140, scale: 0.85, opacity: 0 }, '#product');
-  scrubFrom('#product .polo', { x: 220, y: -60, rotate: 18, opacity: 0 }, '#product');
-  scrubFrom('#product .shorts', { x: -220, rotate: -14, opacity: 0 }, '#product');
-  scrubFrom('#product .mug', { y: 180, rotate: -24, opacity: 0 }, '#product');
+  // product: kit assembles, comes apart in slices, then the mug steams and turns
+  const teeSl = $$('#kitTee .sl'), shSl = $$('#kitShorts .sl');
+  const mug = { a: 0 }, mugSpin = $('#mugSpin'), mugF = $('#mugF'), mugB = $('#mugB');
+  const turnMug = () => { const c = Math.cos(mug.a * Math.PI / 180); mugSpin.style.transform = `scaleX(${Math.max(Math.abs(c), 0.03).toFixed(3)})`; mugF.style.opacity = c >= 0 ? 1 : 0; mugB.style.opacity = c < 0 ? 1 : 0; };
+  G.timeline({ scrollTrigger: { trigger: '#product', start: 'top top', end: '+=340%', pin: true, scrub: 0.7 } })
+    // 1 · assemble: slices fly together into a complete kit
+    .from(teeSl, { xPercent: i => (i % 2 ? 1 : -1) * 120, yPercent: i => (i - 2) * 90, rotation: i => (i % 2 ? 14 : -14), opacity: 0, stagger: 0.03, duration: 0.6, ease: 'power3.out' }, 0)
+    .from(shSl, { xPercent: i => (i % 2 ? -1 : 1) * 160, yPercent: i => (i + 1) * 60, rotation: i => (i % 2 ? -12 : 12), opacity: 0, stagger: 0.04, duration: 0.6, ease: 'power3.out' }, 0.1)
+    .from('#kitFloor', { scaleX: 0.3, opacity: 0, duration: 0.6 }, 0)
+    .to({}, { duration: 0.25 })
+    // 2 · disassemble: exploded view with callouts
+    .to('#kitTee', { xPercent: -70, yPercent: -4, rotation: -8, duration: 0.7, ease: 'power2.inOut' }, 'ex')
+    .to(teeSl, { yPercent: i => (i - 2) * 16, xPercent: i => (i % 2 ? 4 : -4), rotation: i => (i % 2 ? 1.5 : -1.5), duration: 0.7, ease: 'power2.inOut' }, 'ex')
+    .to('#kitShorts', { xPercent: 195, yPercent: -18, rotation: 7, duration: 0.7, ease: 'power2.inOut' }, 'ex')
+    .to(shSl, { yPercent: i => (i - 1) * 18, xPercent: i => (i % 2 ? -5 : 5), duration: 0.7, ease: 'power2.inOut' }, 'ex')
+    .to('#kitSide', { opacity: 1, x: 0, duration: 0.4 }, 'ex+=0.4')
+    .fromTo('#kitPolo', { opacity: 0, xPercent: 60, rotation: 14 }, { opacity: 1, xPercent: 0, rotation: 4, duration: 0.5, ease: 'power3.out' }, 'ex+=0.35')
+    .to('#kitCall g', { opacity: 1, stagger: 0.08, duration: 0.25 }, 'ex+=0.5')
+    .to({}, { duration: 0.35 })
+    // 3 · clear the table, bring in the mug
+    .to(['#kitTee', '#kitShorts', '#kitSide', '#kitPolo', '#kitCall'], { opacity: 0, scale: 0.8, xPercent: '-=40', duration: 0.5, ease: 'power2.in', stagger: 0.04 }, 'mug')
+    .to('#kitFloor', { left: '36%', right: '36%', duration: 0.5 }, 'mug')
+    .fromTo('#kitMug', { opacity: 0, y: 80, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: 'power3.out' }, 'mug+=0.3')
+    .to({}, { duration: 0.25 })
+    // 4 · the mug turns a full circle
+    .to(mug, { a: 360, duration: 1.1, ease: 'none', onUpdate: turnMug })
+    .to('#kitMug', { y: -10, duration: 0.55, ease: 'sine.inOut', yoyo: true, repeat: 1 }, '<');
+  G.set('#kitSide', { x: 60 });
 
   // flyer: the tri-fold opens
-  pinTL('#flyer', '+=110%')
-    .from('#flyerBox', { rotateX: 28, scale: 0.8, y: 40, transformPerspective: 1600, duration: 1 }, 0)
-    .from('#flyerBox .f1', { rotateY: -118, filter: 'brightness(.75)', duration: 1 }, 0)
-    .from('#flyerBox .f3', { rotateY: 118, filter: 'brightness(.75)', duration: 1 }, 0.1);
+  // flyer: drifts down like a sheet of paper, lands, then the camera reads it panel by panel
+  G.set('#flyDrop', { transformPerspective: 1100 });
+  G.timeline({ scrollTrigger: { trigger: '#flyer', start: 'top top', end: '+=300%', pin: true, scrub: 0.8, invalidateOnRefresh: true } })
+    .fromTo('#flyDrop', { y: () => -innerHeight * 1.15, x: () => -innerWidth * 0.12, rotation: -18, rotationX: 55 },
+      { y: () => -innerHeight * 0.72, x: () => innerWidth * 0.1, rotation: 14, rotationX: -32, duration: 0.3, ease: 'sine.inOut' })
+    .to('#flyDrop', { y: () => -innerHeight * 0.33, x: () => -innerWidth * 0.07, rotation: -9, rotationX: 30, duration: 0.3, ease: 'sine.inOut' })
+    .to('#flyDrop', { y: 0, x: 0, rotation: 0, rotationX: 0, duration: 0.3, ease: 'power2.out' })
+    .fromTo('#flyShadow', { scaleX: 0.2, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.9, ease: 'power1.in' }, 0)
+    .from('#flyerBox .f1', { rotateY: -24, duration: 0.9 }, 0).from('#flyerBox .f3', { rotateY: 24, duration: 0.9 }, 0)
+    .to({}, { duration: 0.15 })
+    // zoom into the cover, pan across the inside, back to the contact panel, then pull out
+    .to('#flyCam', { scale: 2.3, xPercent: -76, yPercent: 8, duration: 0.45, ease: 'power2.inOut' })
+    .to('#flyShadow', { opacity: 0, duration: 0.2 }, '<')
+    .to({}, { duration: 0.2 })
+    .to('#flyCam', { xPercent: 0, yPercent: 14, duration: 0.45, ease: 'power2.inOut' })
+    .to({}, { duration: 0.2 })
+    .to('#flyCam', { xPercent: 76, yPercent: -10, duration: 0.45, ease: 'power2.inOut' })
+    .to({}, { duration: 0.2 })
+    .to('#flyCam', { scale: 1, xPercent: 0, yPercent: 0, duration: 0.45, ease: 'power2.inOut' })
+    .to('#flyShadow', { opacity: 1, duration: 0.3 }, '<0.15');
 
   // billboard: start inside the faces, pull back to the city
   pinTL('#billboard', '+=120%')
