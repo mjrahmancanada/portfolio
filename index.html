@@ -1,0 +1,1131 @@
+<title>MJ Rahman Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="author" content="Mohammad Jillur Rahman">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a white gallery wall. Each chapter is one full-bleed scroll scene; condensed grey titles as in the print portfolio, one dahlia-magenta accent. */
+:root{
+  --paper:#FAFAF8; --ink:#17181A; --graphite:#8B8E93; --mist:#E7E8EA; --rule:#D6D8DB;
+  --dahlia:#C2185B; --night:#0B0C10; --bird:#BCC0C5; --panel:#1E2025; --panel-fg:#D9DCE1;
+  --f-display:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;
+  --f-body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --gut-l:max(16px, env(safe-area-inset-left, 0px)); --gut-r:max(16px, env(safe-area-inset-right, 0px));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{background:var(--paper)}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--f-body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--paper)}
+img{max-width:100%;display:block}
+h1,h2,h3{margin:0;font-weight:400;text-wrap:balance}
+p{margin:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--dahlia);outline-offset:3px}
+.wrap{width:100%;max-width:1240px;margin:0 auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.eyebrow{font:600 12px/1 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--graphite)}
+.mono{font-family:var(--f-mono)}
+.chapter-title{font:400 clamp(46px,11vw,168px)/.88 var(--f-display);color:var(--rule);letter-spacing:.02em;overflow:hidden;padding-bottom:.04em}
+.chapter-title .wd{display:inline-block;white-space:nowrap}
+.chapter-title .ch{display:inline-block;will-change:transform}
+.cap{font-size:13px;color:var(--graphite);letter-spacing:.02em}
+.cap b{color:var(--ink);font-weight:600}
+
+/* ---------- top bar ---------- */
+.bar{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px)}
+.bar-in{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:14px;padding-left:var(--gut-l);padding-right:var(--gut-r);font:600 11px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);mix-blend-mode:difference;filter:invert(1)}
+.bar-in span:last-child{color:var(--ink);text-align:right}
+.progress{position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--dahlia);transform-origin:0 50%;transform:scaleX(0)}
+
+/* ---------- 1 hero ---------- */
+.hero{position:relative;height:100vh;height:100svh;min-height:560px;overflow:hidden;background:var(--paper)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%}
+.hero .birds{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.portrait-wrap{position:absolute;right:0;bottom:0;height:94%;aspect-ratio:1122/1402;max-width:62vw;z-index:2;transform-origin:60% 40%}
+.portrait-in{width:100%;height:100%;will-change:transform}
+.portrait-in img{width:100%;height:100%;object-fit:contain;object-position:right bottom}
+#foreClouds{z-index:4;pointer-events:none}
+.hero-name{position:absolute;left:var(--gut-l);bottom:clamp(28px,8vh,80px);z-index:5;padding-left:clamp(0px,3vw,48px)}
+.hero-name h1{font:400 clamp(44px,6.4vw,96px)/.92 var(--f-display);letter-spacing:.01em}
+.hero-name h1 b{font-weight:400;color:var(--ink)}
+.hero-name h1 span{color:var(--graphite)}
+.hero-name p{font:400 clamp(22px,2.6vw,38px)/1 var(--f-display);letter-spacing:.06em;margin-top:6px}
+.hero-name .ln{display:block;overflow:hidden}
+.hero-name .ln > *{display:inline-block}
+.scroll-cue{position:absolute;left:50%;bottom:22px;z-index:5;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font:600 10px/1 var(--f-body);letter-spacing:.3em;color:var(--graphite)}
+.scroll-cue i{width:1px;height:38px;background:linear-gradient(var(--graphite),transparent);animation:cue 1.8s ease-in-out infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+.hero-veil{position:absolute;inset:0;background:var(--paper);opacity:0;z-index:6;pointer-events:none}
+
+/* ---------- 2 profile ---------- */
+.profile{padding-block:clamp(80px,14vh,160px) 60px;overflow:hidden}
+.roles{display:flex;flex-direction:column;gap:0;margin:36px 0 clamp(60px,10vh,120px)}
+.role{font:400 clamp(60px,13vw,200px)/.88 var(--f-display);white-space:nowrap;will-change:transform;letter-spacing:.005em}
+.role.outline{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.role.grey{color:var(--rule)}
+.role .dot{color:var(--dahlia)}
+.stat{display:grid;grid-template-columns:auto 1fr;gap:clamp(20px,4vw,64px);align-items:end;border-top:1px solid var(--rule);padding-top:36px}
+.stat .num{font:400 clamp(110px,19vw,280px)/.78 var(--f-display);font-variant-numeric:tabular-nums;color:var(--ink)}
+.stat .num sup{font-size:.42em;color:var(--dahlia);vertical-align:top;margin-left:4px;line-height:1}
+.stat p{max-width:34ch;font-size:clamp(16px,1.5vw,20px);color:var(--graphite);padding-bottom:10px}
+.statement{font:500 clamp(28px,4.2vw,58px)/1.12 var(--f-body);letter-spacing:-.015em;max-width:22ch;margin:clamp(70px,12vh,140px) 0 0}
+.statement .w{transition:color .2s}
+.statement2{font:400 clamp(18px,1.8vw,23px)/1.55 var(--f-body);max-width:58ch;margin-top:32px;color:var(--ink)}
+.process{margin-top:clamp(70px,12vh,130px)}
+.steps{position:relative;margin-top:28px}
+.steps::before{content:"";position:absolute;left:0;right:0;top:15px;height:1px;background:var(--rule)}
+.process ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px;position:relative}
+.process .line{position:absolute;left:0;right:0;top:15px;height:1px;background:var(--ink);transform-origin:0 50%}
+.process li{position:relative;padding-top:42px;font-size:15px;line-height:1.35}
+.process li::before{content:attr(data-n);position:absolute;top:0;left:0;width:31px;height:31px;border-radius:50%;background:var(--paper);border:1px solid var(--ink);display:grid;place-items:center;font:600 11px/1 var(--f-mono)}
+.process li b{display:block;font:400 24px/1 var(--f-display);letter-spacing:.03em;margin-bottom:6px}
+.skills{margin-top:clamp(80px,14vh,150px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:32px}
+.skills ul{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.skills li{display:grid;grid-template-columns:44px 1fr;gap:8px;padding:18px 0;border-bottom:1px solid var(--rule);font-size:clamp(17px,1.7vw,22px);line-height:1.3}
+.skills li span{font:600 12px/1.9 var(--f-mono);color:var(--graphite)}
+
+/* ---------- 3 software ---------- */
+.software{padding-block:clamp(80px,14vh,160px);position:relative}
+.sw-grid{display:grid;grid-template-columns:minmax(220px,.75fr) minmax(0,1.5fr);gap:clamp(24px,5vw,80px);align-items:center;margin-top:30px}
+.tools{list-style:none;margin:0;padding:0}
+.tool{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:baseline;gap:14px;width:100%;padding:9px 0;border-bottom:1px solid var(--mist);font:400 clamp(26px,2.9vw,40px)/1 var(--f-display);letter-spacing:.02em;color:var(--graphite);transition:color .25s,padding .3s}
+.tool small{font:600 10px/1 var(--f-mono);letter-spacing:.08em;color:var(--rule);transition:color .25s;min-width:22px}
+.tool:hover,.tool:focus-visible,.tool.on{color:var(--ink);padding-left:10px}
+.tool.on small,.tool:hover small{color:var(--dahlia)}
+.tool:focus-visible{outline:none;box-shadow:inset 3px 0 0 var(--dahlia)}
+.stage{border:1px solid var(--rule);background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 30px 80px -40px rgba(23,24,26,.35)}
+.stage-bar{display:flex;align-items:center;gap:10px;height:34px;padding:0 12px;background:var(--mist);font:500 11px/1 var(--f-mono);color:#55595f;border-bottom:1px solid var(--rule)}
+.stage-bar .dots{display:flex;gap:6px}.stage-bar .dots i{width:9px;height:9px;border-radius:50%;background:var(--rule)}
+.stage-bar .st-title{flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.canvas-area{position:relative;aspect-ratio:628/580;max-width:100%;overflow:hidden;perspective:1100px;background:#fff}
+.plane{position:absolute;inset:6%;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.base,.pgroup{position:absolute;inset:0;transition:opacity .4s,filter .5s}
+.pc{position:absolute;transition:filter .5s,opacity .4s,transform .6s}
+.pc img{width:100%;height:100%}
+.idle-hint{position:absolute;left:0;right:0;bottom:12px;text-align:center;font:500 11px/1 var(--f-mono);color:var(--graphite);letter-spacing:.06em;transition:opacity .3s}
+.stage[data-fx]:not([data-fx=""]) .idle-hint{opacity:0}
+.fx{position:absolute;inset:0;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .35s, visibility 0s .35s}
+.fx svg{position:absolute;inset:6%;width:88%;height:88%;overflow:visible}
+.stage[data-fx="ps"] .fx-ps,.stage[data-fx="ai"] .fx-ai,.stage[data-fx="type"] .fx-type,.stage[data-fx="pr"] .fx-pr,.stage[data-fx="ae"] .fx-ae,.stage[data-fx="lu"] .fx-lu,.stage[data-fx="su"] .fx-su,.stage[data-fx="of"] .fx-of,.stage[data-fx="cs"] .fx-cs,.stage[data-fx="qs"] .fx-qs,.stage[data-fx="vj"] .fx-vj{opacity:1;visibility:visible;transition:opacity .35s}
+.chip{position:absolute;font:600 10.5px/1 var(--f-mono);background:var(--panel);color:var(--panel-fg);padding:7px 9px;border-radius:5px;letter-spacing:.03em;white-space:nowrap}
+.chip b{color:#fff;font-weight:600}
+
+/* Photoshop */
+.stage[data-fx="ps"] .p-earth{filter:hue-rotate(155deg) saturate(1.7) contrast(1.05)}
+.ants rect{fill:none;stroke-width:1.6}
+.ants .a1{stroke:#fff}.ants .a2{stroke:#111;stroke-dasharray:6 6;animation:ants .5s linear infinite}
+@keyframes ants{to{stroke-dashoffset:-12}}
+.layers{position:absolute;right:10px;top:10px;width:150px;background:var(--panel);color:var(--panel-fg);border-radius:6px;font:500 10px/1 var(--f-mono);overflow:hidden}
+.layers div{display:flex;gap:7px;align-items:center;padding:7px 8px;border-top:1px solid #2c2f35}
+.layers div:first-child{border-top:0;color:#fff;background:#2d5fd6}
+.layers i{width:14px;height:10px;border-radius:2px;background:#555a63;flex:none}
+.layers div:first-child i{background:linear-gradient(90deg,#f33,#ff3,#3f3,#3ff,#33f,#f3f)}
+/* Illustrator */
+.stage[data-fx="ai"] .pc{filter:grayscale(1) opacity(.28)}
+.vec{fill:none;stroke:#2f7bff;stroke-width:1.4}
+.vec.draw{stroke-dasharray:1000;stroke-dashoffset:1000}
+.stage[data-fx="ai"] .vec.draw{animation:draw 1.6s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.anc{fill:#fff;stroke:#2f7bff;stroke-width:1.4}
+.hnd{stroke:#2f7bff;stroke-width:.8;fill:none}
+.hdot{fill:#2f7bff}
+/* Typography */
+.stage[data-fx="type"] .pc{opacity:.5}
+.ring{transform-box:view-box;transform-origin:327px 340px;animation:spin 16s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ring text{font:400 25px var(--f-display);letter-spacing:6px;fill:var(--ink)}
+.specimen{position:absolute;left:5%;top:4%;font:400 clamp(70px,13vw,150px)/1 var(--f-display);color:var(--dahlia);mix-blend-mode:multiply}
+.metric{position:absolute;left:0;right:0;border-top:1px dashed rgba(194,24,91,.45);font:500 9px/1 var(--f-mono);color:var(--dahlia);padding:3px 6px;text-align:right}
+/* Premiere */
+.lbx{position:absolute;left:0;right:0;height:9%;background:#000;transition:transform .5s}
+.lbx.t{top:0}.lbx.b{bottom:0}
+.timeline{position:absolute;left:8px;right:8px;bottom:8px;height:27%;background:var(--panel);border-radius:6px;color:var(--panel-fg);font:500 9.5px/1 var(--f-mono);padding:8px 10px;overflow:hidden}
+.tl-head{display:flex;justify-content:space-between;margin-bottom:7px}
+.tl-head b{color:#e8c46a;font-weight:600}
+.trk{display:grid;grid-template-columns:22px 1fr;gap:6px;align-items:center;height:18%;margin-bottom:4px}
+.trk div{height:100%;border-radius:3px;position:relative}
+.trk .v2{background:linear-gradient(90deg,transparent 30%,#a479d8 30%,#a479d8 64%,transparent 64%)}
+.trk .v1{background:linear-gradient(90deg,#4f88d8 0 48%,transparent 48% 50%,#4f88d8 50%)}
+.trk .a1{background:repeating-linear-gradient(90deg,#3fae78 0 2px,#2c7d56 2px 4px);clip-path:polygon(0 50%,5% 20%,10% 70%,15% 30%,22% 60%,30% 10%,38% 80%,45% 35%,55% 65%,63% 15%,70% 75%,80% 30%,88% 60%,95% 25%,100% 50%,100% 100%,0 100%)}
+.playhead{position:absolute;top:22px;bottom:0;left:40px;width:1.5px;background:#ff5a5a;animation:play 3s linear infinite}
+@keyframes play{from{left:40px}to{left:calc(100% - 4px)}}
+.stage[data-fx="pr"] .p-rocket{animation:launch 3s cubic-bezier(.55,0,.35,1) infinite}
+@keyframes launch{0%{transform:none}70%{transform:translate(310%,-380%) rotate(8deg) scale(.45);opacity:1}85%{opacity:0}100%{transform:translate(310%,-380%) scale(.45);opacity:0}}
+/* After Effects */
+.stage[data-fx="ae"] .p-saturn{animation:wig1 1.2s ease-in-out infinite alternate}
+.stage[data-fx="ae"] .p-star{animation:pulse .6s ease-in-out infinite alternate}
+.stage[data-fx="ae"] .p-moon{animation:swing 1.6s ease-in-out infinite alternate;transform-origin:50% 0}
+.stage[data-fx="ae"] .p-earth{animation:wig2 2.2s ease-in-out infinite alternate}
+.stage[data-fx="ae"] .p-comet{animation:streak 1.5s cubic-bezier(.7,0,.3,1) infinite}
+.stage[data-fx="ae"] .p-rocket{animation:wig1 .5s ease-in-out infinite alternate}
+@keyframes wig1{0%{transform:translate(-4%,3%) rotate(-6deg)}100%{transform:translate(6%,-5%) rotate(9deg)}}
+@keyframes wig2{0%{transform:rotate(-3deg) scale(.98)}100%{transform:rotate(4deg) scale(1.03)}}
+@keyframes pulse{from{transform:scale(.8) rotate(-20deg)}to{transform:scale(1.25) rotate(25deg)}}
+@keyframes swing{from{transform:rotate(-14deg)}to{transform:rotate(14deg)}}
+@keyframes streak{0%{transform:translate(220%,-300%);filter:blur(3px)}60%{transform:translate(0,0);filter:blur(0)}100%{transform:translate(0,0)}}
+.graph{position:absolute;right:10px;top:10px;width:150px;height:96px;background:var(--panel);border-radius:6px}
+.graph svg{inset:0;width:100%;height:100%}
+.graph path{fill:none;stroke:#5ac8fa;stroke-width:1.6}
+.graph .kf{fill:#e8c46a}
+/* Lumion */
+.lu-light{position:absolute;inset:0;background:linear-gradient(215deg,rgba(255,176,82,.55) 0%,rgba(255,214,150,.18) 40%,rgba(48,58,110,.42) 100%);mix-blend-mode:multiply;animation:scan 2.6s cubic-bezier(.6,0,.3,1) infinite}
+.lu-sun{position:absolute;right:-12%;top:-18%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(255,236,190,.95),rgba(255,200,120,0) 65%);mix-blend-mode:screen}
+@keyframes scan{0%{clip-path:inset(0 0 100% 0)}60%,100%{clip-path:inset(0 0 0 0)}}
+.stage[data-fx="lu"] .pc{filter:drop-shadow(14px 18px 8px rgba(40,30,60,.35)) saturate(1.2)}
+.render{left:10px;bottom:10px}
+.render i{display:inline-block;width:80px;height:5px;border-radius:3px;background:#3a3d44;margin-left:8px;vertical-align:middle;position:relative;overflow:hidden}
+.render i::after{content:"";position:absolute;inset:0;background:#e8c46a;transform-origin:0;animation:bar 2.6s cubic-bezier(.6,0,.3,1) infinite}
+@keyframes bar{from{transform:scaleX(0)}60%,to{transform:scaleX(1)}}
+/* SketchUp */
+.stage[data-fx="su"] .plane{transform:translateY(6%) rotateX(56deg) rotateZ(-32deg) scale(.82)}
+.stage[data-fx="su"] .pc{filter:drop-shadow(0 1px 0 #9aa0a8) drop-shadow(0 2px 0 #9aa0a8) drop-shadow(0 3px 0 #8d939b) drop-shadow(0 8px 6px rgba(0,0,0,.18))}
+.su-grid{position:absolute;inset:-20%;background-image:linear-gradient(rgba(23,24,26,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(23,24,26,.08) 1px,transparent 1px);background-size:6% 6%;opacity:0;transition:opacity .5s}
+.stage[data-fx="su"] .su-grid{opacity:1}
+.ax{position:absolute;left:50%;top:58%;opacity:0;transition:opacity .4s}
+.stage[data-fx="su"] .ax{opacity:1}
+.ax.r{width:70%;height:2px;margin-left:-35%;background:linear-gradient(90deg,rgba(220,40,40,.35) 50%,#dc2828 50%)}
+.ax.g{height:80%;width:2px;top:18%;background:linear-gradient(rgba(30,160,60,1) 50%,rgba(30,160,60,.35) 50%)}
+.ax.b{width:2px;height:40%;top:18%;background:#2a5bd7;transform-origin:50% 100%;transform:rotateX(-90deg)}
+/* Office */
+.stage[data-fx="of"] .pc{opacity:.55}
+.xl{position:absolute;inset:0;background-image:linear-gradient(#e1e3e6 1px,transparent 1px),linear-gradient(90deg,#e1e3e6 1px,transparent 1px);background-size:12.5% 7%;background-position:0 30px}
+.xl-col{position:absolute;left:0;right:0;top:0;height:30px;display:grid;grid-template-columns:repeat(8,1fr);background:#f1f2f4;border-bottom:1px solid var(--rule);font:600 10px/30px var(--f-mono);color:#6b7077;text-align:center}
+.xl-fx{position:absolute;left:0;right:0;top:30px;height:24px;background:#fff;border-bottom:1px solid var(--rule);font:500 10.5px/24px var(--f-mono);color:#3a3d44;padding-left:10px}
+.xl-fx b{color:#1d7a46}
+.xl-sel{position:absolute;left:25%;top:33%;width:50%;height:45%;border:2px solid #1d7a46;box-shadow:0 0 0 9999px rgba(255,255,255,0)}
+.bars{position:absolute;right:6%;bottom:6%;width:34%;height:30%;display:flex;align-items:flex-end;gap:7%;border-bottom:1.5px solid #3a3d44}
+.bars i{flex:1;background:#1d7a46;transform-origin:bottom;transform:scaleY(0)}
+.stage[data-fx="of"] .bars i{animation:grow .9s cubic-bezier(.2,.8,.2,1) forwards}
+.bars i:nth-child(2){animation-delay:.08s!important;background:#2a9d5c}.bars i:nth-child(3){animation-delay:.16s!important}.bars i:nth-child(4){animation-delay:.24s!important;background:#2a9d5c}.bars i:nth-child(5){animation-delay:.32s!important}
+@keyframes grow{to{transform:scaleY(1)}}
+/* Creative Suite: CMYK separation */
+.stage[data-fx="cs"] .base{opacity:0}
+.plate{position:absolute;inset:6%;mix-blend-mode:multiply}
+.plate .pgroup{inset:0}
+.plate.c{filter:url(#sepC);animation:regC 2.4s cubic-bezier(.7,0,.2,1) infinite alternate}
+.plate.m{filter:url(#sepM);animation:regM 2.4s cubic-bezier(.7,0,.2,1) infinite alternate}
+.plate.y{filter:url(#sepY);animation:regY 2.4s cubic-bezier(.7,0,.2,1) infinite alternate}
+@keyframes regC{0%,15%{transform:translate(-5%,-2%)}85%,100%{transform:none}}
+@keyframes regM{0%,15%{transform:translate(4%,3%)}85%,100%{transform:none}}
+@keyframes regY{0%,15%{transform:translate(1%,-5%)}85%,100%{transform:none}}
+.cmyk{left:10px;bottom:10px;display:flex;gap:6px;align-items:center}
+.cmyk i{width:10px;height:10px;border-radius:50%}
+/* QuickShow lasers */
+.qs-night{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 110%,#16203a 0%,var(--night) 60%);opacity:0;transition:opacity .4s}
+.stage[data-fx="qs"] .qs-night{opacity:1}
+.stage[data-fx="qs"] .pc{filter:invert(1) hue-rotate(180deg) saturate(2.4) brightness(1.15) drop-shadow(0 0 5px rgba(80,255,240,.8))}
+.beams{mix-blend-mode:screen}
+.beams g{transform-box:view-box;transform-origin:314px 640px}
+.beams .sweep1{animation:sweep 2.2s ease-in-out infinite alternate}
+.beams .sweep2{animation:sweep 1.7s ease-in-out infinite alternate-reverse}
+@keyframes sweep{from{transform:rotate(-22deg)}to{transform:rotate(22deg)}}
+.beams line{stroke-width:2.2;filter:url(#glow)}
+.stage[data-fx="qs"] .canvas-area{background:var(--night)}
+/* Resolume VJ */
+.stage[data-fx="vj"] .base{opacity:0}
+.vjgrid{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;background:#000;animation:hue 2s steps(8) infinite}
+.vjgrid > div{position:relative;overflow:hidden;animation:beat .5s cubic-bezier(.2,.9,.3,1) infinite}
+.vjgrid > div:nth-child(2){transform:scaleX(-1)}.vjgrid > div:nth-child(3){transform:scaleY(-1)}.vjgrid > div:nth-child(4){transform:scale(-1,-1)}
+.vjgrid .pgroup{inset:0;filter:invert(1) saturate(3) contrast(1.3)}
+@keyframes hue{to{filter:hue-rotate(360deg)}}
+@keyframes beat{0%{opacity:1}40%{opacity:.6}100%{opacity:1}}
+.vjgrid > div > .pgroup{animation:zoom .5s cubic-bezier(.2,.9,.3,1) infinite}
+@keyframes zoom{0%{transform:scale(1.12)}100%{transform:scale(1)}}
+.eq{position:absolute;left:10px;bottom:10px;display:flex;gap:3px;align-items:flex-end;height:30px}
+.eq i{width:5px;background:#5df2d6;animation:eq .5s ease-in-out infinite alternate}
+.eq i:nth-child(odd){animation-duration:.35s}.eq i:nth-child(3n){animation-duration:.62s;background:#ff4fa3}
+@keyframes eq{from{height:15%}to{height:100%}}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:70;transform:translate(-50%,140%);display:flex;align-items:center;gap:12px;background:var(--ink);color:var(--paper);padding:11px 14px 11px 16px;border-radius:999px;font:500 13px/1.2 var(--f-body);box-shadow:0 18px 40px -16px rgba(0,0,0,.5);transition:transform .55s cubic-bezier(.2,.9,.2,1.1),opacity .3s;opacity:0;max-width:calc(100vw - 32px)}
+.toast.show{transform:translate(-50%,0);opacity:1}
+.toast svg{flex:none}
+.toast button{all:unset;cursor:pointer;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;color:var(--graphite)}
+.toast button:hover{color:var(--paper)}
+.toast button:focus-visible{outline:2px solid var(--dahlia)}
+
+/* ---------- 4 range ---------- */
+.range{position:relative;min-height:100vh;display:flex;align-items:center;padding-block:80px;overflow:hidden}
+.range-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(20px,4vw,60px);align-items:center}
+.range h2{font:400 clamp(40px,5vw,72px)/.95 var(--f-display);margin:14px 0 26px}
+.areas{list-style:none;margin:0;padding:0;columns:2;column-gap:28px}
+.areas li{break-inside:avoid;padding:7px 0;border-bottom:1px solid var(--mist);font-size:clamp(15px,1.3vw,17px)}
+.pencil{--r:170%;-webkit-mask-image:radial-gradient(circle at 4% 97%,#000 var(--r),transparent calc(var(--r) + 14%));mask-image:radial-gradient(circle at 4% 97%,#000 var(--r),transparent calc(var(--r) + 14%))}
+
+/* ---------- 5 experience ---------- */
+.exp{position:relative;padding-block:clamp(80px,14vh,150px) clamp(120px,20vh,220px);overflow:hidden}
+.exp h2{font:400 clamp(40px,5vw,72px)/.95 var(--f-display);margin:14px 0 50px}
+.tl{position:relative;padding-left:clamp(28px,4vw,60px);max-width:820px}
+.tl::before{content:"";position:absolute;left:6px;top:8px;bottom:0;width:1px;background:var(--mist)}
+.tl .tl-line{position:absolute;left:6px;top:8px;bottom:0;width:1px;background:var(--ink);transform-origin:top}
+.role-card{position:relative;padding-bottom:56px}
+.role-card::before{content:"";position:absolute;left:calc(-1 * clamp(28px,4vw,60px) + 1px);top:8px;width:11px;height:11px;border-radius:50%;background:var(--dahlia);box-shadow:0 0 0 5px var(--paper)}
+.role-card .when{font:600 12px/1 var(--f-mono);color:var(--dahlia);letter-spacing:.05em;font-variant-numeric:tabular-nums}
+.role-card h3{font:600 clamp(22px,2.4vw,30px)/1.15 var(--f-body);margin:10px 0 4px;letter-spacing:-.01em}
+.role-card .org{color:var(--graphite);margin-bottom:16px}
+.role-card ul{margin:0;padding-left:18px;max-width:64ch}
+.role-card li{margin:5px 0}
+.role-card li::marker{color:var(--rule)}
+.flower{position:absolute;right:-6vw;bottom:-8vw;width:clamp(240px,38vw,560px);pointer-events:none;z-index:0}
+.exp .wrap{position:relative;z-index:1}
+
+/* ---------- work chapters ---------- */
+.divider{padding-block:clamp(60px,12vh,140px) 0;overflow:hidden}
+.marquee{display:flex;white-space:nowrap;font:400 clamp(80px,16vw,240px)/.9 var(--f-display);will-change:transform}
+.marquee span{padding-right:.35em}
+.marquee .o{color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.chapter{position:relative;padding-block:clamp(70px,12vh,140px);overflow:hidden}
+.chapter.pin{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-block:70px 40px}
+.ch-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:clamp(20px,4vh,44px)}
+.ch-head .cap{max-width:36ch;text-align:right;padding-bottom:10px}
+.media{position:relative;margin:0 auto}
+
+.logo-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(14px,2.6vw,36px) clamp(12px,2.4vw,32px);align-items:center;justify-items:center;perspective:1000px}
+.logo-grid img{max-height:clamp(54px,9vw,120px);width:auto;max-width:100%;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.logo-grid img:hover{transform:scale(1.08)}
+.logo-grid img.tall{max-height:clamp(86px,13vw,180px)}
+
+.product{display:grid;grid-template-columns:1fr 1.25fr .85fr;grid-template-rows:auto auto;gap:clamp(10px,2vw,30px);align-items:end;max-width:1000px}
+.product .tee{grid-column:2;grid-row:1/3}
+.product .polo{grid-column:3;grid-row:1;align-self:start}
+.product .shorts{grid-column:1;grid-row:2}
+.product .mug{grid-column:3;grid-row:2;max-width:80%}
+
+.flyer{display:flex;justify-content:center;perspective:1600px;max-width:800px}
+.flyer .fp{width:calc(var(--w) * 1%);transform-style:preserve-3d}
+.flyer .f1{transform-origin:100% 50%}.flyer .f3{transform-origin:0 50%}
+.flyer img{width:100%;height:auto}
+
+.bb{position:relative;max-width:1100px;aspect-ratio:1182/550}
+.bb .board{position:absolute;right:0;top:0;width:70%;overflow:hidden}
+.bb .board img{width:100%}
+.bb .sub{position:absolute;left:0;top:20.9%;width:40.5%;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
+
+.lift{position:relative;width:min(100%,calc(62vh * 312 / 502));aspect-ratio:312/502;margin:0 auto}
+.lift img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lift-caps{position:relative;height:1.4em;margin-top:18px;text-align:center;font:400 clamp(22px,2.6vw,32px)/1.4 var(--f-display);letter-spacing:.04em}
+.lift-caps span{position:absolute;left:0;right:0;transition:opacity .4s,transform .4s}
+.lift-wrap{display:grid;grid-template-columns:1fr auto 1fr;gap:clamp(16px,3vw,40px);align-items:center}
+.lift-side{font-size:15px;color:var(--graphite);max-width:28ch}
+.lift-side.r{justify-self:end;text-align:right}
+.lift-dots{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.lift-dots i{width:24px;height:3px;background:var(--mist);border-radius:2px;transition:background .3s}
+.lift-dots i.on{background:var(--dahlia)}
+
+.tilt{transform-style:preserve-3d;will-change:transform;transition:transform .2s ease-out}
+.social{max-width:900px;perspective:1200px}
+.social img{border-radius:6px}
+.calendar{max-width:1000px;perspective:1400px}
+.office{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1.4vw,16px);max-width:1040px}
+.office img{box-shadow:0 30px 60px -36px rgba(0,0,0,.45)}
+
+.outdoor{display:grid;grid-template-columns:291fr 278fr 247fr 236fr;grid-template-rows:196fr 243fr 186fr;gap:6px;aspect-ratio:1070/640;max-width:1080px}
+.outdoor > div,.event > div{overflow:hidden}
+.outdoor img,.event img{width:100%;height:100%;object-fit:cover}
+.o1{grid-area:1/1/2/2}.o2{grid-area:2/1/4/2}.o3{grid-area:1/2/3/5}.o4{grid-area:3/2/4/3}.o5{grid-area:3/3/4/4}.o6{grid-area:3/4/4/5}
+.event{display:grid;grid-template-columns:336fr 312fr 317fr;grid-template-rows:215fr 231fr 233fr;gap:6px;aspect-ratio:971/690;max-width:1000px}
+.e1{grid-area:1/1/2/2}.e2{grid-area:1/2/2/3}.e3{grid-area:1/3/2/4}.e4{grid-area:2/1/3/2}.e5{grid-area:2/2/4/4}.e6{grid-area:3/1/4/2}
+
+.booth{position:relative;max-width:1000px;aspect-ratio:999/657}
+.booth .b1{position:absolute;left:0;top:0;width:76.2%;overflow:hidden}
+.booth .b1::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.55) 50%,transparent 65%);transform:translateX(var(--g,-120%));mix-blend-mode:soft-light}
+.booth .b2{position:absolute;left:62.6%;top:57%;width:37.4%;box-shadow:0 30px 60px -30px rgba(0,0,0,.55)}
+
+.mags{display:flex;align-items:flex-start;gap:0;max-width:1180px}
+.mag{transform-origin:50% 0}
+.mag img{transform-origin:50% 0;animation:sway 5s ease-in-out infinite alternate}
+.mag:nth-child(2) img{animation-duration:6.2s;animation-delay:-2s}
+.mag:nth-child(3) img{animation-duration:4.6s;animation-delay:-1s}
+@keyframes sway{from{transform:rotate(-1.1deg)}to{transform:rotate(1.1deg)}}
+
+.pack{display:grid;grid-template-columns:407fr 557fr;gap:clamp(20px,6vw,90px);align-items:end;max-width:1000px;perspective:1200px}
+.brochure{display:grid;grid-template-columns:330fr 648fr;gap:clamp(18px,4vw,50px);align-items:center;max-width:1040px;perspective:1600px}
+.brochure .s{transform-origin:0 50%}
+.render3d{display:grid;grid-template-columns:364fr 591fr;gap:0;max-width:960px;align-items:stretch}
+.render3d img{width:100%;height:100%;object-fit:cover}
+
+/* ---------- contact ---------- */
+.contact{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding-block:90px 40px;text-align:center}
+.inf{width:min(320px,60vw);margin:0 auto 40px}
+.inf path{fill:none;stroke:var(--ink);stroke-width:7;stroke-linecap:round}
+.contact h2{font:400 clamp(44px,7vw,110px)/.9 var(--f-display)}
+.contact .where{color:var(--graphite);margin-top:12px}
+.lines{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:36px}
+.line-item{display:flex;align-items:center;gap:10px;border:1px solid var(--rule);border-radius:999px;padding:8px 8px 8px 18px;font:500 clamp(14px,1.4vw,17px)/1.2 var(--f-body);max-width:100%}
+.line-item span{user-select:all;overflow-wrap:anywhere}
+.copy{all:unset;cursor:pointer;font:600 11px/1 var(--f-mono);letter-spacing:.06em;padding:9px 12px;border-radius:999px;background:var(--ink);color:var(--paper)}
+.copy:focus-visible{outline:2px solid var(--dahlia);outline-offset:2px}
+.foot{margin-top:70px;font-size:12px;color:var(--graphite);letter-spacing:.06em}
+
+/* ---------- responsive ---------- */
+@media (max-width:860px){
+  .sw-grid,.range-grid,.skills{grid-template-columns:minmax(0,1fr)}
+  .tools{display:flex;flex-wrap:wrap;gap:6px}
+  .tool{width:auto;border:1px solid var(--mist);border-radius:999px;padding:8px 12px;font-size:20px}
+  .tool:hover,.tool:focus-visible,.tool.on{padding-left:12px;border-color:var(--ink)}
+  .tool small{display:none}
+  .process ol{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:30px}
+  .steps::before,.process .line{display:none}
+  .logo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .lift-wrap{grid-template-columns:minmax(0,1fr)}
+  .lift-side,.lift-side.r{justify-self:center;text-align:center}
+  .stat{grid-template-columns:minmax(0,1fr)}
+  .ch-head .cap{text-align:left}
+  .areas{columns:1}
+  .portrait-wrap{max-width:96vw;height:78%}
+  .layers,.graph{transform:scale(.8);transform-origin:top right}
+}
+@media (max-width:520px){
+  .product{grid-template-columns:1fr 1fr}
+  .product .tee{grid-column:1/3;grid-row:1}.product .polo{grid-column:1;grid-row:2}.product .shorts{grid-column:2;grid-row:2}.product .mug{display:none}
+  .office,.pack,.brochure,.render3d{grid-template-columns:minmax(0,1fr)}
+  .timeline{height:34%}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+
+<!-- SVG filters for CMYK separation and laser glow -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="sepC"><feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0"/></filter>
+  <filter id="sepM"><feColorMatrix type="matrix" values="0 0 0 0 1  0 1 0 0 0  0 0 0 0 1  0 0 0 1 0"/></filter>
+  <filter id="sepY"><feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 1 0 0  0 0 0 1 0"/></filter>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</svg>
+
+<header class="bar">
+  <div class="bar-in"><span>MJ Rahman</span><span id="chapterLabel">Portfolio</span></div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<main>
+<!-- 1 · HERO -->
+<section class="hero" id="hero" aria-label="MJ Rahman, graphic design portfolio">
+  <canvas id="backClouds" aria-hidden="true"></canvas>
+  <svg class="birds" id="birds" viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+  <div class="portrait-wrap" id="portraitWrap"><div class="portrait-in" id="portraitIn"><img src="img/portrait.webp" alt="Double-exposure self-portrait of MJ Rahman, profile dissolving into clouds" width="1122" height="1402" fetchpriority="high"></div></div>
+  <canvas id="foreClouds" aria-hidden="true"></canvas>
+  <div class="hero-name">
+    <h1><span class="ln"><b>MJ</b>&nbsp;<span>Rahman</span></span></h1>
+    <p class="ln"><span>Graphic Design Portfolio</span></p>
+  </div>
+  <div class="scroll-cue" aria-hidden="true">SCROLL<i></i></div>
+  <div class="hero-veil" id="heroVeil"></div>
+</section>
+
+<!-- 2 · PROFILE -->
+<section class="profile" id="profile" data-label="Profile">
+  <div class="wrap"><div class="eyebrow">Performance profile</div></div>
+  <div class="roles" aria-label="Graphic Designer, Brand Development, Marketing Strategy, Creative Execution">
+    <div class="role" data-dir="1">Graphic Designer<span class="dot">.</span></div>
+    <div class="role outline" data-dir="-1">Brand Development</div>
+    <div class="role grey" data-dir="1">Marketing Strategy</div>
+    <div class="role" data-dir="-1">Creative Execution<span class="dot">.</span></div>
+  </div>
+  <div class="wrap">
+    <div class="stat">
+      <div class="num"><span id="years">15</span><sup>+</sup></div>
+      <p>years of professional experience in graphic design, branding, marketing, printing, events and creative business development.</p>
+    </div>
+    <p class="statement reveal-words">I help businesses transform ideas into strong, recognizable and market-ready brands.</p>
+    <p class="statement2">My experience goes beyond design. I work across the complete brand-building process, from understanding a business concept and analysing the market to building practical systems for sustainable growth.</p>
+
+    <div class="process">
+      <div class="eyebrow">The brand-building process</div>
+      <div class="steps"><span class="line" aria-hidden="true"></span>
+      <ol>
+        <li data-n="1"><b>Concept</b>Understand the business idea</li>
+        <li data-n="2"><b>Market</b>Analyse the market</li>
+        <li data-n="3"><b>Identity</b>Develop the brand identity</li>
+        <li data-n="4"><b>Strategy</b>Create the marketing strategy</li>
+        <li data-n="5"><b>Campaigns</b>Execute the campaigns</li>
+        <li data-n="6"><b>Systems</b>Build systems for sustainable growth</li>
+      </ol></div>
+    </div>
+
+    <div class="skills">
+      <div class="eyebrow">Professional skills</div>
+      <ul>
+        <li><span>01</span>Thorough understanding of Adobe Photoshop and Adobe Illustrator</li>
+        <li><span>02</span>Reads industry trends early and turns them into bottom-line results</li>
+        <li><span>03</span>Produces original design and product innovation</li>
+        <li><span>04</span>Excellent communicator</li>
+        <li><span>05</span>Fully understands and works to design briefs</li>
+        <li><span>06</span>Multi-tasks so customer requirements are met on time</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · SOFTWARE -->
+<section class="software" id="software" data-label="Software">
+  <div class="wrap">
+    <div class="eyebrow">Software expertise</div>
+    <div class="sw-grid">
+      <ul class="tools" id="tools" aria-label="Software. Hover or select one to preview it on the illustration.">
+        <li><button class="tool" data-fx="ps" data-t="Photoshop — Hue/Saturation on selection"><small>Ps</small>Adobe Photoshop</button></li>
+        <li><button class="tool" data-fx="ai" data-t="Illustrator — Pen tool, outline view"><small>Ai</small>Adobe Illustrator</button></li>
+        <li><button class="tool" data-fx="type" data-t="Typography — text on a path"><small>Aa</small>Typography</button></li>
+        <li><button class="tool" data-fx="pr" data-t="Premiere Pro — Sequence 01"><small>Pr</small>Adobe Premiere Pro</button></li>
+        <li><button class="tool" data-fx="ae" data-t="After Effects — wiggle() expression"><small>Ae</small>Adobe After Effects</button></li>
+        <li><button class="tool" data-fx="lu" data-t="Lumion — golden-hour render"><small>Lu</small>Lumion</button></li>
+        <li><button class="tool" data-fx="su" data-t="SketchUp — Orbit, perspective"><small>Su</small>SketchUp</button></li>
+        <li><button class="tool" data-fx="of" data-t="MS Office — Excel, Sheet1"><small>Of</small>MS Office</button></li>
+        <li><button class="tool" data-fx="cs" data-t="Creative Suite — CMYK separations"><small>Cs</small>Adobe Creative Suite</button></li>
+        <li><button class="tool" data-fx="qs" data-t="QuickShow — live laser cue"><small>Qs</small>QuickShow</button></li>
+        <li><button class="tool" data-fx="vj" data-t="Resolume Arena — Composition, 120 BPM"><small>Ra</small>Resolume Arena</button></li>
+      </ul>
+
+      <div class="stage" id="stage" data-fx="">
+        <div class="stage-bar"><span class="dots"><i></i><i></i><i></i></span><span class="st-title" id="stTitle">doodle-space.art</span><span style="width:39px"></span></div>
+        <div class="canvas-area">
+          <div class="qs-night"></div>
+          <div class="plane" id="plane">
+            <div class="su-grid"></div>
+            <div class="base" id="base">
+              <div class="pc p-saturn" style="left:0.796%;top:12.931%;width:22.771%;height:19.138%"><img src="img/d-saturn.webp" alt=""></div>
+              <div class="pc p-star" style="left:49.363%;top:11.207%;width:16.879%;height:18.966%"><img src="img/d-star.webp" alt=""></div>
+              <div class="pc p-moon" style="left:84.554%;top:2.069%;width:14.172%;height:16.552%"><img src="img/d-moon.webp" alt=""></div>
+              <div class="pc p-earth" style="left:22.452%;top:33.966%;width:59.873%;height:49.31%"><img src="img/d-earth.webp" alt="Hand-drawn Earth with clouds, a rocket, Saturn, a star and the moon"></div>
+              <div class="pc p-comet" style="left:18.471%;top:51.552%;width:8.28%;height:9.138%"><img src="img/d-comet.webp" alt=""></div>
+              <div class="pc p-rocket" style="left:9.873%;top:79.31%;width:21.178%;height:18.966%"><img src="img/d-rocket.webp" alt=""></div>
+            </div>
+            <i class="ax r"></i><i class="ax g"></i><i class="ax b"></i>
+          </div>
+
+          <!-- Photoshop -->
+          <div class="fx fx-ps">
+            <svg viewBox="0 0 628 580" class="ants"><rect class="a1" x="141" y="197" width="376" height="286"/><rect class="a2" x="141" y="197" width="376" height="286"/></svg>
+            <div class="layers"><div><i></i>Hue/Saturation 1</div><div><i></i>Earth</div><div><i></i>Planets</div><div><i></i>Background</div></div>
+            <span class="chip" style="left:10px;bottom:10px">Hue <b>+155</b> · Sat <b>+70</b></span>
+          </div>
+          <!-- Illustrator -->
+          <div class="fx fx-ai">
+            <svg viewBox="0 0 628 580">
+              <path class="vec draw" d="M327 206 C401 206 461 266 461 340 C461 414 401 474 327 474 C253 474 193 414 193 340 C193 266 253 206 327 206 Z"/>
+              <path class="vec draw" d="M118 520 C 170 430, 260 150, 470 60 S 560 40, 600 30"/>
+              <path class="hnd" d="M253 206 L401 206 M461 266 L461 414 M401 474 L253 474 M193 414 L193 266 M260 150 L470 60"/>
+              <circle class="hdot" cx="253" cy="206" r="3.5"/><circle class="hdot" cx="401" cy="206" r="3.5"/><circle class="hdot" cx="461" cy="266" r="3.5"/><circle class="hdot" cx="461" cy="414" r="3.5"/><circle class="hdot" cx="401" cy="474" r="3.5"/><circle class="hdot" cx="253" cy="474" r="3.5"/><circle class="hdot" cx="193" cy="414" r="3.5"/><circle class="hdot" cx="193" cy="266" r="3.5"/>
+              <rect class="anc" x="323" y="202" width="8" height="8"/><rect class="anc" x="457" y="336" width="8" height="8"/><rect class="anc" x="323" y="470" width="8" height="8"/><rect class="anc" x="189" y="336" width="8" height="8"/><rect class="anc" x="114" y="516" width="8" height="8"/><rect class="anc" x="596" y="26" width="8" height="8"/>
+            </svg>
+            <span class="chip" style="left:10px;bottom:10px">Pen tool · <b>4 anchors</b> · Outline view</span>
+          </div>
+          <!-- Typography -->
+          <div class="fx fx-type">
+            <div class="specimen">Aa</div>
+            <div class="metric" style="top:15%">ascender</div>
+            <div class="metric" style="top:26%">x-height</div>
+            <div class="metric" style="top:36%">baseline</div>
+            <svg viewBox="0 0 628 580"><defs><path id="circ" d="M327 340 m-176 0 a176 176 0 1 1 352 0 a176 176 0 1 1 -352 0"/></defs>
+              <g class="ring"><text><textPath href="#circ">KERNING · LEADING · TRACKING · HIERARCHY · CONTRAST · RHYTHM ·</textPath></text></g></svg>
+            <span class="chip" style="right:10px;bottom:10px">Bebas Neue · <b>tracking 240</b></span>
+          </div>
+          <!-- Premiere -->
+          <div class="fx fx-pr">
+            <div class="lbx t"></div><div class="lbx b"></div>
+            <div class="timeline">
+              <div class="tl-head"><span>Sequence 01</span><b id="tc">00:00:00:00</b></div>
+              <div class="trk"><span>V2</span><div class="v2"></div></div>
+              <div class="trk"><span>V1</span><div class="v1"></div></div>
+              <div class="trk"><span>A1</span><div class="a1"></div></div>
+              <i class="playhead"></i>
+            </div>
+          </div>
+          <!-- After Effects -->
+          <div class="fx fx-ae">
+            <div class="graph"><svg viewBox="0 0 150 96"><path d="M12 82 C 60 82, 70 14, 138 14"/><rect class="kf" x="8" y="78" width="8" height="8" transform="rotate(45 12 82)"/><rect class="kf" x="134" y="10" width="8" height="8" transform="rotate(45 138 14)"/></svg></div>
+            <span class="chip" style="left:10px;bottom:10px">Expression: <b>wiggle(4, 25)</b> · Easy Ease</span>
+          </div>
+          <!-- Lumion -->
+          <div class="fx fx-lu">
+            <div class="lu-light"></div><div class="lu-sun"></div>
+            <span class="chip render">Rendering 1920 × 1080<i></i></span>
+          </div>
+          <!-- SketchUp -->
+          <div class="fx fx-su"><span class="chip" style="left:10px;bottom:10px">Orbit · <b style="color:#ff6b6b">X</b> <b style="color:#5bd17a">Y</b> <b style="color:#6f9bff">Z</b> axes</span></div>
+          <!-- Office -->
+          <div class="fx fx-of">
+            <div class="xl"></div>
+            <div class="xl-col"><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span><span>H</span></div>
+            <div class="xl-fx">fx&nbsp;&nbsp;<b>=CHART(B2:B6)</b></div>
+            <div class="xl-sel"></div>
+            <div class="bars"><i style="height:45%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:88%"></i><i style="height:100%"></i></div>
+          </div>
+          <!-- Creative Suite -->
+          <div class="fx fx-cs" id="fxCs">
+            <span class="chip cmyk"><i style="background:#00aeef"></i><i style="background:#ec008c"></i><i style="background:#fff200"></i><i style="background:#222;outline:1px solid #555"></i>&nbsp;Plates coming into register</span>
+          </div>
+          <!-- QuickShow -->
+          <div class="fx fx-qs">
+            <svg viewBox="0 0 628 580" class="beams">
+              <g class="sweep1"><line x1="314" y1="640" x2="80" y2="-40" stroke="#38ffd2"/><line x1="314" y1="640" x2="250" y2="-60" stroke="#38ffd2"/><line x1="314" y1="640" x2="420" y2="-60" stroke="#38ffd2"/></g>
+              <g class="sweep2"><line x1="314" y1="640" x2="160" y2="-60" stroke="#ff3fb4"/><line x1="314" y1="640" x2="520" y2="-40" stroke="#ff3fb4"/><line x1="314" y1="640" x2="620" y2="40" stroke="#6b7bff"/></g>
+            </svg>
+            <span class="chip" style="right:10px;top:10px">Cue <b>07</b> · Beam sweep</span>
+          </div>
+          <!-- Resolume -->
+          <div class="fx fx-vj" id="fxVj">
+            <div class="vjgrid" id="vjgrid"></div>
+            <div class="eq"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <span class="chip" style="right:10px;top:10px">Layer 1 · Mirror · <b>120 BPM</b></span>
+          </div>
+          <div class="idle-hint">Hover a tool to see it at work</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · RANGE -->
+<section class="range" id="range" data-label="Range">
+  <div class="wrap range-grid">
+    <div>
+      <div class="eyebrow">Areas of work</div>
+      <h2>A wide range of hands-on experience</h2>
+      <ul class="areas" id="areas">
+        <li>Real-estate marketing strategy</li><li>Project logo design</li><li>Brochure design</li><li>Event management</li>
+        <li>Flyer design</li><li>Social media content design</li><li>Proposal design</li><li>Video production</li>
+        <li>Web banner &amp; interface design</li><li>Small &amp; large format design</li><li>Magazine &amp; print ad design</li><li>Photography &amp; cinematography</li>
+      </ul>
+    </div>
+    <img class="pencil" id="pencil" src="img/pencil.webp" alt="Pencil sketch of ideas streaming from a pencil tip: a bird, a brain, a butterfly, a light bulb" width="637" height="630">
+  </div>
+</section>
+
+<!-- 5 · EXPERIENCE -->
+<section class="exp" id="experience" data-label="Experience">
+  <img class="flower" id="flower" src="img/flower.webp" alt="" aria-hidden="true">
+  <div class="wrap">
+    <div class="eyebrow">Graphic design experience</div>
+    <h2>Where the work happened</h2>
+    <div class="tl">
+      <span class="tl-line" aria-hidden="true"></span>
+      <article class="role-card">
+        <div class="when">May 2022 – Present</div>
+        <h3>Social Media Manager &amp; Graphic Designer</h3>
+        <div class="org">TR Trades Reproduction Ltd · Vancouver, Canada</div>
+        <ul>
+          <li>Performs a wide range of graphic design work in Adobe Illustrator, Photoshop, InDesign and Acrobat.</li>
+          <li>Plans, develops and produces creative visual materials and marketing content.</li>
+          <li>Designs single- and multi-page, multi-colour layouts and publications.</li>
+          <li>Creates social media and e-commerce visual content.</li>
+          <li>Translates client requirements into effective visual concepts.</li>
+          <li>Prepares designs for printing, binding, laminating and final production on the appropriate media.</li>
+          <li>Keeps quality, consistency and accuracy across every project.</li>
+        </ul>
+      </article>
+      <article class="role-card">
+        <div class="when">Feb 2016 – Mar 2022</div>
+        <h3>Graphic Designer</h3>
+        <div class="org">Giant Concept Limited · Chittagong, Bangladesh</div>
+        <ul>
+          <li>Created print, digital, social media and e-commerce designs in Illustrator, Photoshop, InDesign and Acrobat.</li>
+          <li>Developed creative concepts, layouts, branding materials and marketing visuals to client requirements.</li>
+          <li>Managed projects from concept and design through print production and finishing.</li>
+          <li>Followed design, market and visual trends to deliver modern, competitive work.</li>
+          <li>Worked with clients and teams on brand consistency, quality and timely delivery.</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SELECTED WORK -->
+<section class="divider" aria-label="Selected work">
+  <div class="marquee" id="marquee" aria-hidden="true"><span>Selected work</span><span class="o">Selected work</span><span>Selected work</span><span class="o">Selected work</span></div>
+</section>
+
+<section class="chapter pin" id="logos" data-label="Logo design">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Logo design</h2><p class="cap">One simple symbol can say what industry you're in, what you offer and how your business feels.</p></div>
+    <div class="logo-grid media" id="logoGrid">
+      <img src="img/logo-lustrous.webp" alt="Lustrous Pearl"><img src="img/logo-jumairah.webp" alt="Jumairah Holdings Ltd."><img src="img/logo-rezia.webp" alt="Park Rezia"><img src="img/logo-haven.webp" alt="Haven 107"><img src="img/logo-plc.webp" class="tall" alt="People's Learning Center">
+      <img src="img/logo-babyfood.webp" alt="Chittagong Baby Food"><img src="img/logo-shape.webp" alt="Shape Interior &amp; Architecture"><img src="img/logo-giant.webp" alt="Giant Concept Limited"><img src="img/logo-silver.webp" alt="Silver Spoon"><img src="img/logo-sailor.webp" alt="Sailor by Epyllion">
+      <img src="img/logo-chevron.webp" alt="Chevron Clinical Laboratory"><img src="img/logo-cpdl.webp" alt="cpdl"><img src="img/logo-hammer.webp" alt="Hammer Strength Fitness &amp; Training Center"><img src="img/logo-bengal.webp" class="tall" alt="Bengal Tigers Cricket Club"><img src="img/logo-mithila.webp" class="tall" alt="Mithila's Fashion">
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="product" data-label="Product design">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Product design</h2><p class="cap"><b>Hammer Strength</b> · Fitness &amp; Training Center merchandise</p></div>
+    <div class="product media">
+      <img class="tee" src="img/tee.webp" alt="Hammer Strength T-shirt">
+      <img class="polo" src="img/polo.webp" alt="Hammer Strength polo shirt">
+      <img class="shorts" src="img/shorts.webp" alt="Hammer Strength training shorts">
+      <img class="mug" src="img/mug.webp" alt="Hammer Strength mug">
+    </div>
+  </div>
+</section>
+
+<section class="chapter pin" id="flyer" data-label="Flyer design">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Flyer design</h2><p class="cap"><b>cpdl</b> · Property portfolio tri-fold</p></div>
+    <div class="flyer media" id="flyerBox">
+      <div class="fp f1" style="--w:33.24"><img src="img/flyer1.webp" alt="cpdl tri-fold, back panel"></div>
+      <div class="fp f2" style="--w:32.43"><img src="img/flyer2.webp" alt="cpdl tri-fold, inside panel"></div>
+      <div class="fp f3" style="--w:34.33"><img src="img/flyer3.webp" alt="cpdl tri-fold, cover"></div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter pin" id="billboard" data-label="Billboard design">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Billboard design</h2><p class="cap"><b>Habib Tazkira's</b> · Outdoor and subway</p></div>
+    <div class="bb media">
+      <div class="board"><img id="boardImg" src="img/billboard.webp" alt="Habib Tazkira's billboard with five beauty close-ups"></div>
+      <img class="sub" id="subImg" src="img/subway.webp" alt="Habib Tazkira's subway poster built from salon service words">
+    </div>
+  </div>
+</section>
+
+<section class="chapter pin" id="lift" data-label="Creative branding">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Creative branding</h2><p class="cap"><b>Silver Spoon</b> · Elevator ambient ad</p></div>
+    <div class="lift-wrap">
+      <p class="lift-side">The lift doors carry a whole lobster. When they open, a chef's knife waits inside.</p>
+      <div>
+        <div class="lift media"><img src="img/lift1.webp" alt="Elevator doors closed, showing a red lobster"><img id="lift2" src="img/lift2.webp" alt="Doors half open, revealing a hand with a knife"><img id="lift3" src="img/lift3.webp" alt="Doors fully open, Silver Spoon logo and knife"></div>
+        <div class="lift-caps" aria-hidden="true"><span id="cap1">Doors closed</span><span id="cap2" style="opacity:0">Doors opening</span><span id="cap3" style="opacity:0">Dinner is served</span></div>
+        <div class="lift-dots"><i class="on"></i><i></i><i></i></div>
+      </div>
+      <p class="lift-side r">Scroll to ride the doors open.</p>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="social" data-label="Social media">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Social media post</h2><p class="cap"><b>Chevron Clinical Laboratory</b> · Dental Unite</p></div>
+    <div class="social media"><div class="tilt" data-tilt><img id="socialImg" src="img/social.webp" alt="Before and after smile post for Chevron Dental Unite with reaction emoji"></div></div>
+  </div>
+</section>
+
+<section class="chapter" id="calendar" data-label="Calendar design">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Calendar design</h2><p class="cap"><b>Dream Knitting</b> · 2018 desk calendar</p></div>
+    <div class="calendar media"><div class="tilt" data-tilt id="calTilt"><img src="img/calendar.webp" alt="Dream Knitting 2018 desk calendar with triangle-cut textile imagery"></div></div>
+  </div>
+</section>
+
+<section class="chapter" id="office" data-label="Office collateral">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Office collateral</h2><p class="cap"><b>Brothers Trade &amp; Tours</b> · Letterhead and business cards</p></div>
+    <div class="office media"><img id="lh" src="img/letterhead.webp" alt="Brothers Trade &amp; Tours letterhead on a desk"><img id="bc" src="img/card.webp" alt="Brothers Trade &amp; Tours business cards"></div>
+  </div>
+</section>
+
+<section class="chapter" id="outdoor" data-label="Outdoor campaign">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Outdoor campaign</h2><p class="cap"><b>Milonmela 2020</b> · Stage, gates, bags and signage</p></div>
+    <div class="outdoor media" id="outdoorGrid">
+      <div class="o1"><img src="img/out1.webp" alt="Milonmela 2020 banner with a school bus illustration"></div>
+      <div class="o2"><img src="img/out2.webp" alt="Branded gift bags"></div>
+      <div class="o3"><img src="img/out3.webp" alt="Main stage with lighting truss and audience"></div>
+      <div class="o4"><img src="img/out4.webp" alt="Group photo at the entrance arch"></div>
+      <div class="o5"><img src="img/out5.webp" alt="Venue signage on the plaza"></div>
+      <div class="o6"><img src="img/out6.webp" alt="Entrance arch"></div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="event" data-label="Event venue design">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Event venue design</h2><p class="cap"><b>HPVax · Doctors' Eid Soirée</b> · Popular Pharmaceuticals Ltd.</p></div>
+    <div class="event media" id="eventGrid">
+      <div class="e1"><img src="img/ev1.webp" alt="HPVax entrance backdrop"></div>
+      <div class="e2"><img src="img/ev2.webp" alt="Pillar wraps along the corridor"></div>
+      <div class="e3"><img src="img/ev3.webp" alt="Lit photo backdrop with balloon arch"></div>
+      <div class="e4"><img src="img/ev4.webp" alt="Doctors' Eid Soirée stage and panel seating"></div>
+      <div class="e5"><img src="img/ev5.webp" alt="Ballroom stage with LED wall and chandeliers"></div>
+      <div class="e6"><img src="img/ev6.webp" alt="Ballroom stage in pink and purple light"></div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="booth" data-label="Exhibition booth">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Exhibition booth design</h2><p class="cap"><b>Jumairah Holdings Ltd.</b> · Trade-fair stall</p></div>
+    <div class="booth media" id="boothBox">
+      <div class="b1"><img src="img/booth1.webp" alt="Jumairah Holdings exhibition booth, front view"></div>
+      <img class="b2" id="b2" src="img/booth2.webp" alt="Jumairah Holdings booth, side view">
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="magazine" data-label="Magazine ad">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Magazine ad</h2><p class="cap"><b>KANS · Silver Spoon · Hammer Strength</b></p></div>
+    <div class="mags media" id="mags">
+      <div class="mag" style="width:29.7%"><img src="img/mag1.webp" alt="KANS apparel label manufacturer ad on denim"></div>
+      <div class="mag" style="width:44.3%"><img src="img/mag2.webp" alt="Silver Spoon Valentine's buffet dinner ad"></div>
+      <div class="mag" style="width:26%"><img src="img/mag3.webp" alt="Hammer Strength 'Remember why you started' ad"></div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="packaging" data-label="Creative packaging">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Creative packaging</h2><p class="cap"><b>Hammer Strength</b> carry bag · <b>Ashton Gin</b> bottle and box</p></div>
+    <div class="pack media"><img id="dumbbell" src="img/dumbbell.webp" alt="Hammer Strength carry bag with dumbbell-shaped handle"><img id="gin" src="img/gin.webp" alt="Ashton Gin bottle and gift box"></div>
+  </div>
+</section>
+
+<section class="chapter" id="brochure" data-label="Brochure design">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">Brochure design</h2><p class="cap"><b>Artistic Color</b> · Cover and opening spread</p></div>
+    <div class="brochure media"><img id="bro1" src="img/bro1.webp" alt="Artistic Color brochure cover with palette and brushes"><img class="s" id="bro2" src="img/bro2.webp" alt="Artistic Color spread: watercolour pan and rainbow umbrella"></div>
+  </div>
+</section>
+
+<section class="chapter" id="render" data-label="3D render">
+  <div class="wrap">
+    <div class="ch-head"><h2 class="chapter-title">3D render</h2><p class="cap">Residential tower exterior and interiors</p></div>
+    <div class="render3d media"><img id="tower" src="img/tower.webp" alt="Rendered residential high-rise tower"><img id="renders" src="img/renders.webp" alt="Rendered interiors: living room, corridor, rooftop pool, dining"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact" data-label="Contact">
+  <div class="wrap">
+    <svg class="inf" viewBox="0 0 320 180" aria-hidden="true"><path id="infPath" d="M160 90 C 200 40, 290 10, 290 80 C 290 150, 200 140, 160 90 C 120 40, 30 30, 30 95 C 30 160, 120 140, 160 90 Z" transform="rotate(-14 160 90)"/></svg>
+    <h2>Mohammad Jillur Rahman</h2>
+    <p class="where">Graphic designer · Vancouver, BC</p>
+    <div class="lines">
+      <div class="line-item"><span id="phone">+1 (778) 683-9312</span><button class="copy" data-copy="phone">Copy</button></div>
+      <div class="line-item"><span id="email">ecommunicationctg@gmail.com</span><button class="copy" data-copy="email">Copy</button></div>
+    </div>
+    <p class="foot">© MJ Rahman. All work shown is reserved to its author.</p>
+  </div>
+</section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="6"/><path d="M12 6v4"/></svg>
+  <span id="toastText">Hover a tool name to see it at work on the illustration</span>
+  <button id="toastClose" aria-label="Dismiss tip">✕</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+  const G = window.gsap, ST = window.ScrollTrigger;
+  const motion = !!(G && ST) && !reduce;
+
+  /* ---------------- mouse ---------------- */
+  const mouse = { x: 0, y: 0, tx: 0, ty: 0, px: -999, py: -999 };
+  addEventListener('pointermove', e => {
+    mouse.tx = (e.clientX / innerWidth) * 2 - 1;
+    mouse.ty = (e.clientY / innerHeight) * 2 - 1;
+    mouse.px = e.clientX; mouse.py = e.clientY;
+  }, { passive: true });
+
+  /* ---------------- hero: clouds ---------------- */
+  const hero = $('#hero');
+  const heroState = { p: 0, visible: true };
+  function rng(seed) { return () => (seed = (seed * 16807) % 2147483647) / 2147483647; }
+  function makeCloud(w, h, seed) {
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    const g = c.getContext('2d'), r = rng(seed);
+    const blobs = [];
+    for (let i = 0; i < 26; i++) {
+      const t = r();
+      blobs.push({ x: w * (0.15 + 0.7 * t), y: h * (0.42 + (r() - 0.5) * 0.36 * Math.sin(t * Math.PI)), rad: h * (0.16 + r() * 0.2) * (0.6 + Math.sin(t * Math.PI) * 0.6) });
+    }
+    blobs.forEach(b => { // shadow underside
+      const gr = g.createRadialGradient(b.x, b.y + b.rad * 0.35, 0, b.x, b.y + b.rad * 0.35, b.rad);
+      gr.addColorStop(0, 'rgba(118,124,134,0.16)'); gr.addColorStop(1, 'rgba(118,124,134,0)');
+      g.fillStyle = gr; g.beginPath(); g.arc(b.x, b.y + b.rad * 0.35, b.rad, 0, 6.283); g.fill();
+    });
+    blobs.forEach(b => { // lit tops
+      const gr = g.createRadialGradient(b.x - b.rad * 0.2, b.y - b.rad * 0.3, 0, b.x, b.y, b.rad);
+      gr.addColorStop(0, 'rgba(255,255,255,0.95)'); gr.addColorStop(0.6, 'rgba(244,245,247,0.6)'); gr.addColorStop(1, 'rgba(244,245,247,0)');
+      g.fillStyle = gr; g.beginPath(); g.arc(b.x, b.y, b.rad, 0, 6.283); g.fill();
+    });
+    return c;
+  }
+  const sprites = [1, 7, 13, 21, 34].map(s => makeCloud(520, 220, s));
+  const back = $('#backClouds'), fore = $('#foreClouds');
+  const bctx = back.getContext('2d'), fctx = fore.getContext('2d');
+  let W = 0, H = 0, DPR = 1;
+  function sizeCanvases() {
+    DPR = Math.min(devicePixelRatio || 1, 2);
+    W = hero.clientWidth; H = hero.clientHeight;
+    [back, fore].forEach(c => { c.width = W * DPR; c.height = H * DPR; c.getContext('2d').setTransform(DPR, 0, 0, DPR, 0, 0); });
+  }
+  sizeCanvases(); addEventListener('resize', sizeCanvases);
+  const r0 = rng(99);
+  const clouds = Array.from({ length: 11 }, (_, i) => ({
+    s: sprites[i % sprites.length], x: r0() * 1.3 - 0.15, y: 0.08 + r0() * 0.8,
+    k: 0.35 + r0() * 0.9, d: 0.25 + r0() * 1.0, v: 0.004 + r0() * 0.01, front: i > 8
+  }));
+  function drawClouds(dt) {
+    const p = heroState.p;
+    bctx.clearRect(0, 0, W, H); fctx.clearRect(0, 0, W, H);
+    const cx = W * 0.62, cy = H * 0.5;
+    clouds.forEach(c => {
+      c.x -= c.v * dt * (motion ? 1 : 0); if (c.x < -0.45) c.x = 1.25;
+      const zoom = 1 + p * 3.2 * c.d;
+      let x = c.x * W - mouse.x * 46 * c.d, y = c.y * H - mouse.y * 22 * c.d;
+      x = cx + (x - cx) * zoom; y = cy + (y - cy) * zoom;
+      const w = c.s.width * c.k * zoom * Math.max(W / 1400, 0.55), h = c.s.height * c.k * zoom * Math.max(W / 1400, 0.55);
+      const ctx = c.front ? fctx : bctx;
+      ctx.globalAlpha = c.front ? Math.min(1, 0.35 + p * 1.4) : Math.min(1, 0.85 + p);
+      ctx.drawImage(c.s, x - w / 2, y - h / 2, w, h);
+    });
+  }
+
+  /* ---------------- hero: birds ---------------- */
+  const birdsSvg = $('#birds');
+  const NS = 'http://www.w3.org/2000/svg';
+  const birds = [
+    { x: 640, y: 150, s: 1.15, sp: 26, ph: 0, f: 5.2 },
+    { x: 760, y: 250, s: 0.85, sp: 21, ph: 1.7, f: 6.1 },
+    { x: 560, y: 320, s: 0.55, sp: 17, ph: 3.1, f: 7.0 }
+  ].map(b => { const p = document.createElementNS(NS, 'path'); p.setAttribute('fill', '#BCC0C5'); birdsSvg.appendChild(p); return Object.assign(b, { el: p, lift: 0, bx: b.x, by: b.y }); });
+  function gull(f) {
+    const w = 46, ty = -20 * f - 3, my = -7 * f - 5;
+    return `M${-w} ${ty}Q${-w * .48} ${my} 0 4Q${w * .48} ${my} ${w} ${ty}Q${w * .48} ${my + 8} 0 10Q${-w * .48} ${my + 8} ${-w} ${ty}Z`;
+  }
+  function svgPoint() { // mouse into svg viewBox space (slice)
+    const r = birdsSvg.getBoundingClientRect(), sc = Math.max(r.width / 1000, r.height / 600);
+    return { x: (mouse.px - r.left - (r.width - 1000 * sc) / 2) / sc, y: (mouse.py - r.top - (r.height - 600 * sc) / 2) / sc };
+  }
+  let t0 = performance.now(), T = 0;
+  function drawBirds(dt) {
+    const m = svgPoint();
+    birds.forEach(b => {
+      if (motion) { b.bx -= b.sp * dt * 0.06; b.by -= b.sp * dt * 0.012; }
+      if (b.bx < -80 || b.by < -60) { b.bx = 1080; b.by = 260 + Math.random() * 200; }
+      const near = Math.hypot(m.x - b.bx, m.y - b.by) < 140;
+      b.lift += ((near ? -70 : 0) - b.lift) * 0.04;
+      const flapRate = near ? b.f * 1.8 : b.f;
+      const f = Math.sin(T * flapRate + b.ph);
+      const x = b.bx - mouse.x * 30 * b.s, y = b.by + Math.sin(T * 0.6 + b.ph) * 14 + b.lift - mouse.y * 14 * b.s - heroState.p * 260 * b.s;
+      b.el.setAttribute('d', gull(f));
+      b.el.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${b.s}) rotate(${-8 + b.lift * 0.08})`);
+      b.el.setAttribute('opacity', (1 - heroState.p * 1.2).toFixed(2));
+    });
+  }
+  const pIn = $('#portraitIn');
+  function heroLoop(now) {
+    const dt = Math.min(64, now - t0) / 16.67; t0 = now; T += dt / 60;
+    mouse.x += (mouse.tx - mouse.x) * 0.06; mouse.y += (mouse.ty - mouse.y) * 0.06;
+    if (heroState.visible) {
+      drawClouds(dt); drawBirds(dt);
+      if (fine && !reduce) pIn.style.transform = `translate3d(${(-mouse.x * 16).toFixed(2)}px, ${(-mouse.y * 9).toFixed(2)}px, 0) rotateY(${(mouse.x * 3).toFixed(2)}deg)`;
+    }
+    requestAnimationFrame(heroLoop);
+  }
+  new IntersectionObserver(es => es.forEach(e => heroState.visible = e.isIntersecting)).observe(hero);
+  requestAnimationFrame(heroLoop);
+
+  /* ---------------- software stage ---------------- */
+  const stage = $('#stage'), stTitle = $('#stTitle'), tools = $$('.tool');
+  const base = $('#base');
+  const clone = () => { const g = base.cloneNode(true); g.removeAttribute('id'); g.className = 'pgroup'; g.querySelectorAll('img').forEach(i => i.alt = ''); return g; };
+  ['c', 'm', 'y'].forEach(k => { const p = document.createElement('div'); p.className = 'plate ' + k; p.appendChild(clone()); $('#fxCs').prepend(p); });
+  for (let i = 0; i < 4; i++) { const d = document.createElement('div'); d.appendChild(clone()); $('#vjgrid').appendChild(d); }
+  let tcTimer = 0;
+  function setFx(k, btn) {
+    stage.dataset.fx = k;
+    tools.forEach(t => t.classList.toggle('on', t === btn));
+    stTitle.textContent = btn ? btn.dataset.t : 'doodle-space.art';
+    $$('.vec.draw').forEach(p => { p.style.animation = 'none'; p.offsetWidth; p.style.animation = ''; });
+    clearInterval(tcTimer);
+    if (k === 'pr') { const st = performance.now(); tcTimer = setInterval(() => { const ms = (performance.now() - st) % 3000, f = Math.floor(ms / 40); $('#tc').textContent = `00:00:0${Math.floor(f / 25)}:${String(f % 25).padStart(2, '0')}`; }, 40); }
+    hideToast();
+  }
+  tools.forEach(t => {
+    t.addEventListener('mouseenter', () => setFx(t.dataset.fx, t));
+    t.addEventListener('focus', () => setFx(t.dataset.fx, t));
+    t.addEventListener('click', () => setFx(t.dataset.fx, t));
+  });
+  $('#tools').addEventListener('mouseleave', () => { if (fine) setFx('', null); });
+
+  /* toast */
+  const toast = $('#toast');
+  let toastShown = false, toastTimer = 0;
+  if (!fine) $('#toastText').textContent = 'Tap a tool name to see it at work on the illustration';
+  function showToast() { if (toastShown) return; toastShown = true; toast.classList.add('show'); toastTimer = setTimeout(hideToast, 6000); }
+  function hideToast() { toast.classList.remove('show'); clearTimeout(toastTimer); }
+  $('#toastClose').addEventListener('click', hideToast);
+  new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) showToast(); }), { threshold: 0.45 }).observe(stage);
+
+  /* tilt on hover */
+  if (fine && !reduce) $$('[data-tilt]').forEach(el => {
+    el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; el.style.transform = `rotateY(${x * 10}deg) rotateX(${-y * 8}deg)`; });
+    el.addEventListener('pointerleave', () => el.style.transform = '');
+  });
+
+  /* copy buttons */
+  $$('.copy').forEach(b => b.addEventListener('click', () => {
+    const el = $('#' + b.dataset.copy), txt = el.textContent;
+    const done = () => { b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy', 1600); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Selected'; setTimeout(() => b.textContent = 'Copy', 1600); };
+    try { navigator.clipboard.writeText(txt).then(done, fallback); } catch (e) { fallback(); }
+  }));
+
+  /* ---------------- scroll choreography ---------------- */
+  const label = $('#chapterLabel');
+  if (!motion) { $('#years').textContent = '15'; return; }
+  G.registerPlugin(ST);
+
+  if (window.Lenis) {
+    const lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
+    lenis.on('scroll', ST.update);
+    G.ticker.add(t => lenis.raf(t * 1000));
+    G.ticker.lagSmoothing(0);
+  }
+
+  // progress + chapter label
+  G.to('#progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
+  $$('[data-label]').forEach(s => ST.create({ trigger: s, start: 'top 55%', end: 'bottom 55%', onToggle: self => { if (self.isActive) label.textContent = s.dataset.label; } }));
+  ST.create({ trigger: '#hero', start: 'top top', end: 'bottom 40%', onToggle: s => { if (s.isActive) label.textContent = 'Portfolio'; } });
+
+  // hero intro
+  G.from('.hero-name .ln > *', { yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.12, delay: 0.2 });
+  G.from('#portraitWrap', { opacity: 0, x: 60, duration: 1.6, ease: 'expo.out' });
+
+  // hero → fly into the clouds
+  G.timeline({ scrollTrigger: { trigger: '#hero', start: 'top top', end: '+=140%', pin: true, scrub: true, onUpdate: s => heroState.p = s.progress } })
+    .to('.hero-name', { yPercent: -80, opacity: 0, ease: 'none', duration: 0.4 }, 0)
+    .to('.scroll-cue', { opacity: 0, duration: 0.15 }, 0)
+    .to('#portraitWrap', { scale: 1.45, yPercent: -10, xPercent: -10, ease: 'none', duration: 1 }, 0)
+    .to('#portraitWrap', { opacity: 0, filter: 'blur(8px)', ease: 'none', duration: 0.35 }, 0.55)
+    .to('#heroVeil', { opacity: 1, ease: 'none', duration: 0.3 }, 0.7);
+
+  // profile: sliding kinetic lines
+  $$('.role').forEach(el => {
+    const d = +el.dataset.dir;
+    G.fromTo(el, { xPercent: d > 0 ? -2 : -30 }, { xPercent: d > 0 ? -30 : 2, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
+  });
+  const yrs = { v: 0 };
+  ST.create({ trigger: '.stat', start: 'top 80%', once: true, onEnter: () => G.to(yrs, { v: 15, duration: 1.6, ease: 'power3.out', onUpdate: () => $('#years').textContent = Math.round(yrs.v) }) });
+  $$('.reveal-words').forEach(p => {
+    p.innerHTML = p.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
+    G.fromTo(p.querySelectorAll('.w'), { opacity: 0.14 }, { opacity: 1, stagger: 0.1, ease: 'none', scrollTrigger: { trigger: p, start: 'top 82%', end: 'bottom 45%', scrub: true } });
+  });
+  G.fromTo('.process .line', { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.process', start: 'top 80%', end: 'bottom 55%', scrub: true } });
+  G.from('.process li', { y: 30, opacity: 0, stagger: 0.08, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.process', start: 'top 78%', toggleActions: 'play none none reverse' } });
+  G.from('.skills li', { y: 24, opacity: 0, stagger: 0.07, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: '.skills', start: 'top 80%', toggleActions: 'play none none reverse' } });
+
+  // software entrance: stage drops in with a 3D turn; tools ripple
+  G.from('#stage', { rotateX: 18, y: 80, opacity: 0, transformPerspective: 1200, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '#software', start: 'top 70%', toggleActions: 'play none none reverse' } });
+  G.from('.tool', { x: -40, opacity: 0, stagger: 0.04, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: '#software', start: 'top 70%', toggleActions: 'play none none reverse' } });
+
+  // range: the pencil draws its world
+  const mm = G.matchMedia();
+  mm.add('(min-width: 861px)', () => {
+    G.timeline({ scrollTrigger: { trigger: '#range', start: 'top top', end: '+=140%', pin: true, scrub: true } })
+      .fromTo('#pencil', { '--r': '0%' }, { '--r': '170%', ease: 'none', duration: 1 }, 0)
+      .from('#areas li', { clipPath: 'inset(0 100% 0 0)', x: -10, stagger: 0.06, ease: 'none', duration: 0.3 }, 0.05);
+  });
+  mm.add('(max-width: 860px)', () => {
+    G.fromTo('#pencil', { '--r': '0%' }, { '--r': '170%', ease: 'none', scrollTrigger: { trigger: '#pencil', start: 'top 85%', end: 'bottom 50%', scrub: true } });
+  });
+
+  // experience: line draws, flower blooms
+  G.fromTo('.tl-line', { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: '.tl', start: 'top 70%', end: 'bottom 60%', scrub: true } });
+  $$('.role-card').forEach(c => G.from(c, { x: 50, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: c, start: 'top 80%', toggleActions: 'play none none reverse' } }));
+  G.fromTo('#flower', { rotate: -120, scale: 0.35, opacity: 0 }, { rotate: 0, scale: 1, opacity: 1, ease: 'none', scrollTrigger: { trigger: '#experience', start: 'top 70%', end: 'bottom bottom', scrub: true } });
+
+  // selected-work marquee
+  G.fromTo('#marquee', { xPercent: 0 }, { xPercent: -45, ease: 'none', scrollTrigger: { trigger: '.divider', start: 'top bottom', end: 'bottom top', scrub: true } });
+
+  // chapter titles: letters rise in (the page-turn motif shared by every chapter)
+  $$('.chapter-title').forEach(h => {
+    h.innerHTML = h.textContent.split(' ').map(w => `<span class="wd">${w.split('').map(c => `<span class="ch">${c}</span>`).join('')}</span>`).join(' ');
+    G.from(h.querySelectorAll('.ch'), { yPercent: 105, rotate: 6, stagger: 0.025, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: h, start: 'top 85%', toggleActions: 'play none none reverse' } });
+  });
+
+  const pinTL = (trigger, len = '+=120%') => G.timeline({ scrollTrigger: { trigger, start: 'top top', end: len, pin: true, scrub: 0.6 } });
+  const scrubFrom = (target, vars, trigger, start = 'top 85%', end = 'top 30%') => G.from(target, Object.assign({ ease: 'none', scrollTrigger: { trigger, start, end, scrub: 0.6 } }, vars));
+
+  // logos: scattered across space, then snap into a grid
+  const lr = rng(7);
+  pinTL('#logos', '+=110%').from('#logoGrid img', {
+    x: () => (lr() - 0.5) * innerWidth * 1.1, y: () => (lr() - 0.5) * innerHeight * 1.2,
+    rotate: () => (lr() - 0.5) * 90, scale: () => 0.3 + lr() * 1.6, opacity: 0, stagger: { each: 0.02, from: 'random' }, ease: 'power2.out', duration: 1
+  });
+
+  // product: pieces arrive from the corners
+  scrubFrom('#product .tee', { y: 140, scale: 0.85, opacity: 0 }, '#product');
+  scrubFrom('#product .polo', { x: 220, y: -60, rotate: 18, opacity: 0 }, '#product');
+  scrubFrom('#product .shorts', { x: -220, rotate: -14, opacity: 0 }, '#product');
+  scrubFrom('#product .mug', { y: 180, rotate: -24, opacity: 0 }, '#product');
+
+  // flyer: the tri-fold opens
+  pinTL('#flyer', '+=110%')
+    .from('#flyerBox', { rotateX: 28, scale: 0.8, y: 40, transformPerspective: 1600, duration: 1 }, 0)
+    .from('#flyerBox .f1', { rotateY: -118, filter: 'brightness(.75)', duration: 1 }, 0)
+    .from('#flyerBox .f3', { rotateY: 118, filter: 'brightness(.75)', duration: 1 }, 0.1);
+
+  // billboard: start inside the faces, pull back to the city
+  pinTL('#billboard', '+=120%')
+    .from('.bb .board', { scale: 2.6, transformOrigin: '58% 45%', duration: 1 }, 0)
+    .from('#subImg', { xPercent: -60, opacity: 0, rotate: -4, duration: 0.45 }, 0.55);
+
+  // elevator: ride the doors open
+  const caps = [$('#cap1'), $('#cap2'), $('#cap3')], dots = $$('.lift-dots i');
+  const setCap = i => { caps.forEach((c, j) => { c.style.opacity = j === i ? 1 : 0; c.style.transform = j === i ? 'none' : 'translateY(8px)'; }); dots.forEach((d, j) => d.classList.toggle('on', j === i)); };
+  G.set(['#lift2', '#lift3'], { opacity: 0 });
+  G.timeline({ scrollTrigger: { trigger: '#lift', start: 'top top', end: '+=200%', pin: true, scrub: 0.4, onUpdate: s => setCap(s.progress < 0.38 ? 0 : s.progress < 0.72 ? 1 : 2) } })
+    .to('.lift', { scale: 1.06, ease: 'none', duration: 1 }, 0)
+    .to('#lift2', { opacity: 1, ease: 'none', duration: 0.12 }, 0.3)
+    .to('#lift3', { opacity: 1, ease: 'none', duration: 0.12 }, 0.64);
+
+  // social: split open from the centre seam (before | after)
+  G.fromTo('#socialImg', { clipPath: 'inset(0% 50% 0% 50%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: { trigger: '#social', start: 'top 75%', end: 'top 20%', scrub: 0.6 } });
+
+  // calendar: flips down like a page
+  scrubFrom('#calTilt', { rotateX: -75, transformOrigin: '50% 0%', y: -40, opacity: 0 }, '#calendar');
+
+  // office: two pieces slide together
+  scrubFrom('#lh', { xPercent: -60, rotate: -7, opacity: 0 }, '#office');
+  scrubFrom('#bc', { xPercent: 60, rotate: 7, opacity: 0 }, '#office');
+
+  // outdoor: the mosaic assembles
+  const or = rng(3);
+  G.from('#outdoorGrid > div', { x: () => (or() - 0.5) * 400, y: () => (or() - 0.2) * 300, rotate: () => (or() - 0.5) * 30, scale: 0.7, opacity: 0, ease: 'none', stagger: 0.05, scrollTrigger: { trigger: '#outdoor', start: 'top 80%', end: 'top 15%', scrub: 0.6 } });
+
+  // event: tiles wipe open, the ballroom settles
+  G.from('#eventGrid > div', { clipPath: 'inset(100% 0% 0% 0%)', ease: 'none', stagger: 0.12, scrollTrigger: { trigger: '#event', start: 'top 80%', end: 'top 15%', scrub: 0.6 } });
+  G.from('#eventGrid .e5 img', { scale: 1.3, ease: 'none', scrollTrigger: { trigger: '#event', start: 'top 80%', end: 'bottom 40%', scrub: 0.6 } });
+
+  // booth: light glides across the stall
+  G.fromTo('.booth .b1', { '--g': '-120%' }, { '--g': '120%', ease: 'none', scrollTrigger: { trigger: '#booth', start: 'top 70%', end: 'bottom 40%', scrub: 0.6 } });
+  scrubFrom('#b2', { yPercent: 60, opacity: 0 }, '#booth', 'top 60%', 'top 15%');
+
+  // magazine: posters drop on their strings
+  G.from('#mags .mag', { yPercent: -110, rotate: i => [-10, 6, -8][i], duration: 1.6, ease: 'elastic.out(1, 0.45)', stagger: 0.15, scrollTrigger: { trigger: '#magazine', start: 'top 70%', toggleActions: 'play none none reverse' } });
+
+  // packaging: the dumbbell drops, the bottle turns
+  G.from('#dumbbell', { yPercent: -70, duration: 1.3, ease: 'bounce.out', scrollTrigger: { trigger: '#packaging', start: 'top 70%', toggleActions: 'play none none reverse' } });
+  scrubFrom('#gin', { rotateY: 80, x: 120, opacity: 0, transformPerspective: 1200 }, '#packaging');
+
+  // brochure: the spread opens on its spine
+  scrubFrom('#bro1', { x: -120, opacity: 0 }, '#brochure');
+  scrubFrom('#bro2', { rotateY: -95, opacity: 0, transformPerspective: 1600 }, '#brochure');
+
+  // 3D: the tower rises, rooms slide in
+  scrubFrom('#tower', { clipPath: 'inset(100% 0% 0% 0%)' }, '#render', 'top 80%', 'top 20%');
+  scrubFrom('#renders', { clipPath: 'inset(0% 0% 0% 100%)' }, '#render', 'top 70%', 'top 15%');
+
+  // contact: infinity draws itself
+  const inf = $('#infPath'), L = inf.getTotalLength();
+  G.fromTo(inf, { strokeDasharray: L, strokeDashoffset: L }, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { trigger: '#contact', start: 'top 80%', end: 'top 10%', scrub: 0.6 } });
+  G.from('.contact h2, .contact .where, .line-item', { y: 30, opacity: 0, stagger: 0.1, duration: 0.9, ease: 'expo.out', scrollTrigger: { trigger: '#contact', start: 'top 55%', toggleActions: 'play none none reverse' } });
+
+  addEventListener('load', () => ST.refresh());
+})();
+</script>
